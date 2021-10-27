@@ -29,8 +29,6 @@ namespace EPalBack
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EPalBack", Version = "v1" });
@@ -52,9 +50,6 @@ namespace EPalBack
                 config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT Token"));
             });
 
-
-
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(option =>
                     {
@@ -69,7 +64,15 @@ namespace EPalBack
 
                     });
 
-
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                       builder =>
+                       {
+                          builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                       });
+            });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +93,7 @@ namespace EPalBack
             app.UseSwaggerUi3();
             app.UseRouting();
 
-
+            app.UseCors();
 
             //•˝≈Á√“
             app.UseAuthentication();
