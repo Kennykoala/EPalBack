@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -5,11 +6,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EPalBack.Helpers;
 
 namespace EPalBack
 {
@@ -27,10 +31,45 @@ namespace EPalBack
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EPalBack", Version = "v1" });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EPalBack", Version = "v1" });
+            //});
+
+
+            //註冊 Swagger 服務
+            services.AddSwaggerDocument(config => {
+
+                var apiScheme = new OpenApiSecurityScheme()
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "請將Token填入: Bearer {Token}"
+
+                };
+                config.AddSecurity("JWT Token", Enumerable.Empty<string>(), apiScheme);
+                config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT Token"));
             });
+
+
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(option =>
+                    {
+                        option.IncludeErrorDetails = true;
+                        option.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateLifetime = true,
+                            ValidIssuer = JwtHelper.Issuer,
+                            IssuerSigningKey = JwtHelper.SecurityKey,
+                            ValidateAudience = false
+                        };
+
+                    });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,13 +78,25 @@ namespace EPalBack
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EPalBack v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EPalBack v1"));
             }
 
+
+            app.UseHttpsRedirection();
+
+            //安裝nswagger
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
             app.UseRouting();
 
+
+
+            //先驗證
+            app.UseAuthentication();
+            //再授權
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
