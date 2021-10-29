@@ -22,44 +22,44 @@ namespace EPalBack.Controllers
         }
 
         [HttpGet]
-        public ApiResonse GetAllProduct()
+        public ApiResponse GetAllProduct()
         {
             try
             {
                 var result = _productService.GetAllProduct();
-                return new ApiResonse(APIStatus.Success, string.Empty, result);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
             }
             catch(Exception ex)
             {
-                return new ApiResonse(APIStatus.Fail, ex.Message, null);
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
 
         [HttpPost]
-        public ApiResonse DeleteProduct(ProductViewModel request)
+        public ApiResponse DeleteProduct(ProductViewModel request)
         {
             try
             {
                 _productService.DeleteProduct(request);
-                return new ApiResonse(APIStatus.Success, string.Empty, true);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
             }
             catch (Exception ex)
             {
-                return new ApiResonse(APIStatus.Fail, ex.Message, false);
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
 
         [HttpPost]
-        public ApiResonse UpdatePokemon(ProductViewModel request)
+        public ApiResponse UpdatePokemon(ProductViewModel request)
         {
             try
             {
                 _productService.UpdateProduct(request);
-                return new ApiResonse(APIStatus.Success, string.Empty, true);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
             }
             catch (Exception ex)
             {
-                return new ApiResonse(APIStatus.Fail, ex.Message, false);
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
     }

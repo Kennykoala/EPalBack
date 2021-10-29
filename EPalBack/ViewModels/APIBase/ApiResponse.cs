@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace EPalBack.ViewModels.APIBase
 {
-    public class ApiResonse
+    public class ApiResponse
     {
-        public ApiResonse(int status, string message, object result)
+        public ApiResponse(int status, string message, object result)
         {
             Status = status;
             Message = message;
