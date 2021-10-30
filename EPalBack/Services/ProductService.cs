@@ -24,7 +24,6 @@ namespace EPalBack.Services
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
                 MemberName = x.Creator.MemberName,
-                //MemberId = x.Creator.MemberId,
                 GameName = x.GameCategory.GameName,
 
             }).ToList();
@@ -49,9 +48,9 @@ namespace EPalBack.Services
             }).ToList();
         }
 
-        public void DeleteProduct(ProductViewModel requst)
+        public void DeleteProduct(ProductViewModel requset)
         {
-            var target = _repository.GetAll<Product>().FirstOrDefault(x => x.ProductId == requst.ProductId);
+            var target = _repository.GetAll<Product>().FirstOrDefault(x => x.ProductId == requset.ProductId);
 
             _repository.Delete(target);
 

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="DataModels\" />
+    <Folder Include="Interface\" />
   </ItemGroup>
 
 </Project>
