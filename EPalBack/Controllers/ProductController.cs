@@ -35,6 +35,20 @@ namespace EPalBack.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public ApiResponse GetProductDetails(int id)
+        {
+            try
+            {
+                var result = _productService.GetProductDetails(id);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
         [HttpPost]
         public ApiResponse DeleteProduct(ProductViewModel request)
         {
@@ -62,5 +76,6 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
+
     }
 }
