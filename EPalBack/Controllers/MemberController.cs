@@ -22,16 +22,16 @@ namespace EPalBack.Controllers
         }
 
         [HttpGet]
-        public ApiResonse GetMembers()
+        public ApiResponse GetMembers()
         {
             try
             {
                 var result = _memberService.GetMembers();
-                return new ApiResonse(APIStatus.Success, string.Empty, result);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
             }
             catch (Exception ex)
             {
-                return new ApiResonse(APIStatus.Fail, ex.Message, null);
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
     }
