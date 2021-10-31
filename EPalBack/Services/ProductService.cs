@@ -10,16 +10,16 @@ namespace EPalBack.Services
 {
     public class ProductService
     {
-        private readonly Repository _repository;
+        private readonly Repository<Product> _repository;
 
-        public ProductService()
+        public ProductService(Repository<Product> repository)
         {
-            _repository = new Repository();
+            _repository = repository;
         }
 
         public IEnumerable<ProductViewModel>GetAllProduct()
         {
-            return _repository.GetAll<Product>().Select(x => new ProductViewModel()
+            return _repository.GetAll().Select(x => new ProductViewModel()
             {
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
@@ -33,7 +33,7 @@ namespace EPalBack.Services
 
         public void DeleteProduct(ProductViewModel requst)
         {
-            var target = _repository.GetAll<Product>().FirstOrDefault(x => x.ProductId == requst.ProductId);
+            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == requst.ProductId);
 
             _repository.Delete(target);
 
@@ -42,7 +42,7 @@ namespace EPalBack.Services
 
         public void UpdateProduct(ProductViewModel request)
         {
-            var target = _repository.GetAll<Product>().FirstOrDefault(x => x.ProductId == request.ProductId);
+            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
 
             _repository.Update(target);
 
