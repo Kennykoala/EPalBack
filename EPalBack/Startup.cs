@@ -81,7 +81,9 @@ namespace EPalBack
             //dbcontext.repository.service DIµù¥U
             services.AddDbContext<EPalContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EPalContext")));
             services.AddScoped<Repository<Product>>();
+            services.AddScoped<Repository<Member>>();
             services.AddScoped<ProductService>();
+            services.AddScoped<MemberService>();
 
 
         }

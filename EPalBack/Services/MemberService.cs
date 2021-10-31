@@ -10,16 +10,16 @@ namespace EPalBack.Services
 {
     public class MemberService
     {
-        private readonly Repository _repository;
+        private readonly Repository<Member> _repository;
 
-        public MemberService()
+        public MemberService(Repository<Member> repository)
         {
-            _repository = new Repository();
+            _repository = repository;
         }
 
         public IEnumerable<MembrViewModel> GetMembers()
         {
-            return _repository.GetAll<Member>().Select(x => new MembrViewModel()
+            return _repository.GetAll().Select(x => new MembrViewModel()
             {
                 MemberId = x.MemberId,
                 MemberName = x.MemberName,

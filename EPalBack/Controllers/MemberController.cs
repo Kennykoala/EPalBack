@@ -16,9 +16,9 @@ namespace EPalBack.Controllers
     {
         private readonly MemberService _memberService;
 
-        public MemberController()
+        public MemberController(MemberService memberService)
         {
-            _memberService = new MemberService();
+            _memberService = memberService;
         }
 
         [HttpGet]
