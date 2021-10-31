@@ -16,9 +16,9 @@ namespace EPalBack.Controllers
     {
         private readonly ProductService _productService;
 
-        public ProductController()
+        public ProductController(ProductService productService)
         {
-            _productService = new ProductService();
+            _productService = productService;
         }
 
         [HttpGet]

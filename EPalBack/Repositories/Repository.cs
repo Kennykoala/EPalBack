@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPalBack.Repositories
 {
-    public class Repository
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly EPalContext _context;
 
-        public Repository()
+        public Repository(EPalContext context)
         {
-            _context = new EPalContext();
+            _context = context;
         }
 
         public void SaveChanges()
@@ -21,23 +21,23 @@ namespace EPalBack.Repositories
             _context.SaveChanges();
         }
 
-        public void Create<T>(T value)  where T :class
+        public void Create(T value)
         {
             _context.Entry(value).State = EntityState.Added;
         }
 
-        public void Update<T>(T value) where T : class
+        public void Update(T value)
         {
             _context.Entry(value).State = EntityState.Modified;
         }
 
-        public void Delete<T>(T value) where T : class
+        public void Delete(T value)
         {
             _context.Entry(value).State = EntityState.Deleted;
 
         }
 
-        public IQueryable<T>GetAll<T>() where T : class
+        public IQueryable<T> GetAll()
         {
             return _context.Set<T>();
         }
