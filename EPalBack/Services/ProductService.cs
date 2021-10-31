@@ -51,7 +51,7 @@ namespace EPalBack.Services
 
         public void DeleteProduct(ProductViewModel requset)
         {
-            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == requst.ProductId);
+            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == requset.ProductId);
 
             _repository.Delete(target);
 
