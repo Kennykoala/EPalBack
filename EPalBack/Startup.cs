@@ -14,6 +14,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EPalBack.Helpers;
+using EPalBack.DataModels;
+using Microsoft.EntityFrameworkCore;
+using EPalBack.Repositories;
+using EPalBack.Services;
 
 namespace EPalBack
 {
@@ -73,6 +77,13 @@ namespace EPalBack
                        });
             });
             services.AddControllers();
+
+            //dbcontext.repository.service DIµù¥U
+            services.AddDbContext<EPalContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EPalContext")));
+            services.AddScoped<Repository<Product>>();
+            services.AddScoped<ProductService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
