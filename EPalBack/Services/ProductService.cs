@@ -24,10 +24,28 @@ namespace EPalBack.Services
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
                 MemberName = x.Creator.MemberName,
+                //MemberId = x.Creator.MemberId,
                 GameName = x.GameCategory.GameName,
-                Server = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId )==null?null: x.ProductServers.First(y => y.ProductId == x.ProductId).Server.ServerName,
+
+            }).ToList();
+        }
+
+        public IEnumerable<ProductDetailsViewModel>GetProductDetails(int id)
+        {
+            var porduct = _repository.GetAll<Product>().Where(p => p.ProductId == id);
+
+            return porduct.Select(x => new ProductDetailsViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                CreatorName = x.Creator.MemberName,
+                GameCategory = x.GameCategory.GameName,
+                Server = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null : x.ProductServers.First(y => y.ProductId == x.ProductId).Server.ServerName,
                 Level = x.Rank.RankName,
-                Position = x.ProductPositions.FirstOrDefault(y => y.ProductId == x.ProductId) == null?null: x.ProductPositions.First(y => y.ProductId == x.ProductId).Position.PositionName,
+                CreatorImg = x.CreatorImg,
+                Language = x.Creator.Language.LanguageName,
+                Introduction = x.Introduction,
+                Style = x.ProductStyles.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null:x.ProductStyles.First(y => y.ProductId == x.ProductId).Style.StyleName
             }).ToList();
         }
 
