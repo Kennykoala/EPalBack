@@ -11,20 +11,20 @@ namespace isRock.Template
 {
     public class LineLUISWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
-        const string key = "_________LUIS_KEY____________";
-        const string endpoint = "______westus.api.cognitive.microsoft.com_______";
-        const string appId = "______32fxxx98-b3d4-4a66-x2f9-8104dxxxxx2f_____";
+        const string key = "e4781b057cf44f89b83a72c196011d1c";
+        const string endpoint = "epal.cognitiveservices.azure.com";
+        const string appId = "bbfb9e51-a361-40e1-b1cb-7c290ba47242";
 
         [Route("api/LineLUIS")]
         [HttpPost]
         public IActionResult POST()
         {
-            var AdminUserId = "_______U5e60294b8c__AdminUserId__02d6295b621a_____";
+            var AdminUserId = "Udf5b02c1a525f3f0881a5e8fb1a883ec";
 
             try
             {
                 //設定ChannelAccessToken
-                this.ChannelAccessToken = "_____________ChannelAccessToken___________________";
+                this.ChannelAccessToken = "sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=";
                 //配合Line Verify
                 if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                     ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
@@ -37,9 +37,16 @@ namespace isRock.Template
                     var ret = MakeRequest(LineEvent.message.text);
                     responseMsg = $"你說了: {LineEvent.message.text}";
                     responseMsg += $"\ntopScoringIntent: {ret.topScoringIntent.intent} ";
+
+                    //抓intent
                     foreach (var item in ret.intents)
                     {
                         responseMsg += $"\n intent: {item.intent}({item.score}) ";
+                    }
+                    //抓取entity
+                    foreach (var item in ret.entities)
+                    {
+                        responseMsg += $"\n entities: {item.entity}({item.score}) ";
                     }
 
                 }

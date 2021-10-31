@@ -86,7 +86,7 @@ namespace EPalBack
             }
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             //¦w¸Ënswagger
             app.UseOpenApi();
