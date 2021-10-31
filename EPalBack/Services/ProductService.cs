@@ -32,7 +32,7 @@ namespace EPalBack.Services
 
         public IEnumerable<ProductDetailsViewModel>GetProductDetails(int id)
         {
-            var porduct = _repository.GetAll<Product>().Where(p => p.ProductId == id);
+            var porduct = _repository.GetAll().Where(p => p.ProductId == id);
 
             return porduct.Select(x => new ProductDetailsViewModel()
             {
