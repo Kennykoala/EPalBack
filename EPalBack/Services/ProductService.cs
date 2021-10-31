@@ -25,7 +25,7 @@ namespace EPalBack.Services
                 UnitPrice = x.UnitPrice,
                 MemberName = x.Creator.MemberName,
                 GameName = x.GameCategory.GameName,
-
+                ProductImg = x.CreatorImg
             }).ToList();
         }
 
@@ -37,6 +37,7 @@ namespace EPalBack.Services
             {
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
+                CreatorId = x.Creator.MemberId,
                 CreatorName = x.Creator.MemberName,
                 GameCategory = x.GameCategory.GameName,
                 Server = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null : x.ProductServers.First(y => y.ProductId == x.ProductId).Server.ServerName,

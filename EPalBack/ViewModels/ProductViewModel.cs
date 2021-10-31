@@ -15,6 +15,7 @@ namespace EPalBack.ViewModels
 
         public decimal UnitPrice { get; set; }
 
+        public string ProductImg { get; set; }
 
     }
 }
