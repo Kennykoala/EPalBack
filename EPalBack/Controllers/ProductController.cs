@@ -15,10 +15,12 @@ namespace EPalBack.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
+        private readonly DashBoardService _dashboardService;
 
-        public ProductController(ProductService productService)
+        public ProductController(ProductService productService,DashBoardService dashBoardService)
         {
             _productService = productService;
+            _dashboardService = dashBoardService;
         }
 
         [HttpGet]
@@ -44,6 +46,20 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Success, string.Empty, result);
             }
             catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllCount()
+        {
+            try
+            {
+                var result = _dashboardService.GetAllCount();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch(Exception ex)
             {
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
@@ -76,6 +92,5 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
-
     }
 }

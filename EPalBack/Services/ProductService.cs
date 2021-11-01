@@ -24,9 +24,8 @@ namespace EPalBack.Services
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
                 MemberName = x.Creator.MemberName,
-                //MemberId = x.Creator.MemberId,
                 GameName = x.GameCategory.GameName,
-
+                ProductImg = x.CreatorImg
             }).ToList();
         }
 
@@ -38,6 +37,7 @@ namespace EPalBack.Services
             {
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
+                CreatorId = x.Creator.MemberId,
                 CreatorName = x.Creator.MemberName,
                 GameCategory = x.GameCategory.GameName,
                 Server = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null : x.ProductServers.First(y => y.ProductId == x.ProductId).Server.ServerName,
@@ -49,9 +49,9 @@ namespace EPalBack.Services
             }).ToList();
         }
 
-        public void DeleteProduct(ProductViewModel requst)
+        public void DeleteProduct(ProductViewModel requset)
         {
-            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == requst.ProductId);
+            var target = _repository.GetAll().FirstOrDefault(x => x.ProductId == requset.ProductId);
 
             _repository.Delete(target);
 

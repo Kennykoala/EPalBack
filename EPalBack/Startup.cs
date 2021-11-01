@@ -82,8 +82,11 @@ namespace EPalBack
             services.AddDbContext<EPalContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EPalContext")));
             services.AddScoped<Repository<Product>>();
             services.AddScoped<Repository<Member>>();
+            services.AddScoped<Repository<CommentDetail>>();
+            services.AddScoped<Repository<Order>>();
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();
+            services.AddScoped<DashBoardService>();
 
 
         }
@@ -105,7 +108,8 @@ namespace EPalBack
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseRouting();
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseCors();
 
             //•˝≈Á√“

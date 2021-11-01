@@ -9,19 +9,13 @@ namespace EPalBack.ViewModels
     {
         public int ProductId { get; set; }
 
-        //public int MemberId { get; set; }
-
         public string MemberName { get; set; }
 
         public string GameName { get; set; }
 
         public decimal UnitPrice { get; set; }
 
-        //public string Server { get; set; }
-
-        //public string Position { get; set; }
-
-        //public string Level { get; set; }
+        public string ProductImg { get; set; }
 
     }
 }
