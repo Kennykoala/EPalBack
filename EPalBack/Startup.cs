@@ -107,7 +107,8 @@ namespace EPalBack
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseRouting();
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseCors();
 
             //•˝≈Á√“
