@@ -9,12 +9,14 @@ namespace EPalBack.DataModels
     {
         public OrderStatus()
         {
-            Orders = new HashSet<Order>();
+            OrderOrderStatusIdCreatorNavigations = new HashSet<Order>();
+            OrderOrderStatuses = new HashSet<Order>();
         }
 
         public int OrderStatusId { get; set; }
         public string OrderStatusName { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> OrderOrderStatusIdCreatorNavigations { get; set; }
+        public virtual ICollection<Order> OrderOrderStatuses { get; set; }
     }
 }

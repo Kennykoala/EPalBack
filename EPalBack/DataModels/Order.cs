@@ -21,12 +21,14 @@ namespace EPalBack.DataModels
         public DateTime OrderDate { get; set; }
         public DateTime DesiredStartTime { get; set; }
         public DateTime? GameEndDateTime { get; set; }
-        public int OrderStatusId { get; set; }
+        public int? OrderStatusId { get; set; }
         public string OrderConfirmation { get; set; }
         public DateTime? GameStartTime { get; set; }
+        public int? OrderStatusIdCreator { get; set; }
 
         public virtual Member Customer { get; set; }
         public virtual OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus OrderStatusIdCreatorNavigation { get; set; }
         public virtual Product Product { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
     }
