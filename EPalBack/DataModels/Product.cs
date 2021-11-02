@@ -26,6 +26,7 @@ namespace EPalBack.DataModels
         public string Introduction { get; set; }
         public int? RankId { get; set; }
         public string CreatorImg { get; set; }
+        public bool? ProductStatus { get; set; }
 
         public virtual Member Creator { get; set; }
         public virtual GameCategory GameCategory { get; set; }
