@@ -7,7 +7,10 @@ namespace EPalBack.ViewModels
 {
     public class OrderViewModel
     {
+        public string MemberName { get; set; }
         public int OrderId { get; set; }
+
+        public string OrderStatusName { get; set; }
 
         public int CustomerId { get; set; }
 
@@ -19,10 +22,10 @@ namespace EPalBack.ViewModels
 
         public int Quantity { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
 
-        public int OrderStatusId { get; set; }
+        public int? OrderStatusId { get; set; }
 
-        public int OrderStatusIdCreator { get; set; }
+        public int? OrderStatusIdCreator { get; set; }
     }
 }
