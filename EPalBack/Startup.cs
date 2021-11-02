@@ -84,6 +84,11 @@ namespace EPalBack
             services.AddScoped<Repository<Member>>();
             services.AddScoped<Repository<CommentDetail>>();
             services.AddScoped<Repository<Order>>();
+            services.AddScoped<Repository<Server>>();
+            services.AddScoped<Repository<Style>>();
+            services.AddScoped<Repository<Language>>();
+            services.AddScoped<Repository<GameCategory>>();
+
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();
             services.AddScoped<DashBoardService>();
