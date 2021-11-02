@@ -34,5 +34,22 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
+
+  
+        [HttpGet("{id:int}")]
+        public ApiResponse GetMemberManage(int id)
+        {
+            try
+            {
+                var result = _memberService.GetMemberManage(id);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch(Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+
     }
 }

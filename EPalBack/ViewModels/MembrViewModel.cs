@@ -53,5 +53,10 @@ namespace EPalBack.ViewModels
 
         public bool? IsAdmin { get; set; }
 
+        /// <summary>
+        /// 後台註冊日期(因應日期內容轉換)
+        /// </summary>
+        public string BackRegistDate { get; set; }
+
     }
 }
