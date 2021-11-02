@@ -84,7 +84,13 @@ namespace EPalBack
             services.AddScoped<Repository<Member>>();
             services.AddScoped<Repository<CommentDetail>>();
             services.AddScoped<Repository<Order>>();
+            services.AddScoped<Repository<Server>>();
+            services.AddScoped<Repository<Style>>();
+            services.AddScoped<Repository<Language>>();
+            services.AddScoped<Repository<GameCategory>>();
+
             services.AddScoped<ProductService>();
+            services.AddScoped<MemberService>();
             services.AddScoped<DashBoardService>();
             services.AddScoped<OrderService>();
 
@@ -107,7 +113,8 @@ namespace EPalBack
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseRouting();
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseCors();
 
             //•˝≈Á√“

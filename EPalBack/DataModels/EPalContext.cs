@@ -212,6 +212,8 @@ namespace EPalBack.DataModels
 
             modelBuilder.Entity<Member>(entity =>
             {
+                entity.HasComment("true表示已從epal網站註冊成為會員");
+
                 entity.HasIndex(e => e.CityId, "IX_CityId");
 
                 entity.HasIndex(e => e.LanguageId, "IX_LanguageId");
@@ -288,10 +290,14 @@ namespace EPalBack.DataModels
                     .HasConstraintName("FK_Orders_Members");
 
                 entity.HasOne(d => d.OrderStatus)
-                    .WithMany(p => p.Orders)
+                    .WithMany(p => p.OrderOrderStatuses)
                     .HasForeignKey(d => d.OrderStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_OrderStatus");
+
+                entity.HasOne(d => d.OrderStatusIdCreatorNavigation)
+                    .WithMany(p => p.OrderOrderStatusIdCreatorNavigations)
+                    .HasForeignKey(d => d.OrderStatusIdCreator)
+                    .HasConstraintName("FK_Orders_OrderStatus1");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Orders)
@@ -311,10 +317,6 @@ namespace EPalBack.DataModels
 
             modelBuilder.Entity<Payment>(entity =>
             {
-                entity.Property(e => e.PaymentId).ValueGeneratedNever();
-
-                entity.Property(e => e.OrderId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.TransactionUid)
                     .IsRequired()
                     .HasColumnName("TransactionUID");
@@ -325,7 +327,7 @@ namespace EPalBack.DataModels
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Payments_Orders");
+                    .HasConstraintName("FK_Payments_Orders1");
             });
 
             modelBuilder.Entity<Position>(entity =>

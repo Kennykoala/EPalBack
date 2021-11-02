@@ -28,8 +28,8 @@ namespace EPalBack.Services
             var result = new DashBoardViewModel();
 
             result.ProductTotal = _repository.GetAll().Count();
-            result.OrderTotal = _repository2.GetAll().Count();
             result.MemberTotal = _repository1.GetAll().Count();
+            result.OrderTotal = _repository2.GetAll().Count();
             result.CommentTotal = _repository3.GetAll().Count();
             yield return result;
         }

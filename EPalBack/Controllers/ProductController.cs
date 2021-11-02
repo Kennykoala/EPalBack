@@ -65,6 +65,62 @@ namespace EPalBack.Controllers
             }
         }
 
+        [HttpGet]
+        public ApiResponse GetAllServer()
+        {
+            try
+            {
+                var result = _productService.GetAllServer();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllLanguage()
+        {
+            try
+            {
+                var result = _productService.GetAllLanguage();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllStyle()
+        {
+            try
+            {
+                var result = _productService.GetAllStyle();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllGame()
+        {
+            try
+            {
+                var result = _productService.GetAllGame();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
         [HttpPost]
         public ApiResponse DeleteProduct(ProductViewModel request)
         {
