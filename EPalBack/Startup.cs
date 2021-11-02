@@ -86,7 +86,7 @@ namespace EPalBack
             services.AddScoped<Repository<Order>>();
             services.AddScoped<ProductService>();
             services.AddScoped<DashBoardService>();
-
+            services.AddScoped<OrderService>();
 
         }
 
