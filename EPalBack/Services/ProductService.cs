@@ -105,7 +105,7 @@ namespace EPalBack.Services
             }).ToList();
         }
 
-        public void DeleteProduct(ProductViewModel requset)
+        public void DeleteProduct(ProductDetailsViewModel requset)
         {
             var target = _product.GetAll().FirstOrDefault(x => x.ProductId == requset.ProductId);
 
@@ -114,11 +114,16 @@ namespace EPalBack.Services
             _product.SaveChanges();
         }
 
-        public void UpdateProduct(ProductViewModel request)
+        public void UpdateProduct(ProductDetailsViewModel request)
         {
-            var target = _product.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
+            var product = _product.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
 
-            _product.Update(target);
+            product.Introduction = request.Introduction;
+            product.Creator.MemberName = request.CreatorName;
+            product.UnitPrice = request.UnitPrice;
+            
+
+            _product.Update(product);
 
             _product.SaveChanges();
         }

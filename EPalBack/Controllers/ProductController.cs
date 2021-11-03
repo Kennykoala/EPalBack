@@ -122,7 +122,7 @@ namespace EPalBack.Controllers
         }
 
         [HttpPost]
-        public ApiResponse DeleteProduct(ProductViewModel request)
+        public ApiResponse DeleteProduct(ProductDetailsViewModel request)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace EPalBack.Controllers
         }
 
         [HttpPost]
-        public ApiResponse UpdatePokemon(ProductViewModel request)
+        public ApiResponse UpdateProduct(ProductDetailsViewModel request)
         {
             try
             {
