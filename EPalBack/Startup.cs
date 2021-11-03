@@ -92,7 +92,7 @@ namespace EPalBack
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();
             services.AddScoped<DashBoardService>();
-
+            services.AddScoped<OrderService>();
 
         }
 
