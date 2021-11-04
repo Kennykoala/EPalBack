@@ -42,11 +42,8 @@ namespace isRock.Template
                 var user = this.GetUserInfo(LineEvent.source.userId);
 
                 //準備回覆訊息
-                //if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲種類")
                 if (LineEvent.message.text == "請選擇遊戲種類")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
 
                     msg.quickReply.items.Add(
@@ -97,8 +94,6 @@ namespace isRock.Template
                 }
                 else if (LineEvent.message.text == "請選擇陪玩師性別")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Gender");
 
                     msg.quickReply.items.Add(
@@ -115,8 +110,6 @@ namespace isRock.Template
                 }
                 else if (LineEvent.message.text == "請選擇陪玩師等級")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Level");
 
                     msg.quickReply.items.Add(
@@ -145,8 +138,6 @@ namespace isRock.Template
                 }
                 else if (LineEvent.message.text == "請選擇遊戲產品價格")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Unitprice");
 
                     msg.quickReply.items.Add(
@@ -169,8 +160,6 @@ namespace isRock.Template
                 }
                 else if (LineEvent.message.text == "請選擇遊戲伺服器")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Server");
 
                     msg.quickReply.items.Add(
@@ -199,8 +188,6 @@ namespace isRock.Template
                 }
                 else if(LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text")
                 {
-                    //responseMsg = $"hi{user.displayName},你說了{LineEvent.message.text}";
-
                     //responseMsg += GetResult(LineEvent.message.text);
                     bool reply = GetResult(LineEvent.message.text, LineEvent.replyToken, AdminUserId);
                     return Ok();
@@ -242,7 +229,7 @@ namespace isRock.Template
 
         public bool GetResult(string keyword, string token, string AdminUserId)
         {
-            string Default = "很抱歉，關鍵字有誤";
+            //string Default = "很抱歉，關鍵字有誤";
             if (keyword == null)
             {
                 return false;
@@ -250,7 +237,7 @@ namespace isRock.Template
             }
 
 
-            //建立CarouselTemplate
+            //CarouselTemplate
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
 
             int gendernum = keyword == "Male" ? 0 : 1;
@@ -266,31 +253,26 @@ namespace isRock.Template
                 bool level = result.Any(x => x.Level == keyword);
                 //判斷遊戲伺服器
                 bool server = result.Any(x => x.Server == keyword);
-
                 //判斷遊戲產品價格
                 bool productprice;
                 switch (keyword)
                 {
                     case "$1~$5":
-                        productprice = result.Any(x => x.UnitPrice >= 1 && x.UnitPrice <= 5);
+                        productprice = result.Any(x => x.UnitPrice >= 1M && x.UnitPrice <= 5M);
                         break;
                     case "$5~$10":
-                        productprice = result.Any(x => x.UnitPrice >= 5 && x.UnitPrice <= 10);
+                        productprice = result.Any(x => x.UnitPrice >= 5M && x.UnitPrice <= 10M);
                         break;
                     case "$10~$20":
-                        productprice = result.Any(x => x.UnitPrice >= 10 && x.UnitPrice <= 20);
+                        productprice = result.Any(x => x.UnitPrice >= 10M && x.UnitPrice <= 20M);
                         break;
                     case "$20 up":
-                        productprice = result.Any(x => x.UnitPrice >= 20);
+                        productprice = result.Any(x => x.UnitPrice >= 20M);
                         break;
                     default:
                         productprice = false;
                         break;
-                }
-
-
-
-                
+                }              
                 
 
                 var rnd = new Random();
@@ -311,16 +293,8 @@ namespace isRock.Template
                                         })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
-                    //replymsg += string.Concat($"遊戲種類名稱:{keyword}", Environment.NewLine);
                     foreach (var cat in bycat)
                     {
-                        //replymsg += string.Format("商品序號:{0} 陪玩者:{1} 單價:${2} {3}",
-                        //    cat.ProductId,
-                        //    cat.MemberName,
-                        //    cat.UnitPrice,
-                        //    cat.CreatorImg,
-                        //    Environment.NewLine);
-
                         var creatorimg = cat.CreatorImg;
                         var memberName = cat.MemberName;
                         var price = cat.UnitPrice.ToString();
@@ -334,25 +308,17 @@ namespace isRock.Template
                                     Environment.NewLine,
                                     cat.UnitPrice);
 
-
-                        //建立actions，作為ButtonTemplate的用戶回覆行為
                         var actions = new List<isRock.LineBot.TemplateActionBase>();
-                        //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
                         actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-                        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-
-                        //單一Column 
                         var Column = new isRock.LineBot.Column
                         {
                             text = carouseltext,
-                            //keyword == gamename
                             title = keyword,
                             thumbnailImageUrl = new Uri(creatorimg),
-                            actions = actions //設定回覆動作
+                            actions = actions 
                         };
 
-                        //這是範例，所以用一組樣板建立三個
                         CarouselTemplate.columns.Add(Column);
 
                     }
@@ -389,14 +355,9 @@ namespace isRock.Template
                                     Environment.NewLine,
                                     cat.UnitPrice);
 
-                        //建立actions，ButtonTemplate的用戶回覆
                         var actions = new List<isRock.LineBot.TemplateActionBase>();
-                        //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
                         actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-                        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-
-                        //Column 
                         var Column = new isRock.LineBot.Column
                         {
                             text = carouseltext,
@@ -439,14 +400,9 @@ namespace isRock.Template
                                     Environment.NewLine,
                                     cat.UnitPrice);
 
-                        //建立actions，ButtonTemplate的用戶回覆
                         var actions = new List<isRock.LineBot.TemplateActionBase>();
-                        //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
                         actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-                        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-
-                        //Column 
                         var Column = new isRock.LineBot.Column
                         {
                             text = carouseltext,
@@ -465,16 +421,16 @@ namespace isRock.Template
                     switch (keyword)
                     {
                         case "$1~$5":
-                            pricelist = result.Where(x => x.UnitPrice >= 1 && x.UnitPrice <= 5).ToList();
+                            pricelist = result.Where(x => x.UnitPrice >= 1M && x.UnitPrice <= 5M).ToList();
                             break;
                         case "$5~$10":
-                            pricelist = result.Where(x => x.UnitPrice >= 5 && x.UnitPrice <= 10).ToList();
+                            pricelist = result.Where(x => x.UnitPrice >= 5M && x.UnitPrice <= 10M).ToList();
                             break;
                         case "$10~$20":
-                            pricelist = result.Where(x => x.UnitPrice >= 10 && x.UnitPrice <= 20).ToList();
+                            pricelist = result.Where(x => x.UnitPrice >= 10M && x.UnitPrice <= 20M).ToList();
                             break;
                         case "$20 up":
-                            pricelist = result.Where(x => x.UnitPrice >= 20).ToList();
+                            pricelist = result.Where(x => x.UnitPrice >= 20M).ToList();
                             break;
                         default:
                             pricelist = null;
@@ -510,14 +466,9 @@ namespace isRock.Template
                                     Environment.NewLine,
                                     cat.UnitPrice);
 
-                        //建立actions，ButtonTemplate的用戶回覆
                         var actions = new List<isRock.LineBot.TemplateActionBase>();
-                        //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
                         actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-                        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-
-                        //Column 
                         var Column = new isRock.LineBot.Column
                         {
                             text = carouseltext,
@@ -560,14 +511,9 @@ namespace isRock.Template
                                     Environment.NewLine,
                                     cat.UnitPrice);
 
-                        //建立actions，ButtonTemplate的用戶回覆
                         var actions = new List<isRock.LineBot.TemplateActionBase>();
-                        //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
                         actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-                        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-
-                        //Column 
                         var Column = new isRock.LineBot.Column
                         {
                             text = carouseltext,
@@ -591,47 +537,68 @@ namespace isRock.Template
             }
 
 
-
-
-            ////建立actions，作為ButtonTemplate的用戶回覆行為
-            //var actions = new List<isRock.LineBot.TemplateActionBase>();
-            ////actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
-            //actions.Add(new isRock.LineBot.UriAction() { label = "Go To EPal", uri = new Uri("http://www.google.com") });
-            ////actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
-
-            ////單一Column 
-            //var Column = new isRock.LineBot.Column
-            //{
-            //    text = "ButtonsTemplate文字訊息",
-            //    title = "ButtonsTemplate標題",
-            //    //設定圖片
-            //    thumbnailImageUrl = new Uri("https://arock.blob.core.windows.net/blogdata201709/14-143030-1cd8cf1e-8f77-4652-9afa-605d27f20933.png"),
-            //    actions = actions //設定回覆動作
-            //};
-
-            ////建立CarouselTemplate
-            //var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
-
-            ////這是範例，所以用一組樣板建立三個
-            //CarouselTemplate.columns.Add(Column);
-            //CarouselTemplate.columns.Add(Column);
-            //CarouselTemplate.columns.Add(Column);
-
-
-            ////建立bot instance
-            //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(token);
-
-            ////發送 CarouselTemplate
-            //bot.PushMessage(AdminUserId, CarouselTemplate);
-            //return true;
-
-            //回覆訊息
             ReplyMessage(token, CarouselTemplate);
-            //response OK
             return true;
-
-
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //                        //replymsg += string.Concat($"遊戲種類名稱:{keyword}", Environment.NewLine);
+    //                foreach (var cat in bycat)
+    //                {
+    //                    //replymsg += string.Format("商品序號:{0} 陪玩者:{1} 單價:${2} {3}",
+    //                    //    cat.ProductId,
+    //                    //    cat.MemberName,
+    //                    //    cat.UnitPrice,
+    //                    //    cat.CreatorImg,
+    //                    //    Environment.NewLine);
+
+    //                    var creatorimg = cat.CreatorImg;
+    //    var memberName = cat.MemberName;
+    //    var price = cat.UnitPrice.ToString();
+    //    var proId = cat.ProductId;
+
+    //    var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+    //        proId);
+
+    //    var carouseltext = string.Format("{0} {1}${2}",
+    //                cat.MemberName,
+    //                Environment.NewLine,
+    //                cat.UnitPrice);
+
+
+    //    //建立actions，作為ButtonTemplate的用戶回覆行為
+    //    var actions = new List<isRock.LineBot.TemplateActionBase>();
+    //    //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
+    //    actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+    //                    //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
+
+
+    //                    //單一Column 
+    //                    var Column = new isRock.LineBot.Column
+    //                    {
+    //                        text = carouseltext,
+    //                        //keyword == gamename
+    //                        title = keyword,
+    //                        thumbnailImageUrl = new Uri(creatorimg),
+    //                        actions = actions //設定回覆動作
+    //                    };
+
+    //CarouselTemplate.columns.Add(Column);
+
+    //                }
+
 
 
 
