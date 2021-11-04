@@ -27,20 +27,21 @@ namespace isRock.Template
         {
             var AdminUserId = "Udf5b02c1a525f3f0881a5e8fb1a883ec";
 
+            //設定ChannelAccessToken
+            this.ChannelAccessToken = "sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=";
+            //配合Line Verify
+            if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
+                ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
+            //取得Line Event
+            var LineEvent = this.ReceivedMessage.events.FirstOrDefault();
+            var responseMsg = "";
+
+            //抓當前與linebot對話的usedid
+            //var user = this.GetUserInfo(LineEvent.source.userId);
+            var UserId = this.ReceivedMessage.events[0].source.userId;
+
             try
             {
-                //設定ChannelAccessToken
-                this.ChannelAccessToken = "sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=";
-                //配合Line Verify
-                if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
-                    ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
-                //取得Line Event
-                var LineEvent = this.ReceivedMessage.events.FirstOrDefault();
-                var responseMsg = "";
-
-                //抓當前與linebot對話的usedid
-                var user = this.GetUserInfo(LineEvent.source.userId);
-
                 //準備回覆訊息
                 if (LineEvent.message.text == "請選擇遊戲種類")
                 {
@@ -88,7 +89,7 @@ namespace isRock.Template
 
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(AdminUserId, msg);
+                    bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
@@ -104,7 +105,7 @@ namespace isRock.Template
                             "Female", "Female", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(AdminUserId, msg);
+                    bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
@@ -132,7 +133,7 @@ namespace isRock.Template
                             "Diamond", "Diamond", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(AdminUserId, msg);
+                    bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
@@ -154,7 +155,7 @@ namespace isRock.Template
                             "$20 up", "$20 up", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(AdminUserId, msg);
+                    bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
@@ -182,14 +183,14 @@ namespace isRock.Template
                             "EU NorthEast", "EU NorthEast", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(AdminUserId, msg);
+                    bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
                 else if(LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text")
                 {
                     //responseMsg += GetResult(LineEvent.message.text);
-                    bool reply = GetResult(LineEvent.message.text, LineEvent.replyToken, AdminUserId);
+                    bool reply = GetResult(LineEvent.message.text, LineEvent.replyToken, UserId);
                     return Ok();
 
                 }
@@ -218,7 +219,7 @@ namespace isRock.Template
             catch (Exception ex)
             {
                 //回覆訊息
-                this.PushMessage(AdminUserId, "發生錯誤:\n" + ex.Message);
+                this.PushMessage(UserId, "發生錯誤:\n" + ex.Message);
                 //response OK
                 return Ok();
             }
@@ -227,7 +228,7 @@ namespace isRock.Template
 
 
 
-        public bool GetResult(string keyword, string token, string AdminUserId)
+        public bool GetResult(string keyword, string token, string UserId)
         {
             //string Default = "很抱歉，關鍵字有誤";
             if (keyword == null)
