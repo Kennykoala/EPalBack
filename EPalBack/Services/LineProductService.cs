@@ -11,16 +11,16 @@ namespace EPalBack.Services
     public class LineProductService
     {
 
-        private readonly Repository _repository;
+        private readonly Repository<Product> _repository;
 
-        public LineProductService()
+        public LineProductService(Repository<Product> repository)
         {
-            _repository = new Repository();
+            _repository = repository;
         }
 
         public IEnumerable<LineProductViewModel> GetAllProduct()
         {
-            return _repository.GetAll<Product>().Select(x => new LineProductViewModel()
+            return _repository.GetAll().Select(x => new LineProductViewModel()
             {
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,

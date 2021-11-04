@@ -12,12 +12,12 @@ namespace isRock.Template
     public class LineWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
 
-        private readonly ProductService _productService;
+        //private readonly ProductService _productService;
         private readonly LineProductService _lineproductService;
-        public LineWebHookController()
+        public LineWebHookController(LineProductService lineproductService)
         {
-            _productService = new ProductService();
-            _lineproductService = new LineProductService();
+            //_productService = productService;
+            _lineproductService = lineproductService;
         }
 
 

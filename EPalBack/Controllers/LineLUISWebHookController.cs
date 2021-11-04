@@ -19,10 +19,12 @@ namespace isRock.Template
         const string endpoint = "epal.cognitiveservices.azure.com";
         const string appId = "bbfb9e51-a361-40e1-b1cb-7c290ba47242";
 
-        private readonly ProductService _productService;
-        public LineLUISWebHookController()
+        //private readonly ProductService _productService;
+        private readonly LineProductService _lineproductService;
+        public LineLUISWebHookController(LineProductService lineproductService)
         {
-            _productService = new ProductService();
+            //_productService = productService;
+            _lineproductService = lineproductService;
         }
 
         [Route("api/LineLUIS")]
@@ -99,10 +101,10 @@ namespace isRock.Template
             //IList<Microsoft.Cognitive.LUIS.Entity> entitiesCollection;
             try
             {
-                var result = _productService.GetAllProduct();
+                var result = _lineproductService.GetAllProduct();
                 if(item.type == "遊戲種類")
                 {
-                    var bycat = result.Where(x => x.GameName == item.entity).Select(x => new ProductViewModel()
+                    var bycat = result.Where(x => x.GameName == item.entity).Select(x => new LineProductViewModel()
                     {
                         ProductId = x.ProductId,
                         UnitPrice = x.UnitPrice,
