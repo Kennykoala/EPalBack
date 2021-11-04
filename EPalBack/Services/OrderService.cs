@@ -20,7 +20,7 @@ namespace EPalBack.Services
             _member = member;
             //_orderstatus = orderstaus;
         }
-
+      
         public IEnumerable<OrderViewModel>GetAllOrder()
         {
             

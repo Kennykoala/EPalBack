@@ -15,14 +15,20 @@ namespace EPalBack.Services
         private readonly Repository<Style> _style;
         private readonly Repository<GameCategory> _game;
         private readonly Repository<Language> _language;
+        private readonly Repository<Member> _member;
+        private readonly Repository<ProductServer> _productserver;
+        private readonly Repository<ProductStyle> _productstyle;
 
-        public ProductService(Repository<Product> product,Repository<Server> server, Repository<Style> style, Repository<GameCategory> game, Repository<Language> language)
+        public ProductService(Repository<Product> product,Repository<Server> server, Repository<Style> style, Repository<GameCategory> game, Repository<Language> language,Repository<Member>member,Repository<ProductServer> productserver,Repository<ProductStyle>productstyle)
         {
             _product = product;
             _server = server;
             _style = style;
             _language = language;
             _game = game;
+            _member = member;
+            _productserver = productserver;
+            _productstyle = productstyle;
         }
 
         public IEnumerable<ProductViewModel>GetAllProduct()
@@ -101,7 +107,11 @@ namespace EPalBack.Services
                 CreatorImg = x.CreatorImg,
                 Language = x.Creator.Language.LanguageName,
                 Introduction = x.Introduction,
-                Style = x.ProductStyles.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null:x.ProductStyles.First(y => y.ProductId == x.ProductId).Style.StyleName
+                Style = x.ProductStyles.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null:x.ProductStyles.First(y => y.ProductId == x.ProductId).Style.StyleName,
+                StyleId = x.ProductStyles.FirstOrDefault(s => s.ProductId == x.ProductId).StyleId,
+                LanguageId = (int)x.Creator.LanguageId,
+                GameCategoryId = x.GameCategoryId,
+                ServerId = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId).ServerId
             }).ToList();
         }
 
@@ -117,14 +127,28 @@ namespace EPalBack.Services
         public void UpdateProduct(ProductDetailsViewModel request)
         {
             var product = _product.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
+            var member = _member.GetAll().FirstOrDefault(x => x.MemberId == request.CreatorId);
+            var game = _game.GetAll().FirstOrDefault(x => x.GameCategoryId == request.GameCategoryId);
+            var language = _language.GetAll().FirstOrDefault(x => x.LanguageId == request.LanguageId);
+            var productserver = _productserver.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
+            var prodcutstyle = _productstyle.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
 
+            prodcutstyle.StyleId = request.StyleId;
+            productserver.ServerId = request.ServerId;
+            member.LanguageId = request.LanguageId;
+            member.MemberName = request.CreatorName;
             product.Introduction = request.Introduction;
-            product.Creator.MemberName = request.CreatorName;
             product.UnitPrice = request.UnitPrice;
-            
+            product.GameCategoryId = request.GameCategoryId;
 
             _product.Update(product);
+            _member.Update(member);
+            _productserver.Update(productserver);
+            _productstyle.Update(prodcutstyle);
 
+            _member.SaveChanges();
+            _productserver.SaveChanges();
+            _productstyle.SaveChanges();
             _product.SaveChanges();
         }
 

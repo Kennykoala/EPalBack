@@ -62,6 +62,25 @@ namespace EPalBack.ViewModels
         /// </summary>
         public string Introduction { get; set; }
 
+        /// <summary>
+        /// 遊戲ID
+        /// </summary>
+        public int GameCategoryId { get; set; }
+
+        /// <summary>
+        /// 伺服器ID
+        /// </summary>
+        public int ServerId { get; set; }
+
+        /// <summary>
+        /// 風格ID
+        /// </summary>
+        public int StyleId { get; set; }
+
+        /// <summary>
+        /// 語言ID
+        /// </summary>
+        public int LanguageId { get; set; }
 
     }
 }
