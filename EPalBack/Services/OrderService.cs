@@ -23,7 +23,7 @@ namespace EPalBack.Services
 
         public IEnumerable<OrderViewModel>GetAllOrder()
         {
-            
+           
             return _repository.GetAll().Select(x => new OrderViewModel()
             {
                 OrderId = x.OrderId,
@@ -35,7 +35,6 @@ namespace EPalBack.Services
                 OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName =x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName
-
             }).ToList();
 
         }
