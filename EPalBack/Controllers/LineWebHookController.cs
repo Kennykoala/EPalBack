@@ -241,19 +241,38 @@ namespace isRock.Template
             //CarouselTemplate
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
 
-            int gendernum = keyword == "Male" ? 0 : 1;
+            //int gendernum = keyword == "Male" ? 0 : 1;
+            int genderenum=0;
             try
             {
                 var result = _lineproductService.GetAllProduct();
                 
                 //判斷遊戲種類
                 bool gamename = result.Any(x => x.GameName == keyword);
-                //判斷性別
-                bool gender = result.Any(x => x.gender == gendernum);
+                ////判斷性別
+                //bool gender = result.Any(x => x.gender == gendernum);
                 //判斷陪玩師等級
                 bool level = result.Any(x => x.Level == keyword);
                 //判斷遊戲伺服器
                 bool server = result.Any(x => x.Server == keyword);
+
+                //判斷性別
+                bool gender;                
+                switch (keyword)
+                {
+                    case "Male":
+                        gender = result.Any(x => x.gender == 0);
+                        genderenum = 0;
+                        break;
+                    case "Female":
+                        gender = result.Any(x => x.gender == 1);
+                        genderenum = 1;
+                        break;
+                    default:
+                        gender = false;
+                        break;
+                }
+
                 //判斷遊戲產品價格
                 bool productprice;
                 switch (keyword)
@@ -327,7 +346,7 @@ namespace isRock.Template
                 }
                 else if (gender)
                 {
-                    var bycat = result.Where(x => x.gender == gendernum).Select(x => new LineProductViewModel()
+                    var bycat = result.Where(x => x.gender == genderenum).Select(x => new LineProductViewModel()
                                         {
                                             ProductId = x.ProductId,
                                             UnitPrice = x.UnitPrice,
@@ -526,6 +545,11 @@ namespace isRock.Template
 
                     }
                 }
+                else
+                {
+                    ReplyMessage(token, "Please see about us!");
+                    return false;
+                }
                 //Default = "找不到相關商品";
                 //return Default;
 
@@ -533,6 +557,7 @@ namespace isRock.Template
             }
             catch (Exception ex)
             {
+                ReplyMessage(token, "Error!");
                 return false;
                 //return Default;
             }
