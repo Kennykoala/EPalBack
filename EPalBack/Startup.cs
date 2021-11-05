@@ -95,6 +95,7 @@ namespace EPalBack
             services.AddScoped<MemberService>();
             services.AddScoped<DashBoardService>();
             services.AddScoped<OrderService>();
+            services.AddScoped<LineProductService>();
 
         }
 
