@@ -195,15 +195,8 @@ namespace isRock.Template
                 }
                 else if (LineEvent.message.text == "關於EPal")
                 {
-                    string responseMsg1 = null;
-                    string responseMsg2 = null;
-                    responseMsg1 = "EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。";
-                    responseMsg2 = "於訊息視窗輸入關鍵字可能無法正確找到相關商品，請務必優先透過選單進行篩選。";
-                    this.ReplyMessage(LineEvent.replyToken, responseMsg1 + responseMsg2);
-                    //response OK
-                    return Ok();
-
-
+                    responseMsg = "EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。\n" +
+                                  "於訊息視窗輸入關鍵字可能無法正確找到相關商品，請務必優先透過選單進行篩選。";
                 }
                 else if(LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text")
                 {
@@ -230,8 +223,6 @@ namespace isRock.Template
                 this.ReplyMessage(LineEvent.replyToken, responseMsg);
                 //response OK
                 return Ok();
-
-
 
             }
             catch (Exception ex)
