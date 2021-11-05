@@ -7,5 +7,10 @@ namespace EPalBack.ViewModels
 {
     public class ProductStatusViewModel
     {
+        public int ProductId { get; set; }
+        /// <summary>
+        /// 商品上下架狀態
+        /// </summary>
+        public bool ProductStatus { get; set; }
     }
 }
