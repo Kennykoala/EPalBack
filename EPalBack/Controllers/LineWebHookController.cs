@@ -49,7 +49,7 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "League of Legends", "League of Legends", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_resolutions-25_897228.png")));
+                            "League of Legends", "League of Legends", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
                             "E-Chat", "E-Chat", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
