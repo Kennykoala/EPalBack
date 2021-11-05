@@ -124,7 +124,7 @@ namespace isRock.Template
                             "Gold", "Gold", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/gold-medal_zdhiri.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Platinum", "Platinum", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/platinum_i7wweb.png")));
+                            "Platnum", "Platnum", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/platinum_i7wweb.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
                             "Diamond", "Diamond", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/diamond_wpbsda.png")));
