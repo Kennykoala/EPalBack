@@ -52,34 +52,34 @@ namespace isRock.Template
                             "League of Legends", "League of Legends", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "E-Chat", "E-Chat", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "E-Chat", "E-Chat", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636109371/echat_gilliu.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Movie", "Movie", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Movie", "Movie", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/123_gbwopz.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Valorant", "Valorant", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Valorant", "Valorant", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/valorant_fgkohz.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Custom Game", "Custom Game", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Custom Game", "Custom Game", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/customgame_ed6fk6.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Minecraft", "Minecraft", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Minecraft", "Minecraft", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/Minecraft_pehjd8.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Among Us", "Among Us", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Among Us", "Among Us", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/Among_Us_Promo_2018_zahymb.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Apex Legends", "Apex Legends", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Apex Legends", "Apex Legends", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Teamfight Tactics", "Teamfight Tactics", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Teamfight Tactics", "Teamfight Tactics", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Overwatch", "Overwatch", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Overwatch", "Overwatch", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Sleep Call", "Sleep Call", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
+                            "Sleep Call", "Sleep Call", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png")));
                     //msg.quickReply.items.Add(
                     //    new isRock.LineBot.QuickReplyMessageAction(
                     //        "Animal Crossing: New Horizons", "Animal Crossing: New Horizons", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
@@ -99,10 +99,10 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Male", "Male", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_resolutions-25_897228.png")));
+                            "Male", "Male", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/male_tlilkj.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Female", "Female", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Female", "Female", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/female_r2c3ax.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
@@ -115,22 +115,22 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Iron", "Iron", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_resolutions-25_897228.png")));
+                            "Iron", "Iron", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/iron-bar_m7djvl.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Bronze", "Bronze", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Bronze", "Bronze", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/bronze-medal_ctlq2m.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Silver", "Silver", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Silver", "Silver", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/silver-medal_xjpyav.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Gold", "Gold", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Gold", "Gold", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/gold-medal_zdhiri.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Platinum", "Platinum", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Platinum", "Platinum", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/platinum_i7wweb.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Diamond", "Diamond", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "Diamond", "Diamond", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/diamond_wpbsda.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
@@ -143,16 +143,16 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "$1~$5", "$1~$5", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_resolutions-25_897228.png")));
+                            "$1~$5", "$1~$5", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "$5~$10", "$5~$10", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "$5~$10", "$5~$10", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "$10~$20", "$10~$20", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "$10~$20", "$10~$20", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "$20 up", "$20 up", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "$20 up", "$20 up", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
@@ -165,22 +165,22 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "OCE", "OCE", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_resolutions-25_897228.png")));
+                            "OCE", "OCE", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "NA", "NA", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "NA", "NA", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "LAN", "LAN", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "LAN", "LAN", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "BR", "BR", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "BR", "BR", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "EU West", "EU West", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "EU West", "EU West", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "EU NorthEast", "EU NorthEast", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_busy_83242.png")));
+                            "EU NorthEast", "EU NorthEast", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
