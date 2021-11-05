@@ -115,9 +115,6 @@ namespace isRock.Template
 
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
-                            "Iron", "Iron", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/iron-bar_m7djvl.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
                             "Bronze", "Bronze", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/bronze-medal_ctlq2m.png")));
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
@@ -131,6 +128,15 @@ namespace isRock.Template
                     msg.quickReply.items.Add(
                         new isRock.LineBot.QuickReplyMessageAction(
                             "Diamond", "Diamond", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/diamond_wpbsda.png")));
+                    msg.quickReply.items.Add(
+                        new isRock.LineBot.QuickReplyMessageAction(
+                            "Master", "Master", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-master-48_swujzl.png")));
+                    msg.quickReply.items.Add(
+                        new isRock.LineBot.QuickReplyMessageAction(
+                            "Challenger", "Challenger", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-climbing-16_fchyqb.png")));
+                    msg.quickReply.items.Add(
+                        new isRock.LineBot.QuickReplyMessageAction(
+                            "Unranked", "Unranked", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-bookmark_kvs8zr.gif")));
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
