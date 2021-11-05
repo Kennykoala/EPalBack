@@ -547,7 +547,7 @@ namespace isRock.Template
                 }
                 else
                 {
-                    ReplyMessage(token, "Please see about us!");
+                    ReplyMessage(token, "Don't enter text directly. Please see about us!");
                     return false;
                 }
                 //Default = "找不到相關商品";
