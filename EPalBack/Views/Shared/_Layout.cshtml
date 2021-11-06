@@ -1,14 +1,41 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ePal Product</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="~/Assets/css/dashboard.css" rel="stylesheet" />
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+
+    @await RenderSectionAsync("topCSS", required: false)
+    @await RenderSectionAsync("topJS", required: false)
 </head>
 <body>
+    <header>
+        <partial name="_NavbarHeaderPartial" view-data="ViewData" />
+    </header>
+    <div class="container">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
 
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - ShoppingDB_CoreMvc5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
-
-
-
+    @await RenderSectionAsync("endCSS", required: false)
+    @await RenderSectionAsync("endJS", required: false)
 </body>
 </html>
