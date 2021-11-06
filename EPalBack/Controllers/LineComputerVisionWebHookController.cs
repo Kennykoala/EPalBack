@@ -11,19 +11,19 @@ namespace isRock.Template
 {
     public class LineComputerVisionWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
-        const string key = "f330xxxxd49341xxxxdc7e7396xxxx7a";
-        const string endpoint = "https://southeastasia.api.cognitive.microsoft.com/";
+        const string key = "";
+        const string endpoint = "";
 
         [Route("api/ComputerVision")]
         [HttpPost]
         public IActionResult POST()
         {
-            var AdminUserId = "_______U5e60294b8c__AdminUserId__02d6295b621a_____";
+            var AdminUserId = "";
 
             try
             {
                 //設定ChannelAccessToken
-                this.ChannelAccessToken = "_____________ChannelAccessToken___________________";
+                this.ChannelAccessToken = "";
                 //配合Line Verify
                 if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                     ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();

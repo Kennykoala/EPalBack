@@ -88,6 +88,8 @@ namespace EPalBack
             services.AddScoped<Repository<Style>>();
             services.AddScoped<Repository<Language>>();
             services.AddScoped<Repository<GameCategory>>();
+            services.AddScoped<Repository<ProductServer>>();
+            services.AddScoped<Repository<ProductStyle>>();
 
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();
@@ -107,7 +109,7 @@ namespace EPalBack
             }
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             //¦w¸Ënswagger
             app.UseOpenApi();

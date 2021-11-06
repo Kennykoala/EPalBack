@@ -20,7 +20,7 @@ namespace EPalBack.Services
             _member = member;
             //_orderstatus = orderstaus;
         }
-        //編輯時間.數量
+      
         public IEnumerable<OrderViewModel>GetAllOrder()
         {
            

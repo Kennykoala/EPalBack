@@ -28,40 +28,34 @@ namespace EPalBack.ViewModels
         public string CreatorImg { get; set; }
 
         /// <summary>
-        /// 遊戲名稱
-        /// </summary>
-        public string GameCategory { get; set; }
-
-        /// <summary>
-        /// 商品伺服器
-        /// </summary>
-        public string Server { get; set; }
-
-        /// <summary>
         /// 單價
         /// </summary>
         public decimal UnitPrice { get; set; }
-
-        /// <summary>
-        /// 商品遊戲語言
-        /// </summary>
-        public string Language { get; set; }
-
-        /// <summary>
-        /// 商品遊戲牌位
-        /// </summary>
-        public string Level { get; set; }
-
-        /// <summary>
-        /// 商品遊戲風格
-        /// </summary>
-        public string Style { get; set; }
 
         /// <summary>
         /// 商品自介
         /// </summary>
         public string Introduction { get; set; }
 
+        /// <summary>
+        /// 遊戲ID
+        /// </summary>
+        public int GameCategoryId { get; set; }
+
+        /// <summary>
+        /// 伺服器ID
+        /// </summary>
+        public int ServerId { get; set; }
+
+        /// <summary>
+        /// 風格ID
+        /// </summary>
+        public int StyleId { get; set; }
+
+        /// <summary>
+        /// 語言ID
+        /// </summary>
+        public int LanguageId { get; set; }
 
     }
 }

@@ -23,6 +23,30 @@ namespace EPalBack.Services
             {
                 MemberId = x.MemberId,
                 MemberName = x.MemberName,
+                //RegistrationDate = x.RegistrationDate,
+                BackRegistDate = Convert.ToDateTime(x.RegistrationDate).Date.ToString("D"),
+                Email = x.Email,
+                Password = x.Password,
+                Phone = x.Phone,
+                Country = x.Country,
+                CityId = x.CityId,
+                Gender = x.Gender,
+                BirthDay = x.BirthDay,
+                TimeZone = x.TimeZone,
+                LanguageId = x.LanguageId,
+                Bio = x.Bio,
+                ProfilePicture = x.ProfilePicture
+            }).ToList();
+        }
+
+        public IEnumerable<MembrViewModel> GetMemberManage(int id)
+        {
+            var member = _repository.GetAll().Where(x => x.MemberId == id);
+
+            return member.Select(x => new MembrViewModel()
+            {
+                MemberId = x.MemberId,
+                MemberName = x.MemberName,
                 RegistrationDate = x.RegistrationDate,
                 Email = x.Email,
                 Password = x.Password,
@@ -36,6 +60,8 @@ namespace EPalBack.Services
                 Bio = x.Bio,
                 ProfilePicture = x.ProfilePicture
             }).ToList();
+
+
         }
     }
 }
