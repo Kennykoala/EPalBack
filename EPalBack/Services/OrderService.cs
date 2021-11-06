@@ -34,7 +34,8 @@ namespace EPalBack.Services
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName =x.Customer.MemberName,
-                OrderStatusName = x.OrderStatus.OrderStatusName
+                OrderStatusName = x.OrderStatus.OrderStatusName,
+                OrderConfirmation =x.OrderConfirmation
             }).ToList();
 
         }
@@ -53,7 +54,8 @@ namespace EPalBack.Services
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName = x.Customer.MemberName,
-                OrderStatusName = x.OrderStatus.OrderStatusName
+                OrderStatusName = x.OrderStatus.OrderStatusName,
+                OrderConfirmation = x.OrderConfirmation
             }).ToList();
             
         }
@@ -74,8 +76,45 @@ namespace EPalBack.Services
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName = x.Customer.MemberName,
-                OrderStatusName = x.OrderStatus.OrderStatusName
+                OrderStatusName = x.OrderStatus.OrderStatusName,
+                OrderConfirmation = x.OrderConfirmation
             }).ToList();
+        }
+
+
+
+
+        public void UpdateOrder(OrderViewModel request)
+        {
+            var target = _order.GetAll().FirstOrDefault(x => x.CustomerId == request.CustomerId);
+            {
+                target.Quantity = request.Quantity;
+                target.DesiredStartTime = request.DesiredStartTime;
+
+                _order.Update(target);
+                _order.SaveChanges();
+
+            }
+        }
+
+        public IEnumerable<OrderViewModel>GetOrderDetails(int id)
+        {
+            var order = _order.GetAll().Where(o => o.OrderId == id);
+
+            return order.Select(x => new OrderViewModel()
+            {
+                ProductId =x.ProductId,
+                UnitPrice =x.UnitPrice,
+                DesiredStartTime =x.DesiredStartTime,
+                OrderDate = Convert.ToDateTime(x.OrderDate).Date.ToString("D"),
+                OrderStatusId = x.OrderStatusId,
+                OrderConfirmation = x.OrderConfirmation
+
+
+            }).ToList();
+
+
+
 
         }
 

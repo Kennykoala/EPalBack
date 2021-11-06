@@ -27,5 +27,11 @@ namespace EPalBack.ViewModels
         public int? OrderStatusId { get; set; }
 
         public int? OrderStatusIdCreator { get; set; }
+
+        public DateTime DesiredStartTime  {get; set; }
+
+
+        public string OrderConfirmation { get; set; }
+
     }
 }
