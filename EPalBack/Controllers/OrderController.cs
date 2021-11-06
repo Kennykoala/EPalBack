@@ -1,4 +1,5 @@
 ﻿using EPalBack.Services;
+using EPalBack.ViewModels;
 using EPalBack.ViewModels.APIBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -64,9 +65,37 @@ namespace EPalBack.Controllers
             }
         }
 
-      
-   
+        [HttpGet("{id:int}")]
+        public ApiResponse GetOrderDetails(int id)
+        {
+            try
+            {
+                var result = _orderService.GetOrderDetails(id);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+
+
+        [HttpPost]
+        public ApiResponse UpdateOrder(OrderStatusViewModel request)
+        {
+            try
+            {
+                _orderService.UpdateOrder(request);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
+            }
+        }
 
 
     }
 }
+

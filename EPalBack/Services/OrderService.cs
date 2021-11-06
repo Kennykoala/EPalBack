@@ -30,12 +30,13 @@ namespace EPalBack.Services
                 CustomerId = x.CustomerId,
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
-                OrderDate = Convert.ToDateTime(x.OrderDate).Date.ToString("D"),
+                OrderDate = x.OrderDate,
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName =x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
-                OrderConfirmation =x.OrderConfirmation
+                OrderConfirmation =x.OrderConfirmation,
+                DesiredStartTime = x.DesiredStartTime,
             }).ToList();
 
         }
@@ -50,12 +51,13 @@ namespace EPalBack.Services
                 CustomerId = x.CustomerId,
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
-                OrderDate = Convert.ToDateTime(x.OrderDate).Date.ToString("D"),
+                OrderDate = x.OrderDate,
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName = x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
-                OrderConfirmation = x.OrderConfirmation
+                OrderConfirmation = x.OrderConfirmation,
+                DesiredStartTime = x.DesiredStartTime,
             }).ToList();
             
         }
@@ -72,21 +74,19 @@ namespace EPalBack.Services
                 CustomerId = x.CustomerId,
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
-                OrderDate = Convert.ToDateTime(x.OrderDate).Date.ToString("D"),
+                OrderDate = x.OrderDate,
                 OrderStatusId = x.OrderStatusId,
                 //OrderStatusIdCreator =x.OrderStatusIdCreator,
                 MemberName = x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
-                OrderConfirmation = x.OrderConfirmation
+                OrderConfirmation = x.OrderConfirmation,
+                DesiredStartTime = x.DesiredStartTime
             }).ToList();
         }
 
-
-
-
-        public void UpdateOrder(OrderViewModel request)
+        public void UpdateOrder(OrderStatusViewModel request)
         {
-            var target = _order.GetAll().FirstOrDefault(x => x.CustomerId == request.CustomerId);
+            var target = _order.GetAll().FirstOrDefault(x => x.OrderId == request.OrderId);
             {
                 target.Quantity = request.Quantity;
                 target.DesiredStartTime = request.DesiredStartTime;
@@ -103,13 +103,12 @@ namespace EPalBack.Services
 
             return order.Select(x => new OrderViewModel()
             {
-                ProductId =x.ProductId,
+                OrderId =x.OrderId,
                 UnitPrice =x.UnitPrice,
-                DesiredStartTime =x.DesiredStartTime,
-                OrderDate = Convert.ToDateTime(x.OrderDate).Date.ToString("D"),
+                DesiredStartTime = x.DesiredStartTime,
+                OrderDate = x.OrderDate,
                 OrderStatusId = x.OrderStatusId,
                 OrderConfirmation = x.OrderConfirmation
-
 
             }).ToList();
 

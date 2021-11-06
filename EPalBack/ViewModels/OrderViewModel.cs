@@ -22,7 +22,7 @@ namespace EPalBack.ViewModels
 
         public int Quantity { get; set; }
 
-        public string OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
         public int? OrderStatusId { get; set; }
 
@@ -34,4 +34,6 @@ namespace EPalBack.ViewModels
         public string OrderConfirmation { get; set; }
 
     }
+
+
 }
