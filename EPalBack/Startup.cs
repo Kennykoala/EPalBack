@@ -76,6 +76,7 @@ namespace EPalBack
                           builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                        });
             });
+            services.AddControllersWithViews();
             services.AddControllers();
 
             //dbcontext.repository.service DIµù¥U
@@ -129,6 +130,9 @@ namespace EPalBack
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
