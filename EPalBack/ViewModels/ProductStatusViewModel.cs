@@ -11,6 +11,6 @@ namespace EPalBack.ViewModels
         /// <summary>
         /// 商品上下架狀態
         /// </summary>
-        public bool ProductStatus { get; set; }
+        public bool SaleStatus { get; set; }
     }
 }
