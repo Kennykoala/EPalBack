@@ -37,6 +37,34 @@ namespace EPalBack.Controllers
             }
         }
 
+        [HttpGet]
+        public ApiResponse GetProductByOnSale()
+        {
+            try
+            {
+                var result = _productService.GetProductByOnSale();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetProductByNonSale()
+        {
+            try
+            {
+                var result = _productService.GetProductByNonSale();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
         [HttpGet("{id:int}")]
         public ApiResponse GetProductDetails(int id)
         {
@@ -141,6 +169,20 @@ namespace EPalBack.Controllers
             try
             {
                 _productService.UpdateProduct(request);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
+            }
+        }
+
+        [HttpPut]
+        public ApiResponse UpdateProductSalesStatus(ProductStatusViewModel request)
+        {
+            try
+            {
+                _productService.UpdateProductSalesStatus(request);
                 return new ApiResponse(APIStatus.Success, string.Empty, true);
             }
             catch (Exception ex)

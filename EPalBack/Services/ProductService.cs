@@ -101,13 +101,8 @@ namespace EPalBack.Services
                 UnitPrice = x.UnitPrice,
                 CreatorId = x.Creator.MemberId,
                 CreatorName = x.Creator.MemberName,
-                //GameCategory = x.GameCategory.GameName,
-                //Server = x.ProductServers.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null : x.ProductServers.First(y => y.ProductId == x.ProductId).Server.ServerName,
-                //Level = x.Rank.RankName,
                 CreatorImg = x.CreatorImg,
-                //Language = x.Creator.Language.LanguageName,
                 Introduction = x.Introduction,
-                //Style = x.ProductStyles.FirstOrDefault(y => y.ProductId == x.ProductId) == null ? null:x.ProductStyles.First(y => y.ProductId == x.ProductId).Style.StyleName,
                 StyleId = x.ProductStyles.FirstOrDefault(s => s.ProductId == x.ProductId).StyleId,
                 LanguageId = (int)x.Creator.LanguageId,
                 GameCategoryId = x.GameCategoryId,
@@ -152,6 +147,39 @@ namespace EPalBack.Services
             _product.SaveChanges();
         }
 
-        
+        public void UpdateProductSalesStatus(ProductStatusViewModel request)
+        {
+            var product = _product.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
+
+            product.ProductStatus = request.SaleStatus;
+
+            _product.Update(product);
+
+            _product.SaveChanges();
+        }
+
+        public IEnumerable<ProductViewModel> GetProductByOnSale()
+        {
+            return _product.GetAll().Where(x=>x.ProductStatus == true).Select(x => new ProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.Creator.MemberName,
+                GameName = x.GameCategory.GameName,
+                ProductImg = x.CreatorImg
+            }).ToList();
+        }
+
+        public IEnumerable<ProductViewModel> GetProductByNonSale()
+        {
+            return _product.GetAll().Where(x => x.ProductStatus == false).Select(x => new ProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.Creator.MemberName,
+                GameName = x.GameCategory.GameName,
+                ProductImg = x.CreatorImg
+            }).ToList();
+        }
     }
 }
