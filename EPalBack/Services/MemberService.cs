@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using EPalBack.ViewModels;
 using EPalBack.Repositories;
 using EPalBack.DataModels;
+using System.Net.Mail;
 
 namespace EPalBack.Services
 {
     public class MemberService
     {
         private readonly Repository<Member> _repository;
+
 
         public MemberService(Repository<Member> repository)
         {
@@ -61,7 +63,24 @@ namespace EPalBack.Services
                 ProfilePicture = x.ProfilePicture
             }).ToList();
 
-
         }
+
+
+        //寄送會員信
+        //public void SendFeedbackMail(string MailBody, string ToEmail, string Subject)
+        //{
+        //    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+        //    SmtpServer.Port = 587;
+        //    SmtpServer.Credentials = new System.Net.NetworkCredential(gmail_account, gmail_password);
+        //    SmtpServer.EnableSsl = true;
+        //    MailMessage mail = new MailMessage();
+        //    mail.From = new MailAddress(gmail_account);
+        //    mail.To.Add(ToEmail);
+        //    mail.Subject = Subject;
+        //    mail.Body = MailBody;
+        //    mail.IsBodyHtml = true;
+        //    SmtpServer.Send(mail);
+
+        //}
     }
 }

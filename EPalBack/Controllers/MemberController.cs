@@ -10,7 +10,7 @@ using EPalBack.ViewModels;
 
 namespace EPalBack.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MemberController : ControllerBase
     {
