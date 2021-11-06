@@ -147,6 +147,39 @@ namespace EPalBack.Services
             _product.SaveChanges();
         }
 
-        
+        public void UpdateProductSalesStatus(ProductStatusViewModel request)
+        {
+            var product = _product.GetAll().FirstOrDefault(x => x.ProductId == request.ProductId);
+
+            product.ProductStatus = request.SaleStatus;
+
+            _product.Update(product);
+
+            _product.SaveChanges();
+        }
+
+        public IEnumerable<ProductViewModel> GetProductByOnSale()
+        {
+            return _product.GetAll().Where(x=>x.ProductStatus == true).Select(x => new ProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.Creator.MemberName,
+                GameName = x.GameCategory.GameName,
+                ProductImg = x.CreatorImg
+            }).ToList();
+        }
+
+        public IEnumerable<ProductViewModel> GetProductByNonSale()
+        {
+            return _product.GetAll().Where(x => x.ProductStatus == false).Select(x => new ProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.Creator.MemberName,
+                GameName = x.GameCategory.GameName,
+                ProductImg = x.CreatorImg
+            }).ToList();
+        }
     }
 }
