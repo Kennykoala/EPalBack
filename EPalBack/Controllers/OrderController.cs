@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EPalBack.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -28,6 +28,34 @@ namespace EPalBack.Controllers
             try
             {
                 var result = _orderService.GetAllOrder();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+
+        [HttpGet]
+        public ApiResponse GetUpaidOrder()
+        {
+            try
+            {
+                var result = _orderService.GetUpaidOrder();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+        [HttpGet]
+        public ApiResponse GetalreadyOrder()
+        {
+            try
+            {
+                var result = _orderService.GetalreadyOrder();
                 return new ApiResponse(APIStatus.Success, string.Empty, result);
             }
             catch (Exception ex)
