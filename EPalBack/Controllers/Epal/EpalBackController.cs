@@ -12,5 +12,10 @@ namespace EPalBack.Controllers.Epal
         {
             return View();
         }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }
