@@ -144,18 +144,17 @@
                                                 </b-form-group>
                                             </b-col>
                                             <b-col lg="6" class="my-1">
-                                                <b-form-group v-model="sortDirection" label="過濾條件" label-cols-sm="3"
-                                                              label-align-sm="right" label-size="sm" class="mb-0"
-                                                              v-slot="{ ariaDescribedby }">
+                                                <!-- <b-form-group v-model="sortDirection" label="過濾條件" label-cols-sm="3"
+                                                    label-align-sm="right" label-size="sm" class="mb-0"
+                                                    v-slot="{ ariaDescribedby }">
                                                     <b-form-checkbox-group v-model="filterOn"
-                                                                           :aria-describedby="ariaDescribedby" class="mt-1">
+                                                        :aria-describedby="ariaDescribedby" class="mt-1">
                                                         <b-form-checkbox value="memberName">會員名稱</b-form-checkbox>
                                                         <b-form-checkbox value="memberPhone">會員電話</b-form-checkbox>
-                                                        <b-form-checkbox value="memberRegEmail">
-                                                            會員註冊信箱
+                                                        <b-form-checkbox value="memberRegEmail">會員註冊信箱
                                                         </b-form-checkbox>
                                                     </b-form-checkbox-group>
-                                                </b-form-group>
+                                                </b-form-group> -->
                                             </b-col>
 
                                         </b-row>
@@ -228,26 +227,71 @@
                                             <!-- 商品明細卡片 -->
                                             <div class="details-body" v-if="!isOnSaleBusy.DetailsBusy">
                                                 <div class="row" v-model="memberManageModel.fields">
-
                                                 </div>
 
                                                 <div class="row">
-                                                    <div v-for="item in memberManageModel.fields"
-                                                         :class="['field','mb-3',((item.key==='creatorImg' || item.key==='introduction')?'col-12':'col-6')]">
-                                                        <h2 class="title">{{item.title}}</h2>
-                                                        <!-- <div v-if="item.key==='creatorImg'">
-                                                                <b-img-lazy v-bind="productDetailsimgProps"
-                                                                    :src="item.value" class="pddetailsimg" thumbnail
-                                                                    center>
-                                                                </b-img-lazy>
-                                                            </div> -->
-                                                        <!-- <div class="content"
-                                                                v-else-if="item.key==='introduction'"
-                                                                v-html="item.value"></div> -->
-                                                        <!-- <p v-else class="content">{{item.value}}</p> -->
-                                                        <input :readonly="item.readonlys" v-model="item.value"
-                                                               class="form-control" type="text">
+                                                    <!-- <div v-for="item in memberManageModel.fields"
+                                                        :class="['field','mb-3',((item.key==='creatorImg' || item.key==='introduction')?'col-12':'col-6')]"> -->
+                                                    <!-- <h2 class="title">{{item.title}}</h2> -->
+                                                    <!-- <div v-if="item.key==='creatorImg'">
+                                                            <b-img-lazy v-bind="productDetailsimgProps"
+                                                                :src="item.value" class="pddetailsimg" thumbnail
+                                                                center>
+                                                            </b-img-lazy>
+                                                        </div> -->
+                                                    <!-- <div class="content"
+                                                            v-else-if="item.key==='introduction'"
+                                                            v-html="item.value"></div> -->
+                                                    <!-- <p v-else class="content">{{item.value}}</p> -->
+                                                    <!-- <input :readonly="item.readonlys"        v-model="item.value"
+                                                    class="form-control" type="text"> -->
+                                                    <!-- <div class="col-12 col-md-6 my-3">
+                                                        <label for="">圖片</label>
+
+                                                    </div> -->
+                                                    <div class="col-12 col-md-12 mb-3">
+                                                        <b-img-lazy thumbnail center :src="MemberUpdate.profilePicture"
+                                                                    v-bind="productDetailsimgProps"
+                                                                    class="pddetailsimg">
+                                                        </b-img-lazy>
                                                     </div>
+
+
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">姓名</label>
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               v-model="MemberUpdate.memberName">
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">手機</label>
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               v-model="MemberUpdate.phone">
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">註冊信箱</label>
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               v-model="MemberUpdate.email">
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">國家</label>
+                                                        <input class="form-control"
+                                                               type="text"
+                                                               v-model="MemberUpdate.country">
+                                                    </div>
+
+
+                                                    <!-- <div class="col-12 col-md-6 my-3">
+                                                        <label for="">商品姓名</label>
+                                                        <input class="form-control"
+                                                        type="text"
+                                                            v-model=""
+                                                            :readonly="!enableEdit"
+                                                        >
+                                                    </div> -->
+                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                             <!-- </template> -->
@@ -502,27 +546,33 @@
                     fields: [
                         { key: 'memberName', title: '商品姓名', value: '', },
                         { key: 'memberId', title: '會員編號', value: '', readonlys: 'false' },
-                        // { key: 'profilePicture', title: '玩家圖片', value: '' },
+                        { key: 'profilePicture', title: '玩家圖片', value: '' },
                         { key: 'phone', title: '手機', value: '' },
                         { key: 'email', title: '註冊信箱', value: '' },
                         { key: 'country', title: '國家', value: '' },
 
                     ]
                 },
-                /*儲存寄件資料的變數*/
+                // 儲存編輯會員資料的變數
+                MemberUpdate: { memberName: "", phone: "", country: "", memberId: "", profilePicture: "" },
+                // 修改編輯會員資料的變數
+                ChangeMember: { memberName: "", phone: "", country: "", memberId: "", password: "123456", email: "" },
+
+
                 emailInfoModal: {
                     id: 'emailInfo-modal',
                     title: '寄信給會員編號XX',
                     memberId: '6666',
                     emailReceiver: '1234@gmail.com',
-                    emailTitle: '信件標題內容12345',
-                    emailBody: '信件內容54321',
+                    emailTitle: '信件標題內容',
+                    emailBody: '信件內容',
                 },
                 /*寄件輸入欄位的基本判斷*/
                 emailInfoModalemailTitleState: null,
                 emailInfoModalemailBodyState: null,
                 /*寄件資料AJAX發送的儲存物件*/
                 sendEmail: { MailBody: "", ToEmail: "", Subject: "" },
+
 
                 //描述頁面是否忙碌中，EX:進行非同步作業
                 isOnSaleBusy: { PageBusy: false, DetailsBusy: false },
@@ -604,11 +654,69 @@
                         console.log(item.memberId);
                     this.$root.$emit('bv::show::modal', this.emailInfoModal.id, button)
                 },
+
+                // UpdateMember() {
+                //     axios.post('http://localhost:34800/api/Member/UpdateMember', this.MemberUpdate)
+                //     .then(res => {
+                //             console.log(res)
+
+                //             if (res.data.status == 0 && res.data.result == true && this.tabIndex == 0) {
+                //                 toastr.success('更新成功');
+                //                 // this.OnSalePage();
+                //                 this.$refs['my-modal'].hide()
+
+
+                //             }
+                //             // else if (res.data.status == 0 && res.data.result == true && this.tabIndex == 1) {
+                //             //     toastr.success('更新成功');
+                //             //     // this.NonSalePage();
+                //             //     this.$refs['my-modal'].hide()
+                //             // }
+                //             // else {
+                //             //     toastr.error('更新失敗')
+                //             //     this.$refs['my-modal'].hide()
+
+                //             // }
+                //         })
+
+                // },
+
                 UpdateMember() {
-                    axios.post('')
+
+                    this.ChangeMember.memberName = this.MemberUpdate.memberName;
+                    this.ChangeMember.phone = this.MemberUpdate.phone;
+                    this.ChangeMember.country = this.MemberUpdate.country;
+                    this.ChangeMember.email = this.MemberUpdate.email;
+                    this.ChangeMember.memberId = 74;
+
+                    let Data = JSON.stringify(this.ChangeMember)
+
+                    console.log(Data);
+
+
+                    $.ajax({
+                        url: "http://localhost:34800/api/Member/UpdateMember",
+                        type: "POST",
+                        data: Data,
+                        async: true,
+                        contentType: 'application/json; charset=utf-8',
+                        processData: false,
+                        //dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+                            console.log('修改成功');
+                            toastr.success('修改成功');
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            console.log('修改失敗');
+                            toastr.error('修改失敗');
+                        }
+                    });
 
 
                 },
+
 
                 hideModal() {
                     this.$refs['my-modal'].hide()
@@ -725,13 +833,27 @@
 
                         if (response.status == 200) {
                             let data = response.data.result;
-                            let newdata = data[0]
-                            console.log(newdata)
+                            let newdata = data[0];
+                            this.MemberUpdate.memberName = newdata.memberName;
+                            this.MemberUpdate.phone = newdata.phone;
+                            this.MemberUpdate.email = newdata.email;
+                            this.MemberUpdate.country = newdata.country;
+                            this.MemberUpdate.profilePicture = newdata.profilePicture;
+
+                            // console.log(newdata)
+                            // console.log(newdata.memberName);
+                            // console.log(this.MemberUpdate.memberName);
+                            // console.log(this.MemberUpdate.phone);
+                            // console.log(this.MemberUpdate.email);
+                            // console.log(this.MemberUpdate.country);
+                            // console.log('123newData');
                             for (let item of this.memberManageModel.fields) {
 
                                 item.value = `$${(newdata[item.key])}.0`;
                                 let temp = newdata[`${item.key}`];
                                 item.value = (temp != '') ? temp : '無'
+
+
 
                             }
                         }
@@ -791,6 +913,7 @@
                         //dataType: "json",
                         success: function (res) {
                             console.log(res);
+
                             console.log('寄信成功');
                             //$("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
                         },
