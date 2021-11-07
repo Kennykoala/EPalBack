@@ -11,17 +11,17 @@ namespace EPalBack.Services
 {
     public class MemberService
     {
-        private readonly Repository<Member> _repository;
+        private readonly Repository<Member> _member;
 
 
         public MemberService(Repository<Member> repository)
         {
-            _repository = repository;
+            _member = repository;
         }
 
         public IEnumerable<MembrViewModel> GetMembers()
         {
-            return _repository.GetAll().Select(x => new MembrViewModel()
+            return _member.GetAll().Select(x => new MembrViewModel()
             {
                 MemberId = x.MemberId,
                 MemberName = x.MemberName,
@@ -43,7 +43,7 @@ namespace EPalBack.Services
 
         public IEnumerable<MembrViewModel> GetMemberManage(int id)
         {
-            var member = _repository.GetAll().Where(x => x.MemberId == id);
+            var member = _member.GetAll().Where(x => x.MemberId == id);
 
             return member.Select(x => new MembrViewModel()
             {
@@ -62,6 +62,20 @@ namespace EPalBack.Services
                 Bio = x.Bio,
                 ProfilePicture = x.ProfilePicture
             }).ToList();
+
+        }
+
+       public void UpdateMember(MembrViewModel request)
+        {
+            var member = _member.GetAll().FirstOrDefault(x => x.MemberId == request.MemberId);
+
+            member.MemberName = request.MemberName;
+            member.Phone = request.Phone;
+            member.Email = request.Email;
+            member.Country = request.Country;
+
+            _member.Update(member);
+            _member.SaveChanges();
 
         }
 

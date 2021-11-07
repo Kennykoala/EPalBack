@@ -50,6 +50,21 @@ namespace EPalBack.Controllers
             }
         }
 
+        [HttpPost]
+        public ApiResponse UpdateMember(MembrViewModel request)
+        {
+            try
+            {
+                _memberService.UpdateMember(request);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
+            }
+
+        }
+
 
     }
 }
