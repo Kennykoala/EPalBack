@@ -10,27 +10,27 @@ namespace EPalBack.Services
 {
     public class DashBoardService
     {
-        private readonly Repository<Product> _repository;
-        private readonly Repository<Member> _repository1;
-        private readonly Repository<Order> _repository2;
-        private readonly Repository<CommentDetail> _repository3;
+        private readonly Repository<Product> _product;
+        private readonly Repository<Member> _member;
+        private readonly Repository<Order> _order;
+        private readonly Repository<CommentDetail> _comment;
 
         public DashBoardService(Repository<Product> repository,Repository<Member> repository1,Repository<Order> repository2,Repository<CommentDetail> repository3)
         {
-            _repository = repository;
-            _repository1 = repository1;
-            _repository2 = repository2;
-            _repository3 = repository3;
+            _product = repository;
+            _member = repository1;
+            _order = repository2;
+            _comment = repository3;
         }
 
         public IEnumerable<DashBoardViewModel>GetAllCount()
         {
             var result = new DashBoardViewModel();
 
-            result.ProductTotal = _repository.GetAll().Count();
-            result.OrderTotal = _repository2.GetAll().Count();
-            result.MemberTotal = _repository1.GetAll().Count();
-            result.CommentTotal = _repository3.GetAll().Count();
+            result.ProductTotal = _product.GetAll().Count();
+            result.MemberTotal = _member.GetAll().Count();
+            result.OrderTotal = _order.GetAll().Count();
+            result.CommentTotal = _comment.GetAll().Count();
             yield return result;
         }
     }

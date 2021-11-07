@@ -76,6 +76,7 @@ namespace EPalBack
                           builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                        });
             });
+            services.AddControllersWithViews();
             services.AddControllers();
 
             //dbcontext.repository.service DIµù¥U
@@ -84,10 +85,18 @@ namespace EPalBack
             services.AddScoped<Repository<Member>>();
             services.AddScoped<Repository<CommentDetail>>();
             services.AddScoped<Repository<Order>>();
+            services.AddScoped<Repository<Server>>();
+            services.AddScoped<Repository<Style>>();
+            services.AddScoped<Repository<Language>>();
+            services.AddScoped<Repository<GameCategory>>();
+            services.AddScoped<Repository<ProductServer>>();
+            services.AddScoped<Repository<ProductStyle>>();
+
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();
             services.AddScoped<DashBoardService>();
-
+            services.AddScoped<OrderService>();
+            services.AddScoped<LineProductService>();
 
         }
 
@@ -102,7 +111,7 @@ namespace EPalBack
             }
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             //¦w¸Ënswagger
             app.UseOpenApi();
@@ -121,6 +130,9 @@ namespace EPalBack
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
