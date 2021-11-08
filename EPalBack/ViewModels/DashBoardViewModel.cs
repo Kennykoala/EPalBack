@@ -15,6 +15,12 @@ namespace EPalBack.ViewModels
 
         public int CommentTotal { get; set; }
 
+        public decimal EarningsMonthTotal { get; set; }
 
+        public decimal EarningsYearTotal { get; set; }
+
+        public int OrderMonthTotal { get; set; }
+
+        public int OrderYearTotal { get; set; }
     }
 }
