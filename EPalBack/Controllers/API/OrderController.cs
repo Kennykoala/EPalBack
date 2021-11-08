@@ -82,7 +82,7 @@ namespace EPalBack.Controllers
 
 
         [HttpPost]
-        public ApiResponse UpdateOrder(OrderStatusViewModel request)
+        public ApiResponse UpdateOrder(OrderViewModel request)
         {
             try
             {

@@ -30,6 +30,7 @@ namespace EPalBack.ViewModels
 
         public DateTime DesiredStartTime  {get; set; }
 
+        public string tempDesired { get; set; }
 
         public string OrderConfirmation { get; set; }
 

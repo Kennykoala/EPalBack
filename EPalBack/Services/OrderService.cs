@@ -36,7 +36,8 @@ namespace EPalBack.Services
                 MemberName =x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
                 OrderConfirmation =x.OrderConfirmation,
-                DesiredStartTime = x.DesiredStartTime,
+                tempDesired = x.DesiredStartTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                Quantity =x.Quantity
             }).ToList();
 
         }
@@ -57,7 +58,8 @@ namespace EPalBack.Services
                 MemberName = x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
                 OrderConfirmation = x.OrderConfirmation,
-                DesiredStartTime = x.DesiredStartTime,
+                tempDesired = x.DesiredStartTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                Quantity = x.Quantity
             }).ToList();
             
         }
@@ -80,16 +82,19 @@ namespace EPalBack.Services
                 MemberName = x.Customer.MemberName,
                 OrderStatusName = x.OrderStatus.OrderStatusName,
                 OrderConfirmation = x.OrderConfirmation,
-                DesiredStartTime = x.DesiredStartTime
+                tempDesired = x.DesiredStartTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                Quantity = x.Quantity
             }).ToList();
         }
 
-        public void UpdateOrder(OrderStatusViewModel request)
+        public void UpdateOrder(OrderViewModel request)
         {
             var target = _order.GetAll().FirstOrDefault(x => x.OrderId == request.OrderId);
             {
+               // int[] array = new int[5];
                 target.Quantity = request.Quantity;
-                target.DesiredStartTime = request.DesiredStartTime;
+                
+                target.DesiredStartTime = Convert.ToDateTime(request.tempDesired);
 
                 _order.Update(target);
                 _order.SaveChanges();
@@ -97,7 +102,8 @@ namespace EPalBack.Services
             }
         }
 
-        public IEnumerable<OrderViewModel>GetOrderDetails(int id)
+        //orderdetail只會顯示一筆所以沒用IEnumerable
+        public OrderViewModel GetOrderDetails(int id)
         {
             var order = _order.GetAll().Where(o => o.OrderId == id);
 
@@ -105,12 +111,14 @@ namespace EPalBack.Services
             {
                 OrderId =x.OrderId,
                 UnitPrice =x.UnitPrice,
-                DesiredStartTime = x.DesiredStartTime,
+                tempDesired = x.DesiredStartTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 OrderDate = x.OrderDate,
                 OrderStatusId = x.OrderStatusId,
-                OrderConfirmation = x.OrderConfirmation
+                OrderConfirmation = x.OrderConfirmation,
+                Quantity = x.Quantity
+                //member
 
-            }).ToList();
+            }).FirstOrDefault();
 
 
 
