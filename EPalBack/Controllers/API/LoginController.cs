@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EPalBack.Helpers;
+using EPalBack.ViewModels;
 
 namespace EPalBack.Controllers
 {
@@ -26,10 +27,17 @@ namespace EPalBack.Controllers
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Login(string username)
+        [HttpPost]
+        public IActionResult Login(LoginViewModel userdata)
         {
-            return Ok(_jwtHelper.GenerateToken(username));
+            if(userdata.Username == "admin" && userdata.Password == "ADMIN")
+            {
+            return Ok(_jwtHelper.GenerateToken(userdata.Username));
+            }
+            else
+            {
+                throw new Exception("登入失敗，帳號或密碼錯誤");
+            }
         }
 
 

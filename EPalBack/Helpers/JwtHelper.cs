@@ -19,24 +19,17 @@ namespace EPalBack.Helpers
         //自製jwt token
         public string GenerateToken(string username)
         {
-
-            //發行者
-            var issuer = "BuildSchool";
-            //匿名
-            var signKey = "njkmdmdkslfkdsfksmdkmfkdsmflmlfmomodmfomffs";
-
             var claims = new List<Claim>();
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
             var userClaimIdentity = new ClaimsIdentity(claims);
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey));
-            var signCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var signCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptior = new SecurityTokenDescriptor()
             {
                 //發行者
-                Issuer = issuer,
+                Issuer = Issuer,
                 //發行時間
                 IssuedAt = DateTime.UtcNow,
                 //訂閱者
