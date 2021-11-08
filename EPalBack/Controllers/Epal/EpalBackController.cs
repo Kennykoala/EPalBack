@@ -12,5 +12,9 @@ namespace EPalBack.Controllers.Epal
         {
             return View();
         }
+        public IActionResult Order()
+        {
+            return View();
+        }
     }
 }
