@@ -36,6 +36,7 @@ namespace EPalBack.Services
             var Today = DateTime.Now;
 
             result.OrderMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today).Count() ;
+
             result.OrderYearTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today).Count();
             result.EarningsMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today).Select(x => x.Quantity * x.UnitPrice).Sum();
             result.EarningsYearTotal= _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today).Select(x => x.Quantity * x.UnitPrice).Sum();
@@ -44,6 +45,15 @@ namespace EPalBack.Services
             result.OrderTotal = _order.GetAll().Count();
             result.CommentTotal = _comment.GetAll().Count();
             
+
+            yield return result;
+        }
+
+        public IEnumerable<MainCategoryPieViewModel> GetMainCategoryPie()
+        {
+            var result = new MainCategoryPieViewModel();
+
+
 
             yield return result;
         }
