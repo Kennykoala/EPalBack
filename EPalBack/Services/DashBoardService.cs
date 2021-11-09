@@ -37,12 +37,8 @@ namespace EPalBack.Services
 
             result.OrderMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today).Count() ;
             result.OrderYearTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today).Count();
-
             result.EarningsMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today).Select(x => x.Quantity * x.UnitPrice).Sum();
-
             result.EarningsYearTotal= _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today).Select(x => x.Quantity * x.UnitPrice).Sum();
-
-
             result.ProductTotal = _product.GetAll().Count();
             result.MemberTotal = _member.GetAll().Count();
             result.OrderTotal = _order.GetAll().Count();
