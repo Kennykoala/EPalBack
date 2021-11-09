@@ -1,17 +1,4 @@
 ﻿@{
         Layout = "_Layout";
     }
-@*@{
-    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
-    switch (ActionName) 
-    {
-        case "Order":
-        case "Member":
-        case "Product":
-            Layout = "~/Views/Shared/_Layout.cshtml";
-            break;
-        default:
-            Layout = "~/Views/Shared/_Layout_noSidebar.cshtml";
-            break;
-    }
-}*@
+@*
