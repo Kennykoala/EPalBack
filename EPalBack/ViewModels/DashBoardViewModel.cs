@@ -22,5 +22,6 @@ namespace EPalBack.ViewModels
         public int OrderMonthTotal { get; set; }
 
         public int OrderYearTotal { get; set; }
+
     }
 }

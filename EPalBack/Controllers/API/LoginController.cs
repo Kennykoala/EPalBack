@@ -36,7 +36,8 @@ namespace EPalBack.Controllers
             }
             else
             {
-                throw new Exception("登入失敗，帳號或密碼錯誤");
+                //throw new Exception("登入失敗，帳號或密碼錯誤");
+                return null;
             }
         }
 
