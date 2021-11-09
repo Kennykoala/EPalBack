@@ -62,6 +62,20 @@ namespace EPalBack.Controllers
             {
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllLanguage()
+        {
+            try
+            {
+                var result = _memberService.GetAllLanguage();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
 
         }
 

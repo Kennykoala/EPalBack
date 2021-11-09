@@ -12,11 +12,15 @@ namespace EPalBack.Services
     public class MemberService
     {
         private readonly Repository<Member> _member;
+        private readonly Repository<Language> _language;
 
 
-        public MemberService(Repository<Member> repository)
+
+
+        public MemberService(Repository<Member> member, Repository<Language> language)
         {
-            _member = repository;
+            _member = member;
+            _language = language;
         }
 
         public IEnumerable<MembrViewModel> GetMembers()
@@ -73,28 +77,37 @@ namespace EPalBack.Services
             member.Phone = request.Phone;
             member.Email = request.Email;
             member.Country = request.Country;
+            member.LanguageId = request.LanguageId;
+            member.Gender = request.Gender;
 
             _member.Update(member);
             _member.SaveChanges();
 
         }
 
+        public IEnumerable<LanguageViewModel> GetAllLanguage()
+        {
+            var result = new LanguageViewModel();
+            var LanguageAll = _language.GetAll().Select(L => new language
+            {
+                LanguageId = L.LanguageId,
+                LanguageName = L.LanguageName
+            }).ToList();
+            result.LanguageAll = LanguageAll;
+            yield return result;
+        }
 
-        //寄送會員信
-        //public void SendFeedbackMail(string MailBody, string ToEmail, string Subject)
+        //性別選單. (先測試,之後再確認能否濃縮成一份)
+        //public IEnumerable<LanguageViewModel> GetAllGender()
         //{
-        //    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-        //    SmtpServer.Port = 587;
-        //    SmtpServer.Credentials = new System.Net.NetworkCredential(gmail_account, gmail_password);
-        //    SmtpServer.EnableSsl = true;
-        //    MailMessage mail = new MailMessage();
-        //    mail.From = new MailAddress(gmail_account);
-        //    mail.To.Add(ToEmail);
-        //    mail.Subject = Subject;
-        //    mail.Body = MailBody;
-        //    mail.IsBodyHtml = true;
-        //    SmtpServer.Send(mail);
-
+        //    var result = new LanguageViewModel();
+        //    var a =
+        //    //var GenderAll = _member.GetAll().Select(G => gender)
         //}
+
+
     }
+
+
+    
 }
