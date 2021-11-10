@@ -12,6 +12,7 @@ function TokenSetter(value) {
 
 function TokenGetter() {
     return localStorage.getItem('accessToken');
+    console.log(localStorage.getItem('accessToken'))
 }
 
 //產生Authorize Bear 格式

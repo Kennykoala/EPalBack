@@ -399,7 +399,6 @@
 
                 // url列表
                 urlList: {
-                    // simplifyproductsOnSale: '/api/product/getallproduct',
                     productDetails: '/api/product/getproductDetails',
                     languageList: '/api/product/getalllanguage',
                     gameList: '/api/product/getallgame',
@@ -465,7 +464,6 @@
             created() {
                 //初始化頁面
                 this.tabIndex = 0;
-                // this.getAllProduct();
                 this.OnSalePage();
                 this.GetPageSelectors();
             },
@@ -490,17 +488,7 @@
                 }
             },
             methods: {
-                //取得所有商品
-                getAllProduct() {
-                    this.SetPageDefault();
-                    axios.get('/api/product/getallproduct')
-                        .then(res => {
-                            if (res.data.status == 0) {
-                                this.items = res.data.result;
-                                console.log(res.data.result)
-                            }
-                        })
-                },
+               
 
                 //設定頁面初始狀態
                 SetPageDefault() {
@@ -533,6 +521,7 @@
                         method: 'get',
                         headers: {
                             'Content-type': 'application/json',
+                            'Authorization': GenCurrentAuthBarerFormat(),
                         },
                         url: uri
                     };
@@ -585,7 +574,7 @@
                         method: 'get',
                         headers: {
                             'Content-type': 'application/json',
-
+                            'Authorization': GenCurrentAuthBarerFormat(),
                         },
                         url: `${uri}/${id}`
                     };
@@ -662,7 +651,8 @@
                     let cfg = {
                         method: 'get',
                         header: {
-                            'Content-type': 'application/json'
+                            'Content-type': 'application/json',
+                            'Authorization': GenCurrentAuthBarerFormat(),
                         },
                         url: url
                     };
@@ -671,7 +661,7 @@
 
                 //更新ProductDetail
                 UpdateProduct() {
-                    axios.post('http://localhost:34800/api/product/UpdateProduct', this.inputData)
+                    axios.post('/api/product/UpdateProduct', this.inputData)
                         .then(res => {
                             console.log(res)
 
@@ -734,6 +724,7 @@
                         method: 'put',
                         headers: {
                             'Content-type': 'application/json',
+                            'Authorization': GenCurrentAuthBarerFormat(),
                         },
                         data: {
                             ProductId: data.ProductId,
