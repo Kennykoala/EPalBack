@@ -8,6 +8,8 @@ namespace EPalBack.ViewModels
     public class LanguageViewModel
     {
         public List<language> LanguageAll { get; set; }
+
+        public int? Gender { get; set; }
     }
 
     public class language
@@ -16,4 +18,6 @@ namespace EPalBack.ViewModels
 
         public string LanguageName { get; set; }
     }
+
+    
 }

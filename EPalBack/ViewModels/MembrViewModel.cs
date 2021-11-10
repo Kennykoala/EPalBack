@@ -58,5 +58,18 @@ namespace EPalBack.ViewModels
         /// </summary>
         public string BackRegistDate { get; set; }
 
+        /// <summary>
+        /// 後台寄信mail內容
+        /// </summary>
+        public string MailBody { get; set; }
+        /// <summary>
+        /// 後台寄信mail對象
+        /// </summary>
+        public string ToEmail { get; set; }
+        /// <summary>
+        /// 後臺寄信mail標題
+        /// </summary>
+        public string Subject { get; set; }
+
     }
 }

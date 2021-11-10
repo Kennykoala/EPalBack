@@ -10,7 +10,7 @@ using EPalBack.ViewModels;
 
 namespace EPalBack.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MemberController : ControllerBase
     {
@@ -48,6 +48,35 @@ namespace EPalBack.Controllers
             {
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
+        }
+
+        [HttpPost]
+        public ApiResponse UpdateMember(MembrViewModel request)
+        {
+            try
+            {
+                _memberService.UpdateMember(request);
+                return new ApiResponse(APIStatus.Success, string.Empty, true);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, false);
+            }
+        }
+
+        [HttpGet]
+        public ApiResponse GetAllLanguage()
+        {
+            try
+            {
+                var result = _memberService.GetAllLanguage();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+
         }
 
 
