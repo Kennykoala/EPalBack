@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using EPalBack.Services;
 using EPalBack.ViewModels.APIBase;
 using EPalBack.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EPalBack.Controllers
 {
+
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductController : ControllerBase

@@ -6,31 +6,38 @@
     <title>ePal Product</title>
     <!-- Custom fonts for this template-->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="/lib/bootstrap/dist/css/googleapis.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/googleapis.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Add this to <head> -->
     <!-- Load required Bootstrap and BootstrapVue CSS -->
-    <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-vue.css" />
+    <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-vue.css" />
 
     <!-- Load polyfills to support older browsers -->
     <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"
             crossorigin="anonymous"></script>
 
     <!-- Load Vue followed by BootstrapVue -->
-    <script src="/lib/bootstrap/dist/js/vue.min.js"></script>
-    <script src="/lib/bootstrap/dist/js/bootstrap-vue.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/vue.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-vue.min.js"></script>
 
     <!-- Load the following for BootstrapVueIcons support -->
-    <script src="/lib/bootstrap/dist/js/bootstrap-vue-icons.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-vue-icons.min.js"></script>
 
     <!-- import CSS -->
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/elementui.css">
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/elementui.css">*@
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="~/lib/bootstrap/dist/js/Common.js"></script>
+
+   
+
+    <link href="~/lib/bootstrap/dist/css/elementui.css" rel="stylesheet" />
 
     <!-- toastr -->
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/toastr.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/toastr.min.css">
 
 
     @await RenderSectionAsync("topCSS", required: false)
@@ -88,14 +95,12 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         @RenderBody()
     </div>
 
 
 
-       
 
 
 
@@ -109,26 +114,30 @@
 
 
 
-        @await RenderSectionAsync("Scripts", required: false)
-        <!-- Bootstrap core JavaScript-->
-        <script src="~/vendor/jquery/jquery.min.js"></script>
-        <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="~/js/sb-admin-2.min.js"></script>
-        <!-- toastr -->
-        <script src="/lib/bootstrap/dist/js/toastr.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Axios -->
-        <script src="/lib/bootstrap/dist/js/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
-                crossorigin="anonymous"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+    <!-- toastr -->
+    <script src="~/lib/bootstrap/dist/js/toastr.min.js"></script>
 
-        <!-- import JavaScript -->
-        <script src="/lib/bootstrap/dist/js/elementui.js"></script>
-        @await RenderSectionAsync("endCSS", required: false)
-        @await RenderSectionAsync("endJS", required: false)
+    <!-- Axios -->
+    <script src="~/lib/bootstrap/dist/js/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous"></script>
+
+    @*<script src="~/lib/bootstrap/dist/js/statecheck.js"></script>*@
+
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/elementui.js"></script>*@
+    @await RenderSectionAsync("endCSS", required: false)
+    @await RenderSectionAsync("endJS", required: false)
 </body>
 </html>

@@ -1,7 +1,59 @@
-﻿@{ 
-    Layout = "_Layout_noSidebar";
-}
-<div class="bg-gradient-primary">
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ePal Product</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ePal Product</title>
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/lib/bootstrap/dist/css/googleapis.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Add this to <head> -->
+    <!-- Load required Bootstrap and BootstrapVue CSS -->
+    <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-vue.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"
+            crossorigin="anonymous"></script>
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="/lib/bootstrap/dist/js/vue.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap-vue.min.js"></script>
+
+    <!-- Load the following for BootstrapVueIcons support -->
+    <script src="/lib/bootstrap/dist/js/bootstrap-vue-icons.min.js"></script>
+
+    <!-- import CSS -->
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/elementui.css">
+
+    <!-- toastr -->
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/toastr.min.css">
+
+
+</head>
+
+<script>
+
+</script>
+
+
+<body class="bg-gradient-primary">
+
+
+
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -45,8 +97,27 @@
             </div>
         </div>
     </div>
-</div>
-@section endJS{
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+    <!-- toastr -->
+    <script src="/lib/bootstrap/dist/js/toastr.min.js"></script>
+
+    <!-- Axios -->
+    <script src="/lib/bootstrap/dist/js/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous"></script>
+
+    <!-- import JavaScript -->
+    <script src="/lib/bootstrap/dist/js/elementui.js"></script>
+
     <script>
         let login = new Vue({
             el: '#login',
@@ -79,7 +150,8 @@
                         console.log(res)
                         if (res.status === 200) {
                             TokenSetter(res.data);
-                            LoginValidRedirect();
+                            //LoginValidRedirect();
+                            window.location.href = '/htmlpages/product.html';
                         } else {
                             throw new UserException('Unknown Error');
                         }
@@ -117,11 +189,11 @@
 
     <script>
         function LoginInvalidRedirect() {
-            window.location.href = '/Epalback/Product';
+            window.location.href = '/htmlpages/product.html';
         }
 
         function LoginValidRedirect() {
-            window.location.href = '/Epalback/Product';
+            window.location.href = '/htmlpages/product.html';
         }
 
         function TokenSetter(value) {
@@ -137,11 +209,9 @@
             return `Bearer ${TokenGetter()}`;
         }
     </script>
-}
-@section topCSS{
-    <style>
-        .bg-gradient-primary{
-            height:100vh;
-        }
-    </style>
-}
+
+</body>
+
+
+
+</html>
