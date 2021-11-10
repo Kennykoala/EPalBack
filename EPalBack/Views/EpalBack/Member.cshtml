@@ -1,4 +1,4 @@
-﻿<!-- Page Wrapper -->
+﻿ <!-- Page Wrapper -->
 <div id="wrapper">
 
     <!-- Sidebar -->
@@ -77,48 +77,9 @@
                                     </template>
                                 </div>
                                 <div class="col-12">
-                                    <!-- <b-tabs content-class="pt-2 pb-2 px-2" fill v-model="tabIndex"> -->
                                     <b-tab active>
-                                        <!-- <template #title>
-                                                <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
-                                                <strong>上架中商品</strong>
-                                            </template>
-                                            <b-row>
-                                                <b-col lg="9" class="my-1"></b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="關鍵字搜尋" label-for="filter-input"
-                                                        label-cols-sm="4" label-align-sm="right" label-size="sm"
-                                                        class="mb-0">
-                                                        <b-input-group size="sm">
-                                                            <b-form-input id="filter-input" v-model="filter"
-                                                                type="search" placeholder="請輸入關鍵字">
-                                                            </b-form-input>
-                                                        </b-input-group>
-                                                    </b-form-group>
-
-                                                </b-col>
-                                            </b-row> -->
                                         <b-row>
-                                            <!-- <b-col lg="6" class="my-1">
-                                                    <b-form-group label="分類" label-for="sort-by-select" label-cols-sm="3"
-                                                        label-align-sm="right" label-size="sm" class="mb-0"
-                                                        v-slot="{ ariaDescribedby }">
-                                                        <b-input-group size="sm">
-                                                            <b-form-select id="sort-by-select" v-model="sortBy" :options="sortOptions"
-                                                                :aria-describedby="ariaDescribedby" class="w-75">
-                                                                <template #first>
-                                                                    <option value="">-- none --</option>
-                                                                </template>
-                                                            </b-form-select>
 
-                                                            <b-form-select v-model="sortDesc" :disabled="!sortBy"
-                                                                :aria-describedby="ariaDescribedby" size="sm" class="w-25">
-                                                                <option :value="false">升序</option>
-                                                                <option :value="true">降序</option>
-                                                            </b-form-select>
-                                                        </b-input-group>
-                                                    </b-form-group>
-                                                </b-col> -->
                                             <b-col lg="6" class="my-1">
                                                 <b-form-group label="初始分類" label-for="initial-sort-select"
                                                               label-cols-sm="3" label-align-sm="right" label-size="sm"
@@ -144,17 +105,6 @@
                                                 </b-form-group>
                                             </b-col>
                                             <b-col lg="6" class="my-1">
-                                                <!-- <b-form-group v-model="sortDirection" label="過濾條件" label-cols-sm="3"
-                                                    label-align-sm="right" label-size="sm" class="mb-0"
-                                                    v-slot="{ ariaDescribedby }">
-                                                    <b-form-checkbox-group v-model="filterOn"
-                                                        :aria-describedby="ariaDescribedby" class="mt-1">
-                                                        <b-form-checkbox value="memberName">會員名稱</b-form-checkbox>
-                                                        <b-form-checkbox value="memberPhone">會員電話</b-form-checkbox>
-                                                        <b-form-checkbox value="memberRegEmail">會員註冊信箱
-                                                        </b-form-checkbox>
-                                                    </b-form-checkbox-group>
-                                                </b-form-group> -->
                                             </b-col>
 
                                         </b-row>
@@ -171,6 +121,11 @@
                                                 </div>
                                             </template>
 
+
+
+
+
+
                                             <template #cell(profilePicture)="row">
                                                 <b-img-lazy class="pdlistimg" :src="row.item.profilePicture"
                                                             thumbnail>
@@ -178,11 +133,6 @@
                                             </template>
 
                                             <template #cell(actions)="row">
-                                                <!-- <b-button variant="Secondary" size="sm"
-                                                        v-on:click="info(row.item, row.index, $event.target)"
-                                                        class="mr-1 btn-secondary">
-                                                        關於
-                                                    </b-button> -->
                                                 <b-button variant="infoM" size="sm"
                                                           v-on:click="infoM(row.item, row.index, $event.target)"
                                                           class="mr-1 btn-primary">
@@ -211,9 +161,11 @@
                                             </b-col>
                                         </b-row>
 
+                                        <!-- memberManageModel.title -->
                                         <!-- Info 編輯modal -->
                                         <b-modal :id="memberManageModel.id" :title="memberManageModel.title"
-                                                 header-bg-variant="infoM" header-text-variant="light" hide-footer
+                                                 header-bg-variant="info"
+                                                 header-text-variant="black" hide-footer
                                                  size="lg" v-on:hidden="resetProductDetailsModel"
                                                  ref="my-modal"
                                                  scrollable>
@@ -230,25 +182,11 @@
                                                 </div>
 
                                                 <div class="row">
-                                                    <!-- <div v-for="item in memberManageModel.fields"
-                                                        :class="['field','mb-3',((item.key==='creatorImg' || item.key==='introduction')?'col-12':'col-6')]"> -->
-                                                    <!-- <h2 class="title">{{item.title}}</h2> -->
-                                                    <!-- <div v-if="item.key==='creatorImg'">
-                                                            <b-img-lazy v-bind="productDetailsimgProps"
-                                                                :src="item.value" class="pddetailsimg" thumbnail
-                                                                center>
-                                                            </b-img-lazy>
-                                                        </div> -->
-                                                    <!-- <div class="content"
-                                                            v-else-if="item.key==='introduction'"
-                                                            v-html="item.value"></div> -->
-                                                    <!-- <p v-else class="content">{{item.value}}</p> -->
-                                                    <!-- <input :readonly="item.readonlys"        v-model="item.value"
-                                                    class="form-control" type="text"> -->
-                                                    <!-- <div class="col-12 col-md-6 my-3">
-                                                        <label for="">圖片</label>
 
-                                                    </div> -->
+                                                    <!-- 使用Elelment組件 -->
+                                                    <el-switch v-model="enableEdit" active-text="啟用以編輯" class="mb-3">
+                                                    </el-switch>
+
                                                     <div class="col-12 col-md-12 mb-3">
                                                         <b-img-lazy thumbnail center :src="MemberUpdate.profilePicture"
                                                                     v-bind="productDetailsimgProps"
@@ -261,37 +199,51 @@
                                                         <label for="">姓名</label>
                                                         <input class="form-control"
                                                                type="text"
-                                                               v-model="MemberUpdate.memberName">
+                                                               v-model="MemberUpdate.memberName"
+                                                               :readonly="!enableEdit">
                                                     </div>
                                                     <div class="col-12 col-md-6 my-3">
                                                         <label for="">手機</label>
                                                         <input class="form-control"
                                                                type="text"
-                                                               v-model="MemberUpdate.phone">
+                                                               v-model="MemberUpdate.phone"
+                                                               :readonly="!enableEdit">
                                                     </div>
                                                     <div class="col-12 col-md-6 my-3">
                                                         <label for="">註冊信箱</label>
                                                         <input class="form-control"
                                                                type="text"
-                                                               v-model="MemberUpdate.email">
+                                                               v-model="MemberUpdate.email"
+                                                               :readonly="!enableEdit">
                                                     </div>
                                                     <div class="col-12 col-md-6 my-3">
                                                         <label for="">國家</label>
                                                         <input class="form-control"
                                                                type="text"
-                                                               v-model="MemberUpdate.country">
+                                                               v-model="MemberUpdate.country"
+                                                               :readonly="!enableEdit">
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">性別</label>
+                                                        <br>
+                                                        <el-select v-model="MemberUpdate.gender"
+                                                                   :disabled="!enableEdit">
+                                                            <el-option v-for="item in genderlist"
+                                                                       :key="item.gender" :value="item.id"
+                                                                       :label="item.gender">
+                                                            </el-option>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">語言</label>
+                                                        <br>
+                                                        <el-select v-model="MemberUpdate.languageId"
+                                                                   :disabled="!enableEdit">
+                                                            <el-option v-for="item in languagelist.options"
+                                                                       :key="item.value" :value="item.value"
+                                                                       :label="item.label">
+                                                            </el-option>
                                                     </div>
 
-
-                                                    <!-- <div class="col-12 col-md-6 my-3">
-                                                        <label for="">商品姓名</label>
-                                                        <input class="form-control"
-                                                        type="text"
-                                                            v-model=""
-                                                            :readonly="!enableEdit"
-                                                        >
-                                                    </div> -->
-                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                             <!-- </template> -->
@@ -354,13 +306,6 @@
                                                 </b-form-group>
                                             </b-col>
                                         </b-row>
-                                        <!-- Main table element -->
-                                        <!-- <b-table v-if="tabIndex==1" :items="items" :fields="fields"
-                                                :current-page="currentPage" :per-page="perPage" :filter="filter"
-                                                :filter-included-fields="filterOn" :sort-by.sync="sortBy"
-                                                :sort-desc.sync="sortDesc" responsive="sm"
-                                                :sort-direction="sortDirection" stacked="md" show-empty small
-                                                :busy="isNonSaleBusy.PageBusy" v-on:filtered=""> -->
                                         <b-table v-if="tabIndex==1" :items="items" :fields="fields">
                                             <template #table-busy>
                                                 <div class="text-center text-danger my-2">
@@ -457,6 +402,8 @@
     </div>
 </div>
 
+
+
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -473,6 +420,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
         integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
         crossorigin="anonymous"></script>
+
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
 
 @section topCSS
 {
@@ -503,6 +455,7 @@
 }
 
 @section endJS{
+
     <script>
         let app = new Vue({
             el: '#app',
@@ -550,13 +503,15 @@
                         { key: 'phone', title: '手機', value: '' },
                         { key: 'email', title: '註冊信箱', value: '' },
                         { key: 'country', title: '國家', value: '' },
+                        { key: 'title', title: '標題', value: '' },
 
                     ]
                 },
                 // 儲存編輯會員資料的變數
-                MemberUpdate: { memberName: "", phone: "", country: "", memberId: "", profilePicture: "" },
+                MemberUpdate: { memberName: "", phone: "", country: "", memberId: "", profilePicture: "", languageId: "", gender: "" },
                 // 修改編輯會員資料的變數
-                ChangeMember: { memberName: "", phone: "", country: "", memberId: "", password: "123456", email: "" },
+                ChangeMember: { memberName: "", phone: "", country: "", memberId: "", password: "123456", email: "", gender: "", languageId: "" },
+
 
 
                 emailInfoModal: {
@@ -581,12 +536,10 @@
                 // url列表
                 urlList: {
                     simplifyproductsOnSale: 'http://localhost:34800/api/product/getallproduct',
-                    // simplifyproductNonSale: 'http://localhost:34800/api/product/getallproduct',
                     productDetails: 'http://localhost:34800/api/product/getproductDetails',
                     memberManages: 'http://localhost:34800/api/Member/GetMemberManage',
-                    // memberManages: 'http://localhost:34800/api/Member/GetMemberManage',
-                    memberFeebackEmail: 'http://localhost:34800/api/Member/PostMemberEmail'
-
+                    memberFeebackEmail: 'http://localhost:34800/api/Member/PostMemberEmail',
+                    memberLanguageList: 'http://localhost:34800/api/Member/GetAllLanguage'
 
                 },
 
@@ -607,6 +560,16 @@
                     width: 240,
                     height: 340
                 },
+                languagelist: {
+                    busy: false,
+                    options: [],
+                },
+                genderlist: [
+                    { gender: "男", id: "0" },
+                    { gender: "女", id: "1" }
+                ],
+                //switch
+                enableEdit: false
             },
             //商品明細圖片延遲載入的參數
 
@@ -614,6 +577,7 @@
                 //初始化頁面
                 this.tabIndex = 0;
                 this.getAllMember();
+                this.GetPageSelectors();
             },
             watch: {
                 tabIndex: function () {
@@ -644,53 +608,26 @@
                 },
                 /*emailInfoModal寄信樣板的資料結構*/
                 sendEmailInfo(item, index, button) {
-                    // this.emailInfoModal.title =
-                    // this.emailInfoModal.emailReceiver = item.memberRegEmail;
                     this.emailInfoModal.title = `寄信給會員編號: ${JSON.stringify(item.memberId, null, 2)}`;
                     this.emailInfoModal.emailReceiver = item.email;
-                    // console.log(item.email);
                     console.log(this.emailInfoModal.emailReceiver);
                     this.emailInfoModal.memberId = item.memberId,
                         console.log(item.memberId);
                     this.$root.$emit('bv::show::modal', this.emailInfoModal.id, button)
                 },
 
-                // UpdateMember() {
-                //     axios.post('http://localhost:34800/api/Member/UpdateMember', this.MemberUpdate)
-                //     .then(res => {
-                //             console.log(res)
-
-                //             if (res.data.status == 0 && res.data.result == true && this.tabIndex == 0) {
-                //                 toastr.success('更新成功');
-                //                 // this.OnSalePage();
-                //                 this.$refs['my-modal'].hide()
-
-
-                //             }
-                //             // else if (res.data.status == 0 && res.data.result == true && this.tabIndex == 1) {
-                //             //     toastr.success('更新成功');
-                //             //     // this.NonSalePage();
-                //             //     this.$refs['my-modal'].hide()
-                //             // }
-                //             // else {
-                //             //     toastr.error('更新失敗')
-                //             //     this.$refs['my-modal'].hide()
-
-                //             // }
-                //         })
-
-                // },
-
+                //修改會員明細API
                 UpdateMember() {
 
+                    this.ChangeMember.memberId = this.MemberUpdate.memberId;
                     this.ChangeMember.memberName = this.MemberUpdate.memberName;
                     this.ChangeMember.phone = this.MemberUpdate.phone;
                     this.ChangeMember.country = this.MemberUpdate.country;
                     this.ChangeMember.email = this.MemberUpdate.email;
-                    this.ChangeMember.memberId = 74;
+                    this.ChangeMember.gender = this.MemberUpdate.gender;
+                    this.ChangeMember.languageId = this.MemberUpdate.languageId;
 
                     let Data = JSON.stringify(this.ChangeMember)
-
                     console.log(Data);
 
 
@@ -713,10 +650,39 @@
                             toastr.error('修改失敗');
                         }
                     });
-
-
                 },
 
+                //取得全部表格Options
+                GetPageSelectors() {
+                    let language = this.GetSelectorOptions(this.urlList.memberLanguageList);
+
+                    console.log(language);
+                    return Promise.all([language])
+                        .then(res => {
+                            let language = res;
+
+                            this.languagelist.options = language[0].data.result[0].languageAll.map(x => { return { value: x.languageId, label: x.languageName } });
+
+                            console.log(this.languagelist.options);
+
+
+                        }).catch(err => {
+
+                            console.error(err);
+                        })
+
+                },
+                //透過API取得Options內容
+                GetSelectorOptions(url) {
+                    let cfg = {
+                        method: 'get',
+                        header: {
+                            'Content-type': 'application/json'
+                        },
+                        url: url
+                    };
+                    return axios(cfg);
+                },
 
                 hideModal() {
                     this.$refs['my-modal'].hide()
@@ -745,70 +711,6 @@
                     this.filter = null;
                 },
 
-                //切換上架商品頁
-                OnSalePage() {
-                    this.SetPageDefault()
-                },
-
-                //切換下架商品頁
-                NonSalePage() {
-                    // console.log('Nonsalepage');
-                    this.SetPageDefault();
-
-                },
-
-                //取得簡化版的商品
-                getSimplifyProducts(uri, busyobj, onsale) {
-                    busyobj.PageBusy = true;
-                    let cfg = {
-                        method: 'get',
-                        headers: {
-                            'Content-type': 'application/json',
-                        },
-                        url: uri
-                    };
-                    axios(cfg)
-                        .then(res => {
-                            if (Array.isArray(res.data.result) && res.status == 200) {
-
-                                switch (res.data.status) {
-                                    case 0:
-                                        this.items = this.SimplifyProductDataProc(res.data.result, onsale);
-                                        break;
-                                    default:
-                                        console.warn(res);
-                                        break;
-                                }
-                            }
-                            else {
-                                throw new UserException('Unknown Error');
-                            }
-                        })
-                        .catch(err => {
-                            if (err.response.status === 401) {
-                                LoginInvalidRedirect();
-                            }
-                            console.dir(err);
-                        })
-                        .finally(() => {
-                            busyobj.PageBusy = false;
-                        });
-                },
-
-
-
-                //取得商品明細
-                getProductDetails(uri, id) {
-                    let cfg = {
-                        method: 'get',
-                        headers: {
-                            'Content-type': 'application/json',
-                        },
-                        url: `${uri}/${id}`
-                    };
-                    console.log(cfg)
-                    return axios(cfg);
-                },
 
                 //編輯會員明細
                 getMemberManage(uri, id) {
@@ -823,11 +725,12 @@
                     return axios(cfg);
                 },
 
-                //編輯會員明細
+                //編輯會員明細(讀取)API
                 async infoM(item, index, button) {
                     try {
                         this.isOnSaleBusy.DetailsBusy = true;
-                        this.memberManageModel.title = `商品明細 - ID：${item.memberId}`
+                        this.memberManageModel.title = `商品明細 - ID：${item.memberId}`;
+                        console.log(this.memberManageModel.title);
                         this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
                         let response = await this.getMemberManage(this.urlList.memberManages, item.memberId)
 
@@ -839,22 +742,26 @@
                             this.MemberUpdate.email = newdata.email;
                             this.MemberUpdate.country = newdata.country;
                             this.MemberUpdate.profilePicture = newdata.profilePicture;
+                            this.MemberUpdate.memberId = newdata.memberId;
+                            this.MemberUpdate.languageId = newdata.languageId;
 
+                            if (newdata.gender == 0) {
+                                this.MemberUpdate.gender = "男"
+                            } else {
+                                this.MemberUpdate.gender = "女"
+                            }
+
+                            // this.MemberUpdate.gender = newdata.gender;
+                            console.log(66666);
+                            console.log(this.MemberUpdate.languageId);
                             // console.log(newdata)
                             // console.log(newdata.memberName);
-                            // console.log(this.MemberUpdate.memberName);
-                            // console.log(this.MemberUpdate.phone);
-                            // console.log(this.MemberUpdate.email);
-                            // console.log(this.MemberUpdate.country);
-                            // console.log('123newData');
+
                             for (let item of this.memberManageModel.fields) {
 
                                 item.value = `$${(newdata[item.key])}.0`;
                                 let temp = newdata[`${item.key}`];
                                 item.value = (temp != '') ? temp : '無'
-
-
-
                             }
                         }
                         else {
@@ -883,11 +790,9 @@
                 //Post發送信件請求
                 emailSubmit() {
 
-
                     this.sendEmail.mailTitle = this.emailInfoModal.emailTitle;
                     this.sendEmail.mailBody = this.emailInfoModal.emailBody;
                     this.sendEmail.ToEmail = this.emailInfoModal.emailReceiver;
-                    // this.sendEmail.ToEmail = this.emailInfoModal.emailReceiver;
                     //  console.log(sendEmail.ToEmail);
 
 
@@ -1076,8 +981,6 @@
             return Math.floor(byte / 1024);
         }
     </script>
-
-
 
 
 }
