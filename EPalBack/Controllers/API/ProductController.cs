@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using EPalBack.Services;
 using EPalBack.ViewModels.APIBase;
 using EPalBack.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EPalBack.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
@@ -23,6 +25,7 @@ namespace EPalBack.Controllers
             _dashboardService = dashBoardService;
         }
 
+        
         [HttpGet]
         public ApiResponse GetAllProduct()
         {
@@ -36,7 +39,7 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
-
+        [Authorize]
         [HttpGet]
         public ApiResponse GetProductByOnSale()
         {
@@ -50,7 +53,7 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
-
+        [Authorize]
         [HttpGet]
         public ApiResponse GetProductByNonSale()
         {
@@ -64,7 +67,7 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
-
+        [Authorize]
         [HttpGet("{id:int}")]
         public ApiResponse GetProductDetails(int id)
         {
@@ -78,7 +81,7 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
-
+        [Authorize]
         [HttpGet]
         public ApiResponse GetAllCount()
         {
@@ -162,7 +165,6 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
-
         [HttpPost]
         public ApiResponse UpdateProduct(ProductDetailsViewModel request)
         {
@@ -176,7 +178,6 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
-
         [HttpPut]
         public ApiResponse UpdateProductSalesStatus(ProductStatusViewModel request)
         {
