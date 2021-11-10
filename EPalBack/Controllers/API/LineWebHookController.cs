@@ -199,7 +199,7 @@ namespace isRock.Template
                 else if(LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text")
                 {
                     //responseMsg += GetResult(LineEvent.message.text);
-                    bool reply = _lineproductService.GetResult(LineEvent.message.text, LineEvent.replyToken, UserId);
+                    bool reply = GetResult(LineEvent.message.text, LineEvent.replyToken, UserId);
                     return Ok();
 
                 }
