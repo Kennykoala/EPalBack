@@ -249,11 +249,11 @@ namespace isRock.Template
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
 
             //int gendernum = keyword == "Male" ? 0 : 1;
-            int genderenum=0;
+            int genderenum = 0;
             try
             {
                 var result = _lineproductService.GetAllProduct();
-                
+
                 //判斷遊戲種類
                 bool gamename = result.Any(x => x.GameName == keyword);
                 ////判斷性別
@@ -264,7 +264,7 @@ namespace isRock.Template
                 bool server = result.Any(x => x.Server == keyword);
 
                 //判斷性別
-                bool gender;                
+                bool gender;
                 switch (keyword)
                 {
                     case "Male":
@@ -299,8 +299,8 @@ namespace isRock.Template
                     default:
                         productprice = false;
                         break;
-                }              
-                
+                }
+
 
                 var rnd = new Random();
                 //string replymsg = "";
@@ -308,16 +308,16 @@ namespace isRock.Template
                 if (gamename)
                 {
                     var bycat = result.Where(x => x.GameName == keyword).Select(x => new LineProductViewModel()
-                                        {
-                                            ProductId = x.ProductId,
-                                            UnitPrice = x.UnitPrice,
-                                            MemberName = x.MemberName,
-                                            GameName = x.GameName,
-                                            Server = x.Server,
-                                            Level = x.Level,
-                                            Position = x.Position,
-                                            CreatorImg = x.CreatorImg
-                                        })
+                    {
+                        ProductId = x.ProductId,
+                        UnitPrice = x.UnitPrice,
+                        MemberName = x.MemberName,
+                        GameName = x.GameName,
+                        Server = x.Server,
+                        Level = x.Level,
+                        Position = x.Position,
+                        CreatorImg = x.CreatorImg
+                    })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
                     foreach (var cat in bycat)
@@ -343,7 +343,7 @@ namespace isRock.Template
                             text = carouseltext,
                             title = keyword,
                             thumbnailImageUrl = new Uri(creatorimg),
-                            actions = actions 
+                            actions = actions
                         };
 
                         CarouselTemplate.columns.Add(Column);
@@ -354,16 +354,16 @@ namespace isRock.Template
                 else if (gender)
                 {
                     var bycat = result.Where(x => x.gender == genderenum).Select(x => new LineProductViewModel()
-                                        {
-                                            ProductId = x.ProductId,
-                                            UnitPrice = x.UnitPrice,
-                                            MemberName = x.MemberName,
-                                            GameName = x.GameName,
-                                            Server = x.Server,
-                                            Level = x.Level,
-                                            Position = x.Position,
-                                            CreatorImg = x.CreatorImg
-                                        })
+                    {
+                        ProductId = x.ProductId,
+                        UnitPrice = x.UnitPrice,
+                        MemberName = x.MemberName,
+                        GameName = x.GameName,
+                        Server = x.Server,
+                        Level = x.Level,
+                        Position = x.Position,
+                        CreatorImg = x.CreatorImg
+                    })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
                     foreach (var cat in bycat)
@@ -399,16 +399,16 @@ namespace isRock.Template
                 else if (level)
                 {
                     var bycat = result.Where(x => x.Level == keyword).Select(x => new LineProductViewModel()
-                                        {
-                                            ProductId = x.ProductId,
-                                            UnitPrice = x.UnitPrice,
-                                            MemberName = x.MemberName,
-                                            GameName = x.GameName,
-                                            Server = x.Server,
-                                            Level = x.Level,
-                                            Position = x.Position,
-                                            CreatorImg = x.CreatorImg
-                                        })
+                    {
+                        ProductId = x.ProductId,
+                        UnitPrice = x.UnitPrice,
+                        MemberName = x.MemberName,
+                        GameName = x.GameName,
+                        Server = x.Server,
+                        Level = x.Level,
+                        Position = x.Position,
+                        CreatorImg = x.CreatorImg
+                    })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
                     foreach (var cat in bycat)
@@ -435,7 +435,7 @@ namespace isRock.Template
                             text = carouseltext,
                             title = productname,
                             thumbnailImageUrl = new Uri(creatorimg),
-                            actions = actions 
+                            actions = actions
                         };
                         CarouselTemplate.columns.Add(Column);
 
@@ -465,16 +465,16 @@ namespace isRock.Template
                     }
 
                     var bycat = pricelist.Select(x => new LineProductViewModel()
-                                        {
-                                            ProductId = x.ProductId,
-                                            UnitPrice = x.UnitPrice,
-                                            MemberName = x.MemberName,
-                                            GameName = x.GameName,
-                                            Server = x.Server,
-                                            Level = x.Level,
-                                            Position = x.Position,
-                                            CreatorImg = x.CreatorImg
-                                        })
+                    {
+                        ProductId = x.ProductId,
+                        UnitPrice = x.UnitPrice,
+                        MemberName = x.MemberName,
+                        GameName = x.GameName,
+                        Server = x.Server,
+                        Level = x.Level,
+                        Position = x.Position,
+                        CreatorImg = x.CreatorImg
+                    })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
                     foreach (var cat in bycat)
@@ -510,16 +510,16 @@ namespace isRock.Template
                 else if (server)
                 {
                     var bycat = result.Where(x => x.Server == keyword).Select(x => new LineProductViewModel()
-                                            {
-                                                ProductId = x.ProductId,
-                                                UnitPrice = x.UnitPrice,
-                                                MemberName = x.MemberName,
-                                                GameName = x.GameName,
-                                                Server = x.Server,
-                                                Level = x.Level,
-                                                Position = x.Position,
-                                                CreatorImg = x.CreatorImg
-                                            })
+                    {
+                        ProductId = x.ProductId,
+                        UnitPrice = x.UnitPrice,
+                        MemberName = x.MemberName,
+                        GameName = x.GameName,
+                        Server = x.Server,
+                        Level = x.Level,
+                        Position = x.Position,
+                        CreatorImg = x.CreatorImg
+                    })
                                         .OrderBy(x => rnd.Next()).Take(5);
 
                     foreach (var cat in bycat)
@@ -587,81 +587,81 @@ namespace isRock.Template
 
 
 
-    //                        //replymsg += string.Concat($"遊戲種類名稱:{keyword}", Environment.NewLine);
-    //                foreach (var cat in bycat)
-    //                {
-    //                    //replymsg += string.Format("商品序號:{0} 陪玩者:{1} 單價:${2} {3}",
-    //                    //    cat.ProductId,
-    //                    //    cat.MemberName,
-    //                    //    cat.UnitPrice,
-    //                    //    cat.CreatorImg,
-    //                    //    Environment.NewLine);
+        //                        //replymsg += string.Concat($"遊戲種類名稱:{keyword}", Environment.NewLine);
+        //                foreach (var cat in bycat)
+        //                {
+        //                    //replymsg += string.Format("商品序號:{0} 陪玩者:{1} 單價:${2} {3}",
+        //                    //    cat.ProductId,
+        //                    //    cat.MemberName,
+        //                    //    cat.UnitPrice,
+        //                    //    cat.CreatorImg,
+        //                    //    Environment.NewLine);
 
-    //                    var creatorimg = cat.CreatorImg;
-    //    var memberName = cat.MemberName;
-    //    var price = cat.UnitPrice.ToString();
-    //    var proId = cat.ProductId;
+        //                    var creatorimg = cat.CreatorImg;
+        //    var memberName = cat.MemberName;
+        //    var price = cat.UnitPrice.ToString();
+        //    var proId = cat.ProductId;
 
-    //    var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
-    //        proId);
+        //    var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+        //        proId);
 
-    //    var carouseltext = string.Format("{0} {1}${2}",
-    //                cat.MemberName,
-    //                Environment.NewLine,
-    //                cat.UnitPrice);
-
-
-    //    //建立actions，作為ButtonTemplate的用戶回覆行為
-    //    var actions = new List<isRock.LineBot.TemplateActionBase>();
-    //    //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
-    //    actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
-    //                    //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
+        //    var carouseltext = string.Format("{0} {1}${2}",
+        //                cat.MemberName,
+        //                Environment.NewLine,
+        //                cat.UnitPrice);
 
 
-    //                    //單一Column 
-    //                    var Column = new isRock.LineBot.Column
-    //                    {
-    //                        text = carouseltext,
-    //                        //keyword == gamename
-    //                        title = keyword,
-    //                        thumbnailImageUrl = new Uri(creatorimg),
-    //                        actions = actions //設定回覆動作
-    //                    };
-
-    //CarouselTemplate.columns.Add(Column);
-
-    //                }
+        //    //建立actions，作為ButtonTemplate的用戶回覆行為
+        //    var actions = new List<isRock.LineBot.TemplateActionBase>();
+        //    //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
+        //    actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+        //                    //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
 
+        //                    //單一Column 
+        //                    var Column = new isRock.LineBot.Column
+        //                    {
+        //                        text = carouseltext,
+        //                        //keyword == gamename
+        //                        title = keyword,
+        //                        thumbnailImageUrl = new Uri(creatorimg),
+        //                        actions = actions //設定回覆動作
+        //                    };
+
+        //CarouselTemplate.columns.Add(Column);
+
+        //                }
 
 
 
 
 
 
-    //    //建立actions，作為ButtonTemplate的用戶回覆行為
-    //    var actions = new List<isRock.LineBot.TemplateActionBase>();
-    //    //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
-    //    actions.Add(new isRock.LineBot.UriAction() { label = "Go To EPal", uri = new Uri("http://www.google.com") });
-    //        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-    //        //單一Column 
-    //        var Column = new isRock.LineBot.Column
-    //        {
-    //            text = "ButtonsTemplate文字訊息",
-    //            title = "ButtonsTemplate標題",
-    //            //設定圖片
-    //            thumbnailImageUrl = new Uri("https://arock.blob.core.windows.net/blogdata201709/14-143030-1cd8cf1e-8f77-4652-9afa-605d27f20933.png"),
-    //            actions = actions //設定回覆動作
-    //        };
 
-    ////建立CarouselTemplate
-    //var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+        //    //建立actions，作為ButtonTemplate的用戶回覆行為
+        //    var actions = new List<isRock.LineBot.TemplateActionBase>();
+        //    //actions.Add(new isRock.LineBot.MessageAction() { label = "標題-文字回覆", text = "回覆文字" });
+        //    actions.Add(new isRock.LineBot.UriAction() { label = "Go To EPal", uri = new Uri("http://www.google.com") });
+        //        //actions.Add(new isRock.LineBot.PostbackAction() { label = "標題-發生postack", data = "abc=aaa&def=111" });
 
-    ////這是範例，所以用一組樣板建立三個
-    //CarouselTemplate.columns.Add(Column);
-    //        CarouselTemplate.columns.Add(Column);
-    //        CarouselTemplate.columns.Add(Column);
+        //        //單一Column 
+        //        var Column = new isRock.LineBot.Column
+        //        {
+        //            text = "ButtonsTemplate文字訊息",
+        //            title = "ButtonsTemplate標題",
+        //            //設定圖片
+        //            thumbnailImageUrl = new Uri("https://arock.blob.core.windows.net/blogdata201709/14-143030-1cd8cf1e-8f77-4652-9afa-605d27f20933.png"),
+        //            actions = actions //設定回覆動作
+        //        };
+
+        ////建立CarouselTemplate
+        //var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+
+        ////這是範例，所以用一組樣板建立三個
+        //CarouselTemplate.columns.Add(Column);
+        //        CarouselTemplate.columns.Add(Column);
+        //        CarouselTemplate.columns.Add(Column);
 
 
 
