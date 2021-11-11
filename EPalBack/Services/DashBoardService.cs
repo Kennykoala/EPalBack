@@ -50,23 +50,23 @@ namespace EPalBack.Services
            
             result.orderJanuarytotal = _order.GetAll().Where(x => x.OrderDate <= orderJanuarytotaldata && x.OrderDate >= orderDecembertotaldata && x.OrderStatusId==3)
                 .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderFebruarytotal = _order.GetAll().Where(x => x.OrderDate <= orderFebruarytotaldata && x.OrderStatusId == 3)
+            result.orderFebruarytotal = _order.GetAll().Where(x => x.OrderDate <= orderFebruarytotaldata && x.OrderDate > orderJanuarytotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderMarchtotal = _order.GetAll().Where(x => x.OrderDate <= orderMarchtotaldata && x.OrderStatusId == 3)
+            result.orderMarchtotal = _order.GetAll().Where(x => x.OrderDate <= orderMarchtotaldata && x.OrderDate > orderFebruarytotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderApriltotal = _order.GetAll().Where(x => x.OrderDate <= orderApriltotaldata && x.OrderStatusId == 3)
+            result.orderApriltotal = _order.GetAll().Where(x => x.OrderDate <= orderApriltotaldata && x.OrderDate > orderMarchtotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderMaytotal = _order.GetAll().Where(x => x.OrderDate <= orderMaytotaldata && x.OrderStatusId == 3)
+            result.orderMaytotal = _order.GetAll().Where(x => x.OrderDate <= orderMaytotaldata && x.OrderDate > orderApriltotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderJunetotal = _order.GetAll().Where(x => x.OrderDate <= orderJunetotaldata && x.OrderStatusId == 3)
+            result.orderJunetotal = _order.GetAll().Where(x => x.OrderDate <= orderJunetotaldata && x.OrderDate > orderMaytotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderJulytotal = _order.GetAll().Where(x => x.OrderDate <= orderJulytotaldata && x.OrderStatusId == 3)
+            result.orderJulytotal = _order.GetAll().Where(x => x.OrderDate <= orderJulytotaldata && x.OrderDate > orderJunetotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderAugusttotal = _order.GetAll().Where(x => x.OrderDate <= orderAugusttotaldata && x.OrderStatusId == 3)
+            result.orderAugusttotal = _order.GetAll().Where(x => x.OrderDate <= orderAugusttotaldata && x.OrderDate > orderJulytotaldata && x.OrderStatusId  == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderSeptembertotal = _order.GetAll().Where(x => x.OrderDate <= orderSeptembertotaldata && x.OrderStatusId == 3)
+            result.orderSeptembertotal = _order.GetAll().Where(x => x.OrderDate <= orderSeptembertotaldata && x.OrderDate > orderAugusttotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
-            result.orderOctoberrtotal = _order.GetAll().Where(x => x.OrderDate <= orderOctoberrtotaldata && x.OrderStatusId == 3)
+            result.orderOctoberrtotal = _order.GetAll().Where(x => x.OrderDate <= orderOctoberrtotaldata && x.OrderDate > orderSeptembertotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
             result.orderNovembertotal = _order.GetAll().Where(x => x.OrderDate <= orderNovembertotaldata && x.OrderDate > orderOctoberrtotaldata && x.OrderStatusId == 3)
               .Select(x => x.Quantity * x.UnitPrice).Sum();
@@ -91,11 +91,23 @@ namespace EPalBack.Services
         }
   
 
-        public IEnumerable<MainCategoryPieViewModel> GetMainCategoryPie()
+        public IEnumerable<DashBoardViewModel> GetCounttotal()
         {
-            var result = new MainCategoryPieViewModel();
+            var result = new DashBoardViewModel();
 
+            var FirstDatofYear = new DateTime(DateTime.Now.Year, 1, 1);
+            var FirstDayofMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var Today = DateTime.Now;
 
+            
+            result.OrderMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today).Count();         
+            result.OrderYearTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today).Count();
+            result.EarningsMonthTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDayofMonth && x.OrderDate <= Today && x.OrderStatusId == 3).Select(x => x.Quantity * x.UnitPrice).Sum();
+            result.EarningsYearTotal = _order.GetAll().Where(x => x.OrderDate >= FirstDatofYear && x.OrderDate <= Today && x.OrderStatusId == 3).Select(x => x.Quantity * x.UnitPrice).Sum();
+            result.ProductTotal = _product.GetAll().Count();
+            result.MemberTotal = _member.GetAll().Count();
+            result.OrderTotal = _order.GetAll().Count();
+            result.CommentTotal = _comment.GetAll().Count();
 
             yield return result;
         }
@@ -128,7 +140,6 @@ namespace EPalBack.Services
         //   return ages;
 
         //}
-
 
         public List<Addmemberrange> GetMemberagerange()
         {

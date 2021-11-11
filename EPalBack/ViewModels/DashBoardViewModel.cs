@@ -7,21 +7,38 @@ namespace EPalBack.ViewModels
 {
     public class DashBoardViewModel
     {
-        //public int ProductTotal { get; set; }
-
-        //public int MemberTotal { get; set; }
-
-        //public int OrderTotal { get; set; }
-
-        //public int CommentTotal { get; set; }
-
-        //public decimal EarningsMonthTotal { get; set; }
-
-        //public decimal EarningsYearTotal { get; set; }
-
-        //public int OrderMonthTotal { get; set; }
-
-        //public int OrderYearTotal { get; set; }
+        /// <summary>
+        /// 商品總數
+        /// </summary>
+        public int ProductTotal { get; set; }
+        /// <summary>
+        /// 會員總數
+        /// </summary>
+        public int MemberTotal { get; set; }
+        /// <summary>
+        /// 訂單總數
+        /// </summary>
+        public int OrderTotal { get; set; }
+        /// <summary>
+        /// 評論總數
+        /// </summary>
+        public int CommentTotal { get; set; }
+        /// <summary>
+        /// 月營收
+        /// </summary>
+        public decimal EarningsMonthTotal { get; set; }
+        /// <summary>
+        /// 年營收
+        /// </summary>
+        public decimal EarningsYearTotal { get; set; }
+        /// <summary>
+        /// 月訂單
+        /// </summary>
+        public int OrderMonthTotal { get; set; }
+        /// <summary>
+        /// 年訂單
+        /// </summary>
+        public int OrderYearTotal { get; set; }
 
         public decimal orderJanuarytotal { get; set; }
         public decimal orderFebruarytotal { get; set; }
