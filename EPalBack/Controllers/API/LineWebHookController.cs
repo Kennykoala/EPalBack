@@ -12,26 +12,23 @@ namespace isRock.Template
     public class LineWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
 
-        //private readonly ProductService _productService;
         private readonly LineProductService _lineproductService;
         public LineWebHookController(LineProductService lineproductService)
         {
-            //_productService = productService;
             _lineproductService = lineproductService;
         }
 
         public delegate isRock.LineBot.TextMessage selectoption();
 
-        private static Dictionary<string[], selectoption> _expressions
-            = new Dictionary<string[], selectoption>
+        private static Dictionary<string, selectoption> _expressions
+            = new Dictionary<string, selectoption>
             {
-                { new string[]{ "message", "text", "請選擇遊戲種類" } ,new selectoption(showCategories) },
-                { new string[]{ "message", "text", "請選擇陪玩師性別" } ,new selectoption(showGenders) },
-                { new string[]{ "message", "text", "請選擇陪玩師等級" } ,new selectoption(showLevels) },
-                { new string[]{ "message", "text", "請選擇遊戲產品價格" } ,new selectoption(showPrice) },
-                { new string[]{ "message", "text", "請選擇遊戲伺服器" } ,new selectoption(showServers) }
+                { "請選擇遊戲種類" , new selectoption(showCategories) },
+                { "請選擇陪玩師性別" , new selectoption(showGenders) },
+                { "請選擇陪玩師等級" , new selectoption(showLevels) },
+                { "請選擇遊戲產品價格" , new selectoption(showPrice) },
+                { "請選擇遊戲伺服器" , new selectoption(showServers) }
             };
-
 
         private static isRock.LineBot.TextMessage showCategories()
         {
@@ -59,6 +56,8 @@ namespace isRock.Template
 
         private static isRock.LineBot.TextMessage showGenders()
         {
+            //isRock.LineBot.Bot bot = new isRock.LineBot.Bot("sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=");
+
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Gender");
             Dictionary<string, string> genders = new Dictionary<string, string>()
                         {
@@ -69,6 +68,7 @@ namespace isRock.Template
             {
                 msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
             }
+            //bot.PushMessage(UserId, msg);
             return msg;
         }
 
@@ -131,71 +131,53 @@ namespace isRock.Template
 
 
 
-        //public static decimal Calculate(string[] expression)
-        //{
-        //    var expr = _expressions.FirstOrDefault(e => expression.Contains(e.Key));
-        //    if (expr.Key == null) { throw new ArgumentException("Invalid operator"); }
-        //    var values = expression.Split(new string[] { expr.Key }, StringSplitOptions.RemoveEmptyEntries);
-        //    var x = decimal.Parse(values[0]);
-        //    var y = decimal.Parse(values[1]);
-        //    return expr.Value(x, y);
-        //}
-
-
         [Route("api/LineBotWebHook")]
         [HttpPost]
         public IActionResult POST()
         {
-            //設定ChannelAccessToken
             this.ChannelAccessToken = "sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=";
-            //配合Line Verify
             if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                 ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
-            //取得Line Event
             var LineEvent = this.ReceivedMessage.events.FirstOrDefault();
             var responseMsg = "";
 
-            //抓當前與linebot對話的usedid
-            //var user = this.GetUserInfo(LineEvent.source.userId);
+            //與linebot對話的usedid
             var UserId = this.ReceivedMessage.events[0].source.userId;
-
-
             isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-
-            //LineEvent.type.ToLower(), LineEvent.message.type.ToLower(), LineEvent.message.text
-            //_expressions.Where(x => x.)
 
             try
             {
                 var linetype = LineEvent.type.ToLower();
                 var linemsgtype = LineEvent.message.type.ToLower();
                 var linemsgtext = LineEvent.message.text;
-                string[] lineevent = new string[] { linetype, linemsgtype, linemsgtext };
+                //string[] lineevent = new string[] { linetype, linemsgtype, linemsgtext };
+
+                var result = _expressions.ContainsKey(linemsgtext);             
 
                 //準備回覆訊息
-                if (_expressions.Keys.Contains(lineevent))
+                if (linetype == "message" && linemsgtype == "text" && result == true)
                 {
-                    //_expressions[lineevent].Invoke();
-                    bot.PushMessage(UserId, _expressions[lineevent].Invoke());
+                    //_expressions[lineevent].Invoke(UserId);
+                    var msg = _expressions[linemsgtext].Invoke();
+                    bot.PushMessage(UserId, msg);
                     return Ok();
                 }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "關於EPal")
+                else if (linetype == "message" && linemsgtype == "text" && linemsgtext == "關於EPal")
                 {
                     responseMsg = "EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。\n" +
                                   "於訊息視窗輸入關鍵字可能無法正確找到相關商品，請務必優先透過選單進行篩選。";
                 }
-                else if(LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text")
+                else if(linetype == "message" && linemsgtype == "text")
                 {
-                    //responseMsg += GetResult(LineEvent.message.text);
                     bool reply = GetResult(LineEvent.message.text, LineEvent.replyToken, UserId);
                     return Ok();
                 }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "sticker")
+                else if (linetype == "message" && linemsgtype == "sticker")
                 {
                     this.ReplyMessage(LineEvent.replyToken, 1, 2);
                     return Ok();
                 }
-                else if (LineEvent.type.ToLower() == "message")
+                else if (linetype == "message")
                 {
                     responseMsg = $"收到 event : {LineEvent.type} type: {LineEvent.message.type} ";
                 }
@@ -204,17 +186,13 @@ namespace isRock.Template
                     responseMsg = $"收到 event : {LineEvent.type} ";
                 }
 
-                //回覆訊息
                 this.ReplyMessage(LineEvent.replyToken, responseMsg);
-                //response OK
                 return Ok();
 
             }
             catch (Exception ex)
             {
-                //回覆訊息
                 this.PushMessage(UserId, "發生錯誤:\n" + ex.Message);
-                //response OK
                 return Ok();
             }
         }
