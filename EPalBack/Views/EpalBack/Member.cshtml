@@ -578,10 +578,11 @@
 
 
                     console.log(Data);
-
-
+                    //axios.get().then(res => {
+                    //    )
+                    let source = this
                     $.ajax({
-                        url: "http://localhost:34800/api/Member/UpdateMember",
+                        url: "/api/Member/UpdateMember",
                         type: "POST",
                         data: Data,
                         async: true,
@@ -589,21 +590,23 @@
                         processData: false,
                         //dataType: "json",
                         success: function (res) {
+                            
                             console.log(res);
                             console.log('修改成功');
                             toastr.success('修改成功');
-                            // resetProductDetailsModel()
-                            // console.log('my-modal');
-                            // this.$refs['my-modal'].hide()
-                            //  hideModal();
+                            console.log(this)
+                            source.getAllMember();
                         },
                         error: function (err) {
                             console.log(err);
                             console.log('修改失敗');
                             toastr.error('修改失敗');
                         }
+                        
                     });
+                   
                     this.hideModal();
+                    // this.getAllMember();
                 },
 
                 //取得全部表格Options
