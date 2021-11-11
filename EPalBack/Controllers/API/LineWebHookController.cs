@@ -20,17 +20,17 @@ namespace isRock.Template
             _lineproductService = lineproductService;
         }
 
-        //private static Dictionary<string[], Func<decimal, decimal, decimal>> _expressions
-        //    = new Dictionary<string[], Func<decimal, decimal, decimal>>
-        //    {
-        //        {new string[]{ "message", "text", "請選擇遊戲種類" } ,(x,y)=> x+y },
-        //        {"-" ,(x,y)=> x-y },
-        //        {"*" ,(x,y)=> x*y },
-        //        {"/" ,(x,y)=> x/y },
-        //    };
+        public delegate isRock.LineBot.TextMessage selectoption();
+
+        private static Dictionary<string[], selectoption> _expressions
+            = new Dictionary<string[], selectoption>
+            {
+                { new string[]{ "message", "text", "請選擇遊戲種類" } ,new selectoption(showCategories) },
+
+            };
 
 
-        private isRock.LineBot.TextMessage showCategories()
+        private static isRock.LineBot.TextMessage showCategories()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
             Dictionary<string, string> categories = new Dictionary<string, string>()
@@ -54,7 +54,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showGenders()
+        private static isRock.LineBot.TextMessage showGenders()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Gender");
             Dictionary<string, string> genders = new Dictionary<string, string>()
@@ -69,7 +69,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showLevels()
+        private static isRock.LineBot.TextMessage showLevels()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Level");
             Dictionary<string, string> levels = new Dictionary<string, string>()
@@ -90,7 +90,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showPrice()
+        private static isRock.LineBot.TextMessage showPrice()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Unitprice");
             Dictionary<string, string> price = new Dictionary<string, string>()
@@ -107,7 +107,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showServers()
+        private static isRock.LineBot.TextMessage showServers()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Server");
             Dictionary<string, string> servers = new Dictionary<string, string>()
@@ -147,6 +147,8 @@ namespace isRock.Template
 
 
             isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
+
+            //_expressions.Keys(LineEvent.type.ToLower(), LineEvent.message.type.ToLower(), LineEvent.message.text)
 
             try
             {
