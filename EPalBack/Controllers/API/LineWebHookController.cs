@@ -20,17 +20,20 @@ namespace isRock.Template
             _lineproductService = lineproductService;
         }
 
-        //private static Dictionary<string[], Func<decimal, decimal, decimal>> _expressions
-        //    = new Dictionary<string[], Func<decimal, decimal, decimal>>
-        //    {
-        //        {new string[]{ "message", "text", "請選擇遊戲種類" } ,(x,y)=> x+y },
-        //        {"-" ,(x,y)=> x-y },
-        //        {"*" ,(x,y)=> x*y },
-        //        {"/" ,(x,y)=> x/y },
-        //    };
+        public delegate isRock.LineBot.TextMessage selectoption();
+
+        private static Dictionary<string[], selectoption> _expressions
+            = new Dictionary<string[], selectoption>
+            {
+                { new string[]{ "message", "text", "請選擇遊戲種類" } ,new selectoption(showCategories) },
+                { new string[]{ "message", "text", "請選擇陪玩師性別" } ,new selectoption(showGenders) },
+                { new string[]{ "message", "text", "請選擇陪玩師等級" } ,new selectoption(showLevels) },
+                { new string[]{ "message", "text", "請選擇遊戲產品價格" } ,new selectoption(showPrice) },
+                { new string[]{ "message", "text", "請選擇遊戲伺服器" } ,new selectoption(showServers) }
+            };
 
 
-        private isRock.LineBot.TextMessage showCategories()
+        private static isRock.LineBot.TextMessage showCategories()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
             Dictionary<string, string> categories = new Dictionary<string, string>()
@@ -54,7 +57,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showGenders()
+        private static isRock.LineBot.TextMessage showGenders()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Gender");
             Dictionary<string, string> genders = new Dictionary<string, string>()
@@ -69,7 +72,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showLevels()
+        private static isRock.LineBot.TextMessage showLevels()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Level");
             Dictionary<string, string> levels = new Dictionary<string, string>()
@@ -90,7 +93,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showPrice()
+        private static isRock.LineBot.TextMessage showPrice()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Unitprice");
             Dictionary<string, string> price = new Dictionary<string, string>()
@@ -107,7 +110,7 @@ namespace isRock.Template
             return msg;
         }
 
-        private isRock.LineBot.TextMessage showServers()
+        private static isRock.LineBot.TextMessage showServers()
         {
             isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Server");
             Dictionary<string, string> servers = new Dictionary<string, string>()
@@ -126,6 +129,17 @@ namespace isRock.Template
             return msg;
         }
 
+
+
+        //public static decimal Calculate(string[] expression)
+        //{
+        //    var expr = _expressions.FirstOrDefault(e => expression.Contains(e.Key));
+        //    if (expr.Key == null) { throw new ArgumentException("Invalid operator"); }
+        //    var values = expression.Split(new string[] { expr.Key }, StringSplitOptions.RemoveEmptyEntries);
+        //    var x = decimal.Parse(values[0]);
+        //    var y = decimal.Parse(values[1]);
+        //    return expr.Value(x, y);
+        //}
 
 
         [Route("api/LineBotWebHook")]
@@ -148,38 +162,21 @@ namespace isRock.Template
 
             isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
 
+            //LineEvent.type.ToLower(), LineEvent.message.type.ToLower(), LineEvent.message.text
+            //_expressions.Where(x => x.)
+
             try
             {
+                var linetype = LineEvent.type.ToLower();
+                var linemsgtype = LineEvent.message.type.ToLower();
+                var linemsgtext = LineEvent.message.text;
+                string[] lineevent = new string[] { linetype, linemsgtype, linemsgtext };
+
                 //準備回覆訊息
-                if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲種類")
+                if (_expressions.Keys.Contains(lineevent))
                 {
-                    //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.ReplyMessageWithJSON(LineEvent.replyToken, "aaa");
-                    //bot.PushMessage(UserId, showCategories());
-                    return Ok();
-                }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇陪玩師性別")
-                {
-                    //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, showGenders());
-                    return Ok();
-                }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇陪玩師等級")
-                {
-                    //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, showLevels());
-                    return Ok();
-                }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲產品價格")
-                {
-                    //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, showPrice());
-                    return Ok();
-                }
-                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲伺服器")
-                {
-                    //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, showServers());
+                    //_expressions[lineevent].Invoke();
+                    bot.PushMessage(UserId, _expressions[lineevent].Invoke());
                     return Ok();
                 }
                 else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "關於EPal")
