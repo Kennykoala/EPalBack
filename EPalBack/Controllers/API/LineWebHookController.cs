@@ -154,7 +154,8 @@ namespace isRock.Template
                 if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲種類")
                 {
                     //isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, showCategories());
+                    bot.ReplyMessageWithJSON(LineEvent.replyToken, "aaa");
+                    //bot.PushMessage(UserId, showCategories());
                     return Ok();
                 }
                 else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇陪玩師性別")
