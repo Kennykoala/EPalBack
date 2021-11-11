@@ -1,7 +1,61 @@
 ﻿ <!-- Page Wrapper -->
-<!-- End of Sidebar -->
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">ePal 管理員</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>儀錶板</span>
+            </a>
+        </li>
+
+        <!-- Order Manager -->
+        <li class="nav-item">
+            <a class="nav-link" href="order.html">
+                <i class="fas fa-fw fa-table"></i>
+                <span>訂單管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="product.html">
+                <i class="fas fa-fw fa-table"></i>
+                <span>商品管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="member.html">
+                <i class="fas fa-fw fa-table"></i>
+                <span>會員管理</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
     <!-- Main Content -->
     <div id="content">
@@ -26,21 +80,15 @@
                                 <b-tab active>
                                     <b-row>
 
-                                        <b-col lg="6" class="my-1">
-                                            <b-form-group label="初始分類" label-for="initial-sort-select"
-                                                          label-cols-sm="3" label-align-sm="right" label-size="sm"
-                                                          class="mb-0">
-                                                <b-form-select id="initial-sort-select" v-model="sortDirection"
-                                                               :options="['asc', 'desc', 'last']" size="sm">
-                                                </b-form-select>
-                                            </b-form-group>
-                                        </b-col>
-                                        <b-col lg="6" class="my-1">
-                                            <b-form-group label="搜尋" label-for="filter-input" label-cols-sm="3"
-                                                          label-align-sm="right" label-size="sm" class="mb-0">
-                                                <b-input-group size="sm">
-                                                    <b-form-input id="filter-input" v-model="filter"
-                                                                  type="search" placeholder="請輸入關鍵字"></b-form-input>
+                                            <b-col lg="6" class="my-1">
+                                      
+                                            </b-col>
+                                            <b-col lg="6" class="my-1">
+                                                <b-form-group label="搜尋" label-for="filter-input" label-cols-sm="3"
+                                                              label-align-sm="right" label-size="sm" class="mb-0">
+                                                    <b-input-group size="sm">
+                                                        <b-form-input id="filter-input" v-model="filter"
+                                                                      type="search" placeholder="請輸入關鍵字"></b-form-input>
 
                                                     <b-input-group-append>
                                                         <b-button :disabled="!filter" @@click="filter = ''">
@@ -107,20 +155,21 @@
                                         </b-col>
                                     </b-row>
 
-                                    <!-- memberManageModel.title -->
-                                    <!-- Info 編輯modal -->
-                                    <b-modal :id="memberManageModel.id" :title="memberManageModel.title"
-                                             header-bg-variant="info"
-                                             header-text-variant="black" hide-footer
-                                             size="lg" v-on:hidden="resetProductDetailsModel"
-                                             ref="my-modal"
-                                             scrollable>
-                                        <!-- <template #default> -->
-                                        <div v-if="isOnSaleBusy.DetailsBusy"
-                                             class="busy text-center text-danger my-2">
-                                            <b-spinner class="align-middle"></b-spinner>
-                                            <strong>Loading...</strong>
-                                        </div>
+                                        <!-- memberManageModel.title -->
+                                        <!-- Info 編輯modal -->
+                                        <b-modal :id="memberManageModel.id" :title="memberManageModel.title"
+                                                 header-bg-variant="info"
+                                                 header-text-variant="black" hide-footer
+                                                 size="lg"
+                                                 v-on:hidden="resetProductDetailsModel"
+                                                 ref="my-modal"
+                                                 scrollable>
+                                            <!-- <template #default> -->
+                                            <div v-if="isOnSaleBusy.DetailsBusy"
+                                                 class="busy text-center text-danger my-2">
+                                                <b-spinner class="align-middle"></b-spinner>
+                                                <strong>Loading...</strong>
+                                            </div>
 
                                         <!-- 商品明細卡片 -->
                                         <div class="details-body" v-if="!isOnSaleBusy.DetailsBusy">
@@ -348,8 +397,6 @@
     </div>
 </div>
 
-
-
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -463,10 +510,10 @@
                 emailInfoModal: {
                     id: 'emailInfo-modal',
                     title: '寄信給會員編號XX',
-                    memberId: '6666',
-                    emailReceiver: '1234@gmail.com',
-                    emailTitle: '信件標題內容',
-                    emailBody: '信件內容',
+                    memberId: '',
+                    emailReceiver: '',
+                    emailTitle: '',
+                    emailBody: '',
                 },
                 /*寄件輸入欄位的基本判斷*/
                 emailInfoModalemailTitleState: null,
@@ -570,10 +617,19 @@
                     this.ChangeMember.phone = this.MemberUpdate.phone;
                     this.ChangeMember.country = this.MemberUpdate.country;
                     this.ChangeMember.email = this.MemberUpdate.email;
-                    this.ChangeMember.gender = this.MemberUpdate.gender;
+                    // this.ChangeMember.gender = this.MemberUpdate.gender;
+                    // this.ChangeMember.gender = 1;
                     this.ChangeMember.languageId = this.MemberUpdate.languageId;
 
+                    if (this.MemberUpdate.gender == "男生") {
+                        this.ChangeMember.gender = 0;
+                    } else {
+                        this.ChangeMember.gender = 1;
+                    }
+
                     let Data = JSON.stringify(this.ChangeMember)
+
+
                     console.log(Data);
 
 
@@ -589,6 +645,10 @@
                             console.log(res);
                             console.log('修改成功');
                             toastr.success('修改成功');
+                            // resetProductDetailsModel()
+                            // console.log('my-modal');
+                            // this.$refs['my-modal'].hide()
+                            //  hideModal();
                         },
                         error: function (err) {
                             console.log(err);
@@ -596,6 +656,7 @@
                             toastr.error('修改失敗');
                         }
                     });
+                    this.hideModal();
                 },
 
                 //取得全部表格Options
@@ -608,9 +669,7 @@
                             let language = res;
 
                             this.languagelist.options = language[0].data.result[0].languageAll.map(x => { return { value: x.languageId, label: x.languageName } });
-
                             console.log(this.languagelist.options);
-
 
                         }).catch(err => {
 
@@ -674,8 +733,9 @@
                 //編輯會員明細(讀取)API
                 async infoM(item, index, button) {
                     try {
+                        this.enableEdit = false;
                         this.isOnSaleBusy.DetailsBusy = true;
-                        this.memberManageModel.title = `商品明細 - ID：${item.memberId}`;
+                        this.memberManageModel.title = `會員明細 - ID：${item.memberId}`;
                         console.log(this.memberManageModel.title);
                         this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
                         let response = await this.getMemberManage(this.urlList.memberManages, item.memberId)
@@ -725,9 +785,15 @@
                 handleEmailOk() {
                     this.emailSubmit();
                 },
+                //重製編輯Modal
+                resetMemberInfoModal() {
+                    this.memberManageModel.title = '';
+                    this.memberManageModel.fields.map(x => x.value = '');
+                },
                 //重置寄信
                 resetEmailInfoModal() {
-
+                    this.emailInfoModal.emailTitle = '';
+                    this.emailInfoModal.emailBody = '';
                 },
                 //檢查寄信欄位是否符合規定
                 checkFormValidity() {
@@ -740,7 +806,6 @@
                     this.sendEmail.mailBody = this.emailInfoModal.emailBody;
                     this.sendEmail.ToEmail = this.emailInfoModal.emailReceiver;
                     //  console.log(sendEmail.ToEmail);
-
 
                     var Data = JSON.stringify({
                         email: 'user@example.com',
@@ -775,7 +840,7 @@
                         }
                     });
 
-
+                    this.resetEmailInfoModal()
                 },
 
                 //顯示商品明細
@@ -814,8 +879,9 @@
 
 
                 resetProductDetailsModel() {
-                    this.productDetailsModel.title = ''
-                    this.productDetailsModel.fields.map(x => x.value = '');
+                    this.$refs['my-modal'].hide()
+                    // this.productDetailsModel.title = ''
+                    // this.productDetailsModel.fields.map(x => x.value = '');
                 },
 
                 ProductModify(id) {
