@@ -1,58 +1,4 @@
-﻿     <!-- Page Wrapper -->
-<div id="wrapper">
-
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">ePal 管理員</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>儀錶板</span>
-            </a>
-        </li>
-
-        <!-- Order Manager -->
-        <li class="nav-item">
-            <a class="nav-link" href="order.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>訂單管理</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="product.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>商品管理</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="member.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>會員管理</span>
-            </a>
-        </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    </ul>
+﻿
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -741,7 +687,7 @@
                     try {
                         this.enableEdit = false;
                         this.isOnSaleBusy.DetailsBusy = true;
-                        this.memberManageModel.title = `商品明細 - ID：${item.memberId}`;
+                        this.memberManageModel.title = `會員明細 - ID：${item.memberId}`;
                         console.log(this.memberManageModel.title);
                         this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
                         let response = await this.getMemberManage(this.urlList.memberManages, item.memberId)
