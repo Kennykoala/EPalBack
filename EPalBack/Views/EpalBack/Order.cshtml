@@ -668,7 +668,7 @@
                         console.log(item)
                         this.enableEdit = false;
                         this.isOnSaleBusy.DetailsBusy = true;
-                        this.productDetailsModel.title = `商品明細 - ID：${item.orderId}`
+                        this.productDetailsModel.title = `訂單明細 - ID：${item.orderId}`
                         this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
                         console.log(this.urlList.productDetails)
                         let response = await this.getOrderDetails(this.urlList.productDetails, item.orderId)
