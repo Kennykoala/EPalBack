@@ -13,7 +13,6 @@ namespace EPalBack.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
@@ -81,7 +80,7 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
-        [Authorize]
+        
         [HttpGet]
         public ApiResponse GetAllCount()
         {
@@ -151,6 +150,36 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, null);
             }
         }
+
+        [HttpGet]
+        public ApiResponse GetMemberagerange()
+        {
+            try
+            {
+                var result = _dashboardService.GetMemberagerange();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+       
+        [HttpGet]
+        public ApiResponse GetCounttotal()
+        {
+            try
+            {
+                var result = _dashboardService.GetCounttotal();
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
+
+
 
         [HttpPost]
         public ApiResponse DeleteProduct(ProductDetailsViewModel request)
