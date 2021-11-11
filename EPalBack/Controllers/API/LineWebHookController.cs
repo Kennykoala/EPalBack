@@ -50,7 +50,7 @@ namespace isRock.Template
             try
             {
                 //準備回覆訊息
-                if (LineEvent.message.text == "請選擇遊戲種類")
+                if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲種類")
                 {
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
 
@@ -66,164 +66,112 @@ namespace isRock.Template
                             {"Apex Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg"},
                             {"Teamfight Tactics","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg"},
                             {"Overwatch","https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp"},
-                            {"Sleep Call","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png"},
-
+                            {"Sleep Call","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png"}
                         };
 
                     foreach (var entry in categories)
                     {
-                        msg.quickReply.items.Add(
-                            new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
                     }
-
-
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "League of Legends", "League of Legends", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "E-Chat", "E-Chat", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636109371/echat_gilliu.png")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Movie", "Movie", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/123_gbwopz.png")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Valorant", "Valorant", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/valorant_fgkohz.jpg")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Custom Game", "Custom Game", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/customgame_ed6fk6.png")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Minecraft", "Minecraft", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/Minecraft_pehjd8.png")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Among Us", "Among Us", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/Among_Us_Promo_2018_zahymb.jpg")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Apex Legends", "Apex Legends", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Teamfight Tactics", "Teamfight Tactics", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Overwatch", "Overwatch", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp")));
-                    //msg.quickReply.items.Add(
-                    //    new isRock.LineBot.QuickReplyMessageAction(
-                    //        "Sleep Call", "Sleep Call", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png")));
-                    ////msg.quickReply.items.Add(
-                    ////    new isRock.LineBot.QuickReplyMessageAction(
-                    ////        "Animal Crossing: New Horizons", "Animal Crossing: New Horizons", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
-                    ////msg.quickReply.items.Add(
-                    ////    new isRock.LineBot.QuickReplyMessageAction(
-                    ////        "Others", "Others", new Uri("https://arock.blob.core.windows.net/blogdata201809/if_emoji_emoticon-35_3638429.png")));
-
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
-                else if (LineEvent.message.text == "請選擇陪玩師性別")
+                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇陪玩師性別")
                 {
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Gender");
 
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Male", "Male", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/male_tlilkj.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Female", "Female", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/female_r2c3ax.png")));
+                    Dictionary<string, string> genders = new Dictionary<string, string>()
+                        {
+                            {"Male","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/male_tlilkj.png"},
+                            {"Female","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/female_r2c3ax.png"}
+                        };
+
+                    foreach (var entry in genders)
+                    {
+                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                    }
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
-                else if (LineEvent.message.text == "請選擇陪玩師等級")
+                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇陪玩師等級")
                 {
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Creator Level");
 
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Bronze", "Bronze", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/bronze-medal_ctlq2m.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Silver", "Silver", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/silver-medal_xjpyav.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Gold", "Gold", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/gold-medal_zdhiri.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Platnum", "Platnum", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/platinum_i7wweb.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Diamond", "Diamond", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/diamond_wpbsda.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Master", "Master", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-master-48_swujzl.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Challenger", "Challenger", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-climbing-16_fchyqb.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "Unranked", "Unranked", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-bookmark_kvs8zr.gif")));
+                    Dictionary<string, string> levels = new Dictionary<string, string>()
+                        {
+                            {"Bronze","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/bronze-medal_ctlq2m.png"},
+                            {"Silver","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/silver-medal_xjpyav.png"},
+                            {"Gold","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/gold-medal_zdhiri.png"},
+                            {"Platnum","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/platinum_i7wweb.png"},
+                            {"Diamond","https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-master-48_swujzl.png"},
+                            {"Master","https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-master-48_swujzl.png"},
+                            {"Challenger","https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-climbing-16_fchyqb.png"},
+                            {"Unranked","https://res.cloudinary.com/djamumruo/image/upload/v1636124878/icons8-bookmark_kvs8zr.gif"},
+                        };
+
+                    foreach (var entry in levels)
+                    {
+                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                    }
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
-                else if (LineEvent.message.text == "請選擇遊戲產品價格")
+                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲產品價格")
                 {
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Unitprice");
 
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "$1~$5", "$1~$5", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "$5~$10", "$5~$10", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "$10~$20", "$10~$20", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "$20 up", "$20 up", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png")));
+                    Dictionary<string, string> price = new Dictionary<string, string>()
+                        {
+                            {"$1~$5","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png"},
+                            {"$5~$10","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png"},
+                            {"$10~$20","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png"},
+                            {"$20 up","https://res.cloudinary.com/djamumruo/image/upload/v1636118882/money-bag_vvjzg6.png"}
+                        };
+
+                    foreach (var entry in price)
+                    {
+                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                    }
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
-                else if (LineEvent.message.text == "請選擇遊戲伺服器")
+                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲伺服器")
                 {
                     isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Server");
 
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "OCE", "OCE", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "NA", "NA", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "LAN", "LAN", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "BR", "BR", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "EU West", "EU West", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
-                    msg.quickReply.items.Add(
-                        new isRock.LineBot.QuickReplyMessageAction(
-                            "EU NorthEast", "EU NorthEast", new Uri("https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png")));
+                    Dictionary<string, string> servers = new Dictionary<string, string>()
+                        {
+                            {"OCE","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"},
+                            {"NA","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"},
+                            {"LAN","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"},
+                            {"BR","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"},
+                            {"EU West","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"},
+                            {"EU NorthEast","https://res.cloudinary.com/djamumruo/image/upload/v1636119151/icons8-server-48_zbdqgm.png"}
+                        };
+
+                    foreach (var entry in servers)
+                    {
+                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                    }
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
                     bot.PushMessage(UserId, msg);
                     return Ok();
 
                 }
-                else if (LineEvent.message.text == "關於EPal")
+                else if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "關於EPal")
                 {
                     responseMsg = "EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。\n" +
                                   "於訊息視窗輸入關鍵字可能無法正確找到相關商品，請務必優先透過選單進行篩選。";
