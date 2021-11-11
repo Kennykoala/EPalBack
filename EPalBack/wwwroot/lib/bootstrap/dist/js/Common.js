@@ -11,12 +11,13 @@ function TokenSetter(value) {
 }
 
 function TokenGetter() {
+    //console.log(localStorage.getItem('accessToken'))
     return localStorage.getItem('accessToken');
-    console.log(localStorage.getItem('accessToken'))
 }
 
 //產生Authorize Bear 格式
 function GenCurrentAuthBarerFormat() {
+    console.log(`Bearer ${TokenGetter()}`)
     return `Bearer ${TokenGetter()}`;
 }
 
