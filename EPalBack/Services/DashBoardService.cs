@@ -29,8 +29,7 @@ namespace EPalBack.Services
 
             //取得這個月的第一天
             //var FirstDayofMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            //當月第一天
-        
+            //當月第一天     
             var orderFebruarytotaldata = new DateTime(2021, 1, 31).AddMonths(1);
             var orderMarchtotaldata = new DateTime(2021, 2, 28).AddMonths(1).AddDays(4);
             var orderApriltotaldata = new DateTime(2021, 3, 31).AddMonths(1);
@@ -86,7 +85,7 @@ namespace EPalBack.Services
             //result.MemberTotal = _member.GetAll().Count();
             //result.OrderTotal = _order.GetAll().Count();
             //result.CommentTotal = _comment.GetAll().Count();
-            
+           
 
             yield return result;
         }
@@ -99,6 +98,50 @@ namespace EPalBack.Services
 
 
             yield return result;
+        }
+
+        //public IEnumerable<TimeSpan> GetMemberagerange()
+        //{
+        //    // var result = new MemberagerangeViewModel();
+        //    List<TimeSpan> ages = new List<TimeSpan>() { 
+
+        //    };
+
+        //    var today = DateTime.Today;
+        //    //var age = _member.GetAll().Select(x=>x.BirthDay);
+        //    var age = _member.GetAll().Select(x => new MemberagerangeViewModel
+        //    {
+        //        BirthDay = (DateTime)x.BirthDay
+        //    });
+
+        //    var personage;
+        //    foreach (var i in age)
+        //    {
+        //        // var a = i.BirthDay.ToString();
+        //        //DateTime bir = new DateTime(i);
+        //        personage = today.Subtract(i.BirthDay);
+
+        //        //result.BirthDay = myDateTime - i;
+        //    }
+
+        //    //age.personage = 
+        //   return ages;
+
+        //}
+
+
+        public List<Addmemberrange> GetMemberagerange()
+        {
+            var age = _member.GetAll();
+            var today = DateTime.Today;
+           // var memberstatu = _member.GetAll().ToList();
+            var memberstatus = age.Select(m => new Addmemberrange
+            {             
+                BirthDay = (DateTime)m.BirthDay,
+                Age = today.Subtract((DateTime)m.BirthDay)/365
+            }).ToList();
+
+            return memberstatus;
         }
     }
 }
