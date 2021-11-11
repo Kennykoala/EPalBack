@@ -20,14 +20,42 @@ namespace isRock.Template
             _lineproductService = lineproductService;
         }
 
-        //private static Dictionary<string, Func<decimal, decimal, decimal>> _expressions
-        //    = new Dictionary<string, Func<decimal, decimal, decimal>>
+        //private static Dictionary<string[], Func<decimal, decimal, decimal>> _expressions
+        //    = new Dictionary<string[], Func<decimal, decimal, decimal>>
         //    {
-        //        {"請選擇遊戲種類" ,(x,y)=> x+y },
+        //        {new string[]{ "message", "text", "請選擇遊戲種類" } ,(x,y)=> x+y },
         //        {"-" ,(x,y)=> x-y },
         //        {"*" ,(x,y)=> x*y },
         //        {"/" ,(x,y)=> x/y },
         //    };
+
+
+        private isRock.LineBot.TextMessage showCategories()
+        {
+            isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
+
+            Dictionary<string, string> categories = new Dictionary<string, string>()
+                        {
+                            {"League of Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg"},
+                            {"E-Chat","https://res.cloudinary.com/djamumruo/image/upload/v1636109371/echat_gilliu.png"},
+                            {"Movie","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/123_gbwopz.png"},
+                            {"Valorant","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/valorant_fgkohz.jpg"},
+                            {"Custom Game","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/customgame_ed6fk6.png"},
+                            {"Minecraft","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/Minecraft_pehjd8.png"},
+                            {"Among Us","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/Among_Us_Promo_2018_zahymb.jpg"},
+                            {"Apex Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg"},
+                            {"Teamfight Tactics","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg"},
+                            {"Overwatch","https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp"},
+                            {"Sleep Call","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png"}
+                        };
+
+            foreach (var entry in categories)
+            {
+                msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+            }
+
+            return msg;
+        }
 
 
         [Route("api/LineBotWebHook")]
@@ -52,30 +80,30 @@ namespace isRock.Template
                 //準備回覆訊息
                 if (LineEvent.type.ToLower() == "message" && LineEvent.message.type.ToLower() == "text" && LineEvent.message.text == "請選擇遊戲種類")
                 {
-                    isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
+                    //isRock.LineBot.TextMessage msg = new isRock.LineBot.TextMessage("EPal Game Categories");
 
-                    Dictionary<string, string> categories = new Dictionary<string, string>()
-                        {
-                            {"League of Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg"},
-                            {"E-Chat","https://res.cloudinary.com/djamumruo/image/upload/v1636109371/echat_gilliu.png"},
-                            {"Movie","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/123_gbwopz.png"},
-                            {"Valorant","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/valorant_fgkohz.jpg"},
-                            {"Custom Game","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/customgame_ed6fk6.png"},
-                            {"Minecraft","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/Minecraft_pehjd8.png"},
-                            {"Among Us","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/Among_Us_Promo_2018_zahymb.jpg"},
-                            {"Apex Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg"},
-                            {"Teamfight Tactics","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg"},
-                            {"Overwatch","https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp"},
-                            {"Sleep Call","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png"}
-                        };
+                    //Dictionary<string, string> categories = new Dictionary<string, string>()
+                    //    {
+                    //        {"League of Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636109116/league-of-legends_vhzld0.jpg"},
+                    //        {"E-Chat","https://res.cloudinary.com/djamumruo/image/upload/v1636109371/echat_gilliu.png"},
+                    //        {"Movie","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/123_gbwopz.png"},
+                    //        {"Valorant","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/valorant_fgkohz.jpg"},
+                    //        {"Custom Game","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/customgame_ed6fk6.png"},
+                    //        {"Minecraft","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/Minecraft_pehjd8.png"},
+                    //        {"Among Us","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/Among_Us_Promo_2018_zahymb.jpg"},
+                    //        {"Apex Legends","https://res.cloudinary.com/djamumruo/image/upload/v1636118053/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w_pheafd.jpg"},
+                    //        {"Teamfight Tactics","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/tft-galaxies-header_xkkld3.jpg"},
+                    //        {"Overwatch","https://res.cloudinary.com/djamumruo/image/upload/v1636118292/overwatch_tapjhi.webp"},
+                    //        {"Sleep Call","https://res.cloudinary.com/djamumruo/image/upload/v1636118054/sellpcall_reovco.png"}
+                    //    };
 
-                    foreach (var entry in categories)
-                    {
-                        msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
-                    }
+                    //foreach (var entry in categories)
+                    //{
+                    //    msg.quickReply.items.Add(new isRock.LineBot.QuickReplyMessageAction(entry.Key, entry.Key, new Uri(entry.Value)));
+                    //}
 
                     isRock.LineBot.Bot bot = new isRock.LineBot.Bot(ChannelAccessToken);
-                    bot.PushMessage(UserId, msg);
+                    bot.PushMessage(UserId, showCategories());
                     return Ok();
 
                 }
