@@ -1,5 +1,112 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿
+@section TopCSS{ 
+    <link href="~/css/game.css" rel="stylesheet" />
 }
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <nav class="
+              navbar navbar-expand navbar-light
+              bg-white
+              topbar
+              mb-4
+              static-top
+              shadow
+            ">
+            <h3>遊戲管理</h3>
+        </nav>
+        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <b-container fluid>
+            <div id="gameapp" v-cloak>
+                <b-row>
+                    <b-col>
+                        <b-breadcrumb :items="breadcrumbs"></b-breadcrumb>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-table hover :items="items" :fields="fields" id="game-table" :per-page="perPage"
+                             :current-page="currentPage" small responsive="sm" stacked="md" show-empty>
+                        <template #cell(gameCover)="game">
+                            <b-img-lazy :src="game.item.gameCover" thumbnail></b-img-lazy>
+                        </template>
+                        <template #cell(gameCoverMini)="game" class="mini">
+                            <b-img-lazy :src="game.item.gameCoverMini" thumbnail></b-img-lazy>
+                        </template>
+                        <template #cell(manage)="game">
+                            <b-button variant="info" @@click="[showModal(), gameInfo(game.index)]">
+                                遊戲明細
+                            </b-button>
+                        </template>
+                    </b-table>
+                    <b-col lg="9" class="pag">
+                        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"
+                                      aria-controls="game-table" size="md"></b-pagination>
+                    </b-col>
+                    <b-col lg="3" class="my-1">
+                        <b-form-group label="每頁顯示筆數" label-for="per-page-select" label-cols-sm="3"
+                                      label-cols-lg="9" content-cols="3" label-align-sm="right" label-size="sm"
+                                      class="mb-0">
+                            <b-form-select id="per-page-select" v-model="perPage" :options="pageOptions"
+                                           size="sm">
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-modal v-model="modalShow" header-bg-variant="info" header-text-variant="light" hide-footer
+                         size="lg" :id="this.item">
+                    <b-form-checkbox v-model="enableEdit" name="check-button" switch>
+                        啟用以編輯
+                    </b-form-checkbox>
+                    <b-row>
+                        <b-col class="modalImgMini">
+                            <b-img-lazy :src="modalData.gameCoverMini" thumbnail></b-img-lazy>
+                        </b-col>
+                    </b-row>
+
+                    <b-row class="my-2">
+                        <b-col lg="6">
+                            <label :for="fields[1].key">{{fields[1].label}}</label>
+                            <b-form-input :id="fields[1].key" v-model="modalData.gameName" :disabled="!enableEdit"></b-form-input>
+                        </b-col>
+                        <b-col lg="6">
+                            <label :for="fields[4].key">{{fields[4].label}}</label>
+
+                            <b-form-input :id="fields[4].key" v-model="modalData.gameAlias" :disabled="!enableEdit"></b-form-input>
+                        </b-col>
+                    </b-row>
+                    <b-row class="my-2">
+                        <b-col lg="6">
+                            <label :for="fields[5].key">{{fields[5].label}}</label>
+                            <b-form-input :id="fields[5].key" v-model="modalData.playerCount" readonly></b-form-input>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <hr>
+                        <b-col>
+                            <b-button variant="primary">更新</b-button>
+                            <b-button variant="secondary" @@click="showModal">取消</b-button>
+                        </b-col>
+                    </b-row>
+                </b-modal>
+            </div>
+        </b-container>
+    </div>
+    <!-- End of Main Content -->
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+</div>
+
+@section endJS{
+    <script src="~/js/game.js"></script>
+            }
+
