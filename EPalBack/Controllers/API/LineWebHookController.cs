@@ -229,7 +229,7 @@ namespace isRock.Template
 
 
         public delegate bool MyKey(string userInput, List<LineProductViewModel> allproduct);
-        public delegate bool MyValue(string userInput, List<LineProductViewModel> allproduct, string userToken);
+        public delegate void MyValue(string userInput, List<LineProductViewModel> allproduct, string userToken);
 
         private bool condition1(string keyword, List<LineProductViewModel> allproduct)
         {
@@ -241,7 +241,7 @@ namespace isRock.Template
             return gamename;
         }
 
-        private bool showApple(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        private void showApple(string keyword, List<LineProductViewModel> allproduct, string userToken)
         {
 
             //CarouselTemplate
@@ -289,7 +289,7 @@ namespace isRock.Template
                 CarouselTemplate.columns.Add(Column);
             }
             ReplyMessage(userToken, CarouselTemplate);
-            return true;
+
         }
 
 
@@ -326,7 +326,7 @@ namespace isRock.Template
                     };
                 //挑選出Key的回傳值為true的Method來執行
                 d.Where(x => x.Key(userInput, allproduct) == true).FirstOrDefault().Value.Invoke(userInput, allproduct, userToken);
-
+                return true;
 
 
                 ////判斷遊戲種類
@@ -643,8 +643,8 @@ namespace isRock.Template
             }
 
 
-            ReplyMessage(token, CarouselTemplate);
-            return true;
+            //ReplyMessage(token, CarouselTemplate);
+            //return true;
         }
 
 
