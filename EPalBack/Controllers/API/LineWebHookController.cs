@@ -229,7 +229,7 @@ namespace isRock.Template
 
 
         public delegate bool MyKey(string userInput, List<LineProductViewModel> allproduct);
-        public delegate isRock.LineBot.CarouselTemplate MyValue(string userInput, List<LineProductViewModel> allproduct);
+        public delegate bool MyValue(string userInput, List<LineProductViewModel> allproduct, string userToken);
 
         private bool condition1(string keyword, List<LineProductViewModel> allproduct)
         {
@@ -241,7 +241,7 @@ namespace isRock.Template
             return gamename;
         }
 
-        private static isRock.LineBot.CarouselTemplate showApple(string keyword, List<LineProductViewModel> allproduct)
+        private bool showApple(string keyword, List<LineProductViewModel> allproduct, string userToken)
         {
 
             //CarouselTemplate
@@ -288,7 +288,8 @@ namespace isRock.Template
                 };
                 CarouselTemplate.columns.Add(Column);
             }
-            return CarouselTemplate;
+            ReplyMessage(userToken, CarouselTemplate);
+            return true;
         }
 
 
@@ -315,6 +316,7 @@ namespace isRock.Template
 
                 string userInput = keyword;//使用者輸入的文字
                 List <LineProductViewModel> allproduct= result;
+                string userToken = token;
 
                 Dictionary<MyKey, MyValue> d = new Dictionary<MyKey, MyValue>()
                     {
@@ -323,7 +325,7 @@ namespace isRock.Template
                      //{new MyKey(condition3),  new MyValue(showCherry)},
                     };
                 //挑選出Key的回傳值為true的Method來執行
-                d.Where(x => x.Key(userInput, allproduct) == true).FirstOrDefault().Value.Invoke(userInput, allproduct);
+                d.Where(x => x.Key(userInput, allproduct) == true).FirstOrDefault().Value.Invoke(userInput, allproduct, userToken);
 
 
 
