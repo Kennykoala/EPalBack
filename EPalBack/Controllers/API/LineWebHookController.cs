@@ -610,6 +610,7 @@ namespace isRock.Template
             //int genderenum = 0;
             try
             {
+
                 var result = _lineproductService.GetAllProduct().ToList();
 
 
