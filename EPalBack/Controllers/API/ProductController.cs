@@ -24,20 +24,6 @@ namespace EPalBack.Controllers
             _dashboardService = dashBoardService;
         }
 
-        
-        [HttpGet]
-        public ApiResponse GetAllProduct()
-        {
-            try
-            {
-                var result = _productService.GetAllProduct();
-                return new ApiResponse(APIStatus.Success, string.Empty, result);
-            }
-            catch(Exception ex)
-            {
-                return new ApiResponse(APIStatus.Fail, ex.Message, null);
-            }
-        }
         [Authorize]
         [HttpGet]
         public ApiResponse GetProductByOnSale()
@@ -179,21 +165,7 @@ namespace EPalBack.Controllers
             }
         }
 
-
-
-        [HttpPost]
-        public ApiResponse DeleteProduct(ProductDetailsViewModel request)
-        {
-            try
-            {
-                _productService.DeleteProduct(request);
-                return new ApiResponse(APIStatus.Success, string.Empty, true);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(APIStatus.Fail, ex.Message, false);
-            }
-        }
+        [Authorize]
         [HttpPost]
         public ApiResponse UpdateProduct(ProductDetailsViewModel request)
         {
@@ -207,6 +179,8 @@ namespace EPalBack.Controllers
                 return new ApiResponse(APIStatus.Fail, ex.Message, false);
             }
         }
+
+        [Authorize]
         [HttpPut]
         public ApiResponse UpdateProductSalesStatus(ProductStatusViewModel request)
         {

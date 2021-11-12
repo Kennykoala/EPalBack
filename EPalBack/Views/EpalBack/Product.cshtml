@@ -662,8 +662,17 @@
 
                 //更新ProductDetail
                 UpdateProduct() {
-                    axios.post('/api/product/UpdateProduct', this.inputData)
-                        .then(res => {
+                    let cfg = {
+                        method: 'post',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': GenCurrentAuthBarerFormat(),
+                        },
+                        data: this.inputData,
+
+                        url: '/api/product/UpdateProduct'
+                    };
+                      axios(cfg).then(res => {
                             console.log(res)
 
                             if (res.data.status == 0 && res.data.result == true && this.tabIndex == 0) {
