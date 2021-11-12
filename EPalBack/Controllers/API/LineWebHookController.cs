@@ -164,7 +164,7 @@ namespace isRock.Template
                 }
                 else if (linetype == "message" && linemsgtype == "text" && linemsgtext == "關於EPal")
                 {
-                    responseMsg = "EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。\n" +
+                    responseMsg = "https://res.cloudinary.com/djamumruo/image/upload/v1636682885/epallogo_pd77fp.png EPal提供您客製化的遊戲服務平台，可點選各功能鍵，篩選出適合您的陪玩師，並連結至EPal網站，查看遊戲產品明細。\n\n" +
                                   "於訊息視窗輸入關鍵字可能無法正確找到相關商品，請務必優先透過選單進行篩選。";
                 }
                 else if(linetype == "message" && linemsgtype == "text")
