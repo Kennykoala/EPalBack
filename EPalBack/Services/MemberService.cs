@@ -5,21 +5,27 @@ using System.Threading.Tasks;
 using EPalBack.ViewModels;
 using EPalBack.Repositories;
 using EPalBack.DataModels;
+using System.Net.Mail;
 
 namespace EPalBack.Services
 {
     public class MemberService
     {
-        private readonly Repository<Member> _repository;
+        private readonly Repository<Member> _member;
+        private readonly Repository<Language> _language;
 
-        public MemberService(Repository<Member> repository)
+
+
+
+        public MemberService(Repository<Member> member, Repository<Language> language)
         {
-            _repository = repository;
+            _member = member;
+            _language = language;
         }
 
         public IEnumerable<MembrViewModel> GetMembers()
         {
-            return _repository.GetAll().Select(x => new MembrViewModel()
+            return _member.GetAll().Select(x => new MembrViewModel()
             {
                 MemberId = x.MemberId,
                 MemberName = x.MemberName,
@@ -41,7 +47,7 @@ namespace EPalBack.Services
 
         public IEnumerable<MembrViewModel> GetMemberManage(int id)
         {
-            var member = _repository.GetAll().Where(x => x.MemberId == id);
+            var member = _member.GetAll().Where(x => x.MemberId == id);
 
             return member.Select(x => new MembrViewModel()
             {
@@ -61,7 +67,47 @@ namespace EPalBack.Services
                 ProfilePicture = x.ProfilePicture
             }).ToList();
 
+        }
+
+       public void UpdateMember(MembrViewModel request)
+        {
+            var member = _member.GetAll().FirstOrDefault(x => x.MemberId == request.MemberId);
+
+            member.MemberName = request.MemberName;
+            member.Phone = request.Phone;
+            member.Email = request.Email;
+            member.Country = request.Country;
+            member.LanguageId = request.LanguageId;
+            member.Gender = request.Gender;
+
+            _member.Update(member);
+            _member.SaveChanges();
 
         }
+
+        public IEnumerable<LanguageViewModel> GetAllLanguage()
+        {
+            var result = new LanguageViewModel();
+            var LanguageAll = _language.GetAll().Select(L => new language
+            {
+                LanguageId = L.LanguageId,
+                LanguageName = L.LanguageName
+            }).ToList();
+            result.LanguageAll = LanguageAll;
+            yield return result;
+        }
+
+        //性別選單. (先測試,之後再確認能否濃縮成一份)
+        //public IEnumerable<LanguageViewModel> GetAllGender()
+        //{
+        //    var result = new LanguageViewModel();
+        //    var a =
+        //    //var GenderAll = _member.GetAll().Select(G => gender)
+        //}
+
+
     }
+
+
+    
 }

@@ -10,6 +10,7 @@ using EPalBack.ViewModels;
 
 namespace EPalBack.Controllers
 {
+    
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoginController : ControllerBase
@@ -27,6 +28,7 @@ namespace EPalBack.Controllers
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
+        
         [HttpPost]
         public IActionResult Login(LoginViewModel userdata)
         {
@@ -36,7 +38,8 @@ namespace EPalBack.Controllers
             }
             else
             {
-                throw new Exception("登入失敗，帳號或密碼錯誤");
+                //throw new Exception("登入失敗，帳號或密碼錯誤");
+                return null;
             }
         }
 

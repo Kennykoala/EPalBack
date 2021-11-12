@@ -1,323 +1,318 @@
-﻿
+﻿<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
 
-  
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
 
-        <!-- Main Content -->
-        <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <h3>訂單管理</h3>
-            </nav>
-            <!-- End of Topbar -->
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <main role="main" class="pb-3">
-                    <div class="container-fluid">
-                        <div id="app" v-cloak>
-                            <!-- <button v-on:click="test">click</button> -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <template>
-                                        <b-breadcrumb :items="breadCrumbItems"></b-breadcrumb>
-                                    </template>
-                                </div>
-                                <div class="col-12">
-                                    <b-tabs content-class="pt-2 pb-2 px-2" fill v-model="tabIndex">
-                                        <b-tab active>
-                                            <template #title>
-                                                <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
-                                                <strong>全部訂單</strong>
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <h3>訂單管理</h3>
+        </nav>
+        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <main role="main" class="pb-3">
+                <div class="container-fluid">
+                    <div id="app" v-cloak>
+                        <!-- <button v-on:click="test">click</button> -->
+                        <div class="row">
+                            <div class="col-12">
+                                <template>
+                                    <b-breadcrumb :items="breadCrumbItems"></b-breadcrumb>
+                                </template>
+                            </div>
+                            <div class="col-12">
+                                <b-tabs content-class="pt-2 pb-2 px-2" fill v-model="tabIndex">
+                                    <b-tab active>
+                                        <template #title>
+                                            <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
+                                            <strong>全部訂單</strong>
+                                        </template>
+                                        <b-row>
+                                            <b-col lg="9" class="my-1"></b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="關鍵字搜尋" label-for="filter-input"
+                                                              label-cols-sm="4" label-align-sm="right" label-size="sm"
+                                                              class="mb-0">
+                                                    <b-input-group size="sm">
+                                                        <b-form-input id="filter-input" v-model="filter"
+                                                                      type="search" placeholder="請輸入關鍵字">
+                                                        </b-form-input>
+                                                    </b-input-group>
+                                                </b-form-group>
+                                            </b-col>
+                                        </b-row>
+                                        <b-table v-if="tabIndex==0" :items="items" :fields="fields"
+                                                 responsive="sm" stacked="md" show-empty small :per-page="perPage"
+                                                 :current-page="currentPage" :filter="filter">
+                                            <template #table-busy>
+                                                <div class="text-center text-danger my-2">
+                                                    <b-spinner class="align-middle"></b-spinner>
+                                                    <strong>Loading...</strong>
+                                                </div>
                                             </template>
-                                            <b-row>
-                                                <b-col lg="9" class="my-1"></b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="關鍵字搜尋" label-for="filter-input"
-                                                                  label-cols-sm="4" label-align-sm="right" label-size="sm"
-                                                                  class="mb-0">
-                                                        <b-input-group size="sm">
-                                                            <b-form-input id="filter-input" v-model="filter"
-                                                                          type="search" placeholder="請輸入關鍵字">
-                                                            </b-form-input>
-                                                        </b-input-group>
-                                                    </b-form-group>
-                                                </b-col>
-                                            </b-row>
-                                            <b-table v-if="tabIndex==0" :items="items" :fields="fields"
-                                                     responsive="sm" stacked="md" show-empty small :per-page="perPage"
-                                                     :current-page="currentPage" :filter="filter">
-                                                <template #table-busy>
-                                                    <div class="text-center text-danger my-2">
-                                                        <b-spinner class="align-middle"></b-spinner>
-                                                        <strong>Loading...</strong>
-                                                    </div>
-                                                </template>
 
-                                                <template #cell(productImg)="row">
-                                                    <b-img-lazy class="pdlistimg" :src="row.item.productImg"
-                                                                thumbnail>
-                                                    </b-img-lazy>
-                                                </template>
-
-                                                <template #cell(actions)="row">
-                                                    <b-button variant="info" size="sm"
-                                                              v-on:click="info(row.item, row.index, $event.target)"
-                                                              class="mr-1">
-                                                        訂單詳情
-                                                    </b-button>
-                                                    <!-- <b-button size="sm"
-                                                        v-on:click="ShowUpdateSaleConfirm(row.item.productId,SalesConfirmBoxProps.nonSale)"
-                                                        class="mr-1">
-                                                        商品下架
-                                                    </b-button> -->
-                                                </template>
-                                            </b-table>
-                                            <b-row class="">
-                                                <b-col lg="6" class="ml-auto">
-                                                    <b-pagination v-model="currentPage" :total-rows="totalRows"
-                                                                  :per-page="perPage" align="fill" size="md" class="my-0">
-                                                    </b-pagination>
-                                                </b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="每頁顯示筆數" label-for="per-page-select"
-                                                                  label-cols-sm="3" label-cols-lg="9" content-cols="3"
-                                                                  label-align-sm="right" label-size="sm" class="mb-0">
-                                                        <b-form-select id="per-page-select" v-model="perPage"
-                                                                       :options="pageOptions" size="sm"></b-form-select>
-                                                    </b-form-group>
-                                                </b-col>
-                                            </b-row>
-                                        </b-tab>
-
-
-                                        <b-tab>
-                                            <template #title>
-                                                <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
-                                                <strong>未付款訂單</strong>
+                                            <template #cell(productImg)="row">
+                                                <b-img-lazy class="pdlistimg" :src="row.item.productImg"
+                                                            thumbnail>
+                                                </b-img-lazy>
                                             </template>
-                                            <b-row>
-                                                <b-col lg="9" class="my-1"></b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="關鍵字搜尋" label-for="filter-input"
-                                                                  label-cols-sm="4" label-align-sm="right" label-size="sm"
-                                                                  class="mb-0">
-                                                        <b-input-group size="sm">
-                                                            <b-form-input id="filter-input" v-model="filter"
-                                                                          type="search" placeholder="請輸入關鍵字">
-                                                            </b-form-input>
-                                                        </b-input-group>
-                                                    </b-form-group>
 
-                                                </b-col>
-                                            </b-row>
-                                            <b-table v-if="tabIndex==1" :items="items" :fields="fields"
-                                                     responsive="sm" stacked="md" show-empty small :per-page="perPage"
-                                                     :current-page="currentPage" :filter="filter">
-                                                <template #table-busy>
-                                                    <div class="text-center text-danger my-2">
-                                                        <b-spinner class="align-middle"></b-spinner>
-                                                        <strong>Loading...</strong>
-                                                    </div>
-                                                </template>
-
-                                                <template #cell(productImg)="row">
-                                                    <b-img-lazy class="pdlistimg" :src="row.item.productImg"
-                                                                thumbnail>
-                                                    </b-img-lazy>
-                                                </template>
-
-                                                <template #cell(actions)="row">
-                                                    <b-button variant="info" size="sm"
-                                                              v-on:click="info(row.item, row.index, $event.target)"
-                                                              class="mr-1">
-                                                        訂單詳情
-                                                    </b-button>
-
-                                                </template>
-                                            </b-table>
-                                            <b-row class="">
-                                                <b-col lg="6" class="ml-auto">
-                                                    <b-pagination v-model="currentPage" :total-rows="totalRows"
-                                                                  :per-page="perPage" align="fill" size="md" class="my-0">
-                                                    </b-pagination>
-                                                </b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="每頁顯示筆數" label-for="per-page-select"
-                                                                  label-cols-sm="3" label-cols-lg="9" content-cols="3"
-                                                                  label-align-sm="right" label-size="sm" class="mb-0">
-                                                        <b-form-select id="per-page-select" v-model="perPage"
-                                                                       :options="pageOptions" size="sm"></b-form-select>
-                                                    </b-form-group>
-                                                </b-col>
-                                            </b-row>
-                                        </b-tab>
-
-
-                                        <b-tab>
-                                            <template #title>
-                                                <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
-                                                <strong>已付款訂單</strong>
+                                            <template #cell(actions)="row">
+                                                <b-button variant="info" size="sm"
+                                                          v-on:click="info(row.item, row.index, $event.target)"
+                                                          class="mr-1">
+                                                    訂單詳情
+                                                </b-button>
+                                                <!-- <b-button size="sm"
+                                                    v-on:click="ShowUpdateSaleConfirm(row.item.productId,SalesConfirmBoxProps.nonSale)"
+                                                    class="mr-1">
+                                                    商品下架
+                                                </b-button> -->
                                             </template>
-                                            <b-row>
-                                                <b-col lg="9" class="my-1"></b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="關鍵字搜尋" label-for="filter-input"
-                                                                  label-cols-sm="4" label-align-sm="right" label-size="sm"
-                                                                  class="mb-0">
-                                                        <b-input-group size="sm">
-                                                            <b-form-input id="filter-input" v-model="filter"
-                                                                          type="search" placeholder="請輸入關鍵字">
-                                                            </b-form-input>
-                                                        </b-input-group>
-                                                    </b-form-group>
-
-                                                </b-col>
-                                            </b-row>
-                                            <b-table v-if="tabIndex==2" :items="items" :fields="fields"
-                                                     responsive="sm" stacked="md" show-empty small :per-page="perPage"
-                                                     :current-page="currentPage" :filter="filter">
-                                                <template #table-busy>
-                                                    <div class="text-center text-danger my-2">
-                                                        <b-spinner class="align-middle"></b-spinner>
-                                                        <strong>Loading...</strong>
-                                                    </div>
-                                                </template>
-
-                                                <template #cell(productImg)="row">
-                                                    <b-img-lazy class="pdlistimg" :src="row.item.productImg"
-                                                                thumbnail>
-                                                    </b-img-lazy>
-                                                </template>
-
-                                                <template #cell(actions)="row">
-                                                    <b-button variant="info" size="sm"
-                                                              v-on:click="info(row.item, row.index, $event.target)"
-                                                              class="mr-1">
-                                                        訂單詳情
-                                                    </b-button>
-
-                                                </template>
-                                            </b-table>
-                                            <b-row class="">
-                                                <b-col lg="6" class="ml-auto">
-                                                    <b-pagination v-model="currentPage" :total-rows="totalRows"
-                                                                  :per-page="perPage" align="fill" size="md" class="my-0">
-                                                    </b-pagination>
-                                                </b-col>
-                                                <b-col lg="3" class="my-1">
-                                                    <b-form-group label="每頁顯示筆數" label-for="per-page-select"
-                                                                  label-cols-sm="3" label-cols-lg="9" content-cols="3"
-                                                                  label-align-sm="right" label-size="sm" class="mb-0">
-                                                        <b-form-select id="per-page-select" v-model="perPage"
-                                                                       :options="pageOptions" size="sm"></b-form-select>
-                                                    </b-form-group>
-                                                </b-col>
-                                            </b-row>
-                                        </b-tab>
+                                        </b-table>
+                                        <b-row class="">
+                                            <b-col lg="6" class="ml-auto">
+                                                <b-pagination v-model="currentPage" :total-rows="totalRows"
+                                                              :per-page="perPage" align="fill" size="md" class="my-0">
+                                                </b-pagination>
+                                            </b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="每頁顯示筆數" label-for="per-page-select"
+                                                              label-cols-sm="3" label-cols-lg="9" content-cols="3"
+                                                              label-align-sm="right" label-size="sm" class="mb-0">
+                                                    <b-form-select id="per-page-select" v-model="perPage"
+                                                                   :options="pageOptions" size="sm"></b-form-select>
+                                                </b-form-group>
+                                            </b-col>
+                                        </b-row>
+                                    </b-tab>
 
 
+                                    <b-tab>
+                                        <template #title>
+                                            <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
+                                            <strong>未付款訂單</strong>
+                                        </template>
+                                        <b-row>
+                                            <b-col lg="9" class="my-1"></b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="關鍵字搜尋" label-for="filter-input"
+                                                              label-cols-sm="4" label-align-sm="right" label-size="sm"
+                                                              class="mb-0">
+                                                    <b-input-group size="sm">
+                                                        <b-form-input id="filter-input" v-model="filter"
+                                                                      type="search" placeholder="請輸入關鍵字">
+                                                        </b-form-input>
+                                                    </b-input-group>
+                                                </b-form-group>
+
+                                            </b-col>
+                                        </b-row>
+                                        <b-table v-if="tabIndex==1" :items="items" :fields="fields"
+                                                 responsive="sm" stacked="md" show-empty small :per-page="perPage"
+                                                 :current-page="currentPage" :filter="filter">
+                                            <template #table-busy>
+                                                <div class="text-center text-danger my-2">
+                                                    <b-spinner class="align-middle"></b-spinner>
+                                                    <strong>Loading...</strong>
+                                                </div>
+                                            </template>
+
+                                            <template #cell(productImg)="row">
+                                                <b-img-lazy class="pdlistimg" :src="row.item.productImg"
+                                                            thumbnail>
+                                                </b-img-lazy>
+                                            </template>
+
+                                            <template #cell(actions)="row">
+                                                <b-button variant="info" size="sm"
+                                                          v-on:click="info(row.item, row.index, $event.target)"
+                                                          class="mr-1">
+                                                    訂單詳情
+                                                </b-button>
+
+                                            </template>
+                                        </b-table>
+                                        <b-row class="">
+                                            <b-col lg="6" class="ml-auto">
+                                                <b-pagination v-model="currentPage" :total-rows="totalRows"
+                                                              :per-page="perPage" align="fill" size="md" class="my-0">
+                                                </b-pagination>
+                                            </b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="每頁顯示筆數" label-for="per-page-select"
+                                                              label-cols-sm="3" label-cols-lg="9" content-cols="3"
+                                                              label-align-sm="right" label-size="sm" class="mb-0">
+                                                    <b-form-select id="per-page-select" v-model="perPage"
+                                                                   :options="pageOptions" size="sm"></b-form-select>
+                                                </b-form-group>
+                                            </b-col>
+                                        </b-row>
+                                    </b-tab>
 
 
-                                        <!-- Info modal -->
-                                        <b-modal :id="productDetailsModel.id" :title="productDetailsModel.title"
-                                                 header-bg-variant="info" header-text-variant="light" hide-footer
-                                                 size="lg" v-on:hidden="resetProductDetailsModel" ref="my-modal"
-                                                 scrollable>
-                                            <el-switch v-model="enableEdit" active-text="啟用以編輯" class="mb-3">
-                                            </el-switch>
-                                            <!-- <template #default> -->
-                                            <div v-if="isOnSaleBusy.DetailsBusy"
-                                                 class="busy text-center text-danger my-2">
-                                                <b-spinner class="align-middle"></b-spinner>
-                                                <strong>Loading...</strong>
-                                            </div>
-                                            <div class="details-body" v-if="!isOnSaleBusy.DetailsBusy">
+                                    <b-tab>
+                                        <template #title>
+                                            <b-icon icon="arrow-up-square-fill" aria-hidden="true"></b-icon>
+                                            <strong>已付款訂單</strong>
+                                        </template>
+                                        <b-row>
+                                            <b-col lg="9" class="my-1"></b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="關鍵字搜尋" label-for="filter-input"
+                                                              label-cols-sm="4" label-align-sm="right" label-size="sm"
+                                                              class="mb-0">
+                                                    <b-input-group size="sm">
+                                                        <b-form-input id="filter-input" v-model="filter"
+                                                                      type="search" placeholder="請輸入關鍵字">
+                                                        </b-form-input>
+                                                    </b-input-group>
+                                                </b-form-group>
+
+                                            </b-col>
+                                        </b-row>
+                                        <b-table v-if="tabIndex==2" :items="items" :fields="fields"
+                                                 responsive="sm" stacked="md" show-empty small :per-page="perPage"
+                                                 :current-page="currentPage" :filter="filter">
+                                            <template #table-busy>
+                                                <div class="text-center text-danger my-2">
+                                                    <b-spinner class="align-middle"></b-spinner>
+                                                    <strong>Loading...</strong>
+                                                </div>
+                                            </template>
+
+                                            <template #cell(productImg)="row">
+                                                <b-img-lazy class="pdlistimg" :src="row.item.productImg"
+                                                            thumbnail>
+                                                </b-img-lazy>
+                                            </template>
+
+                                            <template #cell(actions)="row">
+                                                <b-button variant="info" size="sm"
+                                                          v-on:click="info(row.item, row.index, $event.target)"
+                                                          class="mr-1">
+                                                    訂單詳情
+                                                </b-button>
+
+                                            </template>
+                                        </b-table>
+                                        <b-row class="">
+                                            <b-col lg="6" class="ml-auto">
+                                                <b-pagination v-model="currentPage" :total-rows="totalRows"
+                                                              :per-page="perPage" align="fill" size="md" class="my-0">
+                                                </b-pagination>
+                                            </b-col>
+                                            <b-col lg="3" class="my-1">
+                                                <b-form-group label="每頁顯示筆數" label-for="per-page-select"
+                                                              label-cols-sm="3" label-cols-lg="9" content-cols="3"
+                                                              label-align-sm="right" label-size="sm" class="mb-0">
+                                                    <b-form-select id="per-page-select" v-model="perPage"
+                                                                   :options="pageOptions" size="sm"></b-form-select>
+                                                </b-form-group>
+                                            </b-col>
+                                        </b-row>
+                                    </b-tab>
+
+
+
+
+                                    <!-- Info modal -->
+                                    <b-modal :id="productDetailsModel.id" :title="productDetailsModel.title"
+                                             header-bg-variant="info" header-text-variant="light" hide-footer
+                                             size="lg" v-on:hidden="resetProductDetailsModel" ref="my-modal"
+                                             scrollable>
+                                        <el-switch v-model="enableEdit" active-text="啟用以編輯" class="mb-3">
+                                        </el-switch>
+                                        <!-- <template #default> -->
+                                        <div v-if="isOnSaleBusy.DetailsBusy"
+                                             class="busy text-center text-danger my-2">
+                                            <b-spinner class="align-middle"></b-spinner>
+                                            <strong>Loading...</strong>
+                                        </div>
+                                        <div class="details-body" v-if="!isOnSaleBusy.DetailsBusy">
+                                            <div class="row justify-content-center">
+
                                                 <div class="row justify-content-center">
-
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <label for="">訂單編號</label>
-                                                            <input class="form-control" type="text"
-                                                                   v-model="inputData.orderId" readonly>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <label for="">玩家姓名</label>
-                                                            <input class="form-control" type="text"
-                                                                   v-model="inputData.memberName" readonly>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <label for="">商品價格</label>
-                                                            <input class="form-control" type="number" min="0"
-                                                                   v-model="inputData.unitprice" readonly>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <label for="">商品數量</label>
-                                                            <input class="form-control" type="number" min="0"
-                                                                   v-model="inputData.quantity"
-                                                                   :readonly="!enableEdit">
-                                                        </div>
-
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <label for="">付款序號</label>
-                                                            <el-input class="content" type="textarea" :rows="1"
-                                                                      v-model="inputData.orderConfirmation" disabled>
-                                                            </el-input>
-                                                        </div>
-
-
-                                                        <div class="col-12 col-md-6 my-3">
-                                                            <!-- <span class="demonstration">時間</span> -->
-                                                            {{inputData.tempDesired}}
-                                                            <label for="">時間</label>
-                                                            <el-date-picker v-model="inputData.tempDesired"
-                                                                            type="datetime" value-format="yyyy-MM-dd HH:mm:ss"
-                                                                            placeholder="選擇日期时间" :disabled="!enableEdit">
-                                                            </el-date-picker>
-                                                        </div>
-
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">訂單編號</label>
+                                                        <input class="form-control" type="text"
+                                                               v-model="inputData.orderId" readonly>
                                                     </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">玩家姓名</label>
+                                                        <input class="form-control" type="text"
+                                                               v-model="inputData.memberName" readonly>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">商品價格</label>
+                                                        <input class="form-control" type="number" min="0"
+                                                               v-model="inputData.unitprice" readonly>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">商品數量</label>
+                                                        <input class="form-control" type="number" min="0"
+                                                               v-model="inputData.quantity"
+                                                               :readonly="!enableEdit">
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <label for="">付款序號</label>
+                                                        <el-input class="content" type="textarea" :rows="1"
+                                                                  v-model="inputData.orderConfirmation" disabled>
+                                                        </el-input>
+                                                    </div>
+
+
+                                                    <div class="col-12 col-md-6 my-3">
+                                                        <!-- <span class="demonstration">時間</span> -->
+                                                        {{inputData.tempDesired}}
+                                                        <label for="">時間</label>
+                                                        <el-date-picker v-model="inputData.tempDesired"
+                                                                        type="datetime" value-format="yyyy-MM-dd HH:mm:ss"
+                                                                        placeholder="選擇日期时间" :disabled="!enableEdit">
+                                                        </el-date-picker>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <!-- </template> -->
-                                            <div class="modal-footer my-3">
-                                                <button type="button" class="btn btn-secondary"
-                                                        @@click="hideModal">
-                                                    取消
-                                                </button>
-                                                <button v-on:click="UpdateOrder" type="button"
-                                                        class="btn btn-primary">
-                                                    更新
-                                                </button>
-                                            </div>
-                                        </b-modal>
-                                    </b-tabs>
-                                </div>
+                                        </div>
+                                        <!-- </template> -->
+                                        <div class="modal-footer my-3">
+                                            <button type="button" class="btn btn-secondary"
+                                                    @@click="hideModal">
+                                                取消
+                                            </button>
+                                            <button v-on:click="UpdateOrder" type="button"
+                                                    class="btn btn-primary">
+                                                更新
+                                            </button>
+                                        </div>
+                                    </b-modal>
+                                </b-tabs>
                             </div>
                         </div>
                     </div>
-                </main>
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
                 </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
-
+            </main>
+        </div>
+        <!-- /.container-fluid -->
     </div>
+    <!-- End of Main Content -->
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+</div>
 
 
-    <!-- End of Content Wrapper -->
-
-
+<!-- End of Content Wrapper -->
 <!-- End of Page Wrapper -->
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
@@ -673,7 +668,7 @@
                         console.log(item)
                         this.enableEdit = false;
                         this.isOnSaleBusy.DetailsBusy = true;
-                        this.productDetailsModel.title = `商品明細 - ID：${item.orderId}`
+                        this.productDetailsModel.title = `訂單明細 - ID：${item.orderId}`
                         this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
                         console.log(this.urlList.productDetails)
                         let response = await this.getOrderDetails(this.urlList.productDetails, item.orderId)
@@ -865,4 +860,13 @@
             height: 100px;
         }
     </style>
-} 
+}
+
+@section topJS{
+
+    <script>
+        if (localStorage.getItem('accessToken') == null) {
+            window.location.href = '/Epalback/login';
+        }
+    </script>
+}

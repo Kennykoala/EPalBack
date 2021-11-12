@@ -1,0 +1,956 @@
+﻿
+
+    
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <h3>會員管理</h3>
+        </nav>
+        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <main role="main" class="pb-3">
+                <div class="container-fluid">
+                    <div id="app" v-cloak>
+                        <div class="row">
+                            <div class="col-12">
+                                <template>
+                                    <b-breadcrumb :items="breadCrumbItems"></b-breadcrumb>
+                                </template>
+                            </div>
+                            <div class="col-12">
+                                <b-tab active>
+                                    <b-row>
+
+                                            <b-col lg="6" class="my-1">
+                                      
+                                            </b-col>
+                                            <b-col lg="6" class="my-1">
+                                                <b-form-group label="搜尋" label-for="filter-input" label-cols-sm="3"
+                                                              label-align-sm="right" label-size="sm" class="mb-0">
+                                                    <b-input-group size="sm">
+                                                        <b-form-input id="filter-input" v-model="filter"
+                                                                      type="search" placeholder="請輸入關鍵字"></b-form-input>
+
+                                                    <b-input-group-append>
+                                                        <b-button :disabled="!filter" @@click="filter = ''">
+                                                            清空
+                                                        </b-button>
+                                                    </b-input-group-append>
+                                                </b-input-group>
+                                            </b-form-group>
+                                        </b-col>
+                                        <b-col lg="6" class="my-1">
+                                        </b-col>
+
+                                    </b-row>
+
+
+
+                                    <b-table v-if="tabIndex==0" :items="items" :fields="fields" responsive="sm"
+                                             stacked="md" show-empty small :per-page="perPage"
+                                             :current-page="currentPage" :filter="filter">
+                                        <template #table-busy>
+                                            <div class="text-center text-danger my-2">
+                                                <b-spinner class="align-middle"></b-spinner>
+                                                <strong>Loading...</strong>
+                                            </div>
+                                        </template>
+
+
+
+
+
+
+                                        <template #cell(profilePicture)="row">
+                                            <b-img-lazy class="pdlistimg" :src="row.item.profilePicture"
+                                                        thumbnail>
+                                            </b-img-lazy>
+                                        </template>
+
+                                        <template #cell(actions)="row">
+                                            <b-button variant="infoM" size="sm"
+                                                      v-on:click="infoM(row.item, row.index, $event.target)"
+                                                      class="mr-1 btn-primary">
+                                                編輯
+                                            </b-button>
+                                            <b-button size="sm"
+                                                      v-on:click="sendEmailInfo(row.item, row.index, $event.target)"
+                                                      class="mr-1 btn-success">
+                                                寄信
+                                            </b-button>
+                                        </template>
+                                    </b-table>
+                                    <b-row class="">
+                                        <b-col lg="6" class="ml-auto">
+                                            <b-pagination v-model="currentPage" :total-rows="totalRows"
+                                                          :per-page="perPage" align="fill" size="md" class="my-0">
+                                            </b-pagination>
+                                        </b-col>
+                                        <b-col lg="3" class="my-1">
+                                            <b-form-group label="每頁顯示筆數" label-for="per-page-select"
+                                                          label-cols-sm="3" label-cols-lg="9" content-cols="3"
+                                                          label-align-sm="right" label-size="sm" class="mb-0">
+                                                <b-form-select id="per-page-select" v-model="perPage"
+                                                               :options="pageOptions" size="sm"></b-form-select>
+                                            </b-form-group>
+                                        </b-col>
+                                    </b-row>
+
+                                        <!-- memberManageModel.title -->
+                                        <!-- Info 編輯modal -->
+                                        <b-modal :id="memberManageModel.id" :title="memberManageModel.title"
+                                                 header-bg-variant="info"
+                                                 header-text-variant="black" hide-footer
+                                                 size="lg"
+                                                 v-on:hidden="resetProductDetailsModel"
+                                                 ref="my-modal"
+                                                 scrollable>
+                                            <!-- <template #default> -->
+                                            <div v-if="isOnSaleBusy.DetailsBusy"
+                                                 class="busy text-center text-danger my-2">
+                                                <b-spinner class="align-middle"></b-spinner>
+                                                <strong>Loading...</strong>
+                                            </div>
+
+                                        <!-- 商品明細卡片 -->
+                                        <div class="details-body" v-if="!isOnSaleBusy.DetailsBusy">
+                                            <div class="row" v-model="memberManageModel.fields">
+                                            </div>
+
+                                            <div class="row">
+
+                                                <!-- 使用Elelment組件 -->
+                                                <el-switch v-model="enableEdit" active-text="啟用以編輯" class="mb-3">
+                                                </el-switch>
+
+                                                <div class="col-12 col-md-12 mb-3">
+                                                    <b-img-lazy thumbnail center :src="MemberUpdate.profilePicture"
+                                                                v-bind="productDetailsimgProps"
+                                                                class="pddetailsimg">
+                                                    </b-img-lazy>
+                                                </div>
+
+
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">姓名</label>
+                                                    <input class="form-control"
+                                                           type="text"
+                                                           v-model="MemberUpdate.memberName"
+                                                           :readonly="!enableEdit">
+                                                </div>
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">手機</label>
+                                                    <input class="form-control"
+                                                           type="text"
+                                                           v-model="MemberUpdate.phone"
+                                                           :readonly="!enableEdit">
+                                                </div>
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">註冊信箱</label>
+                                                    <input class="form-control"
+                                                           type="text"
+                                                           v-model="MemberUpdate.email"
+                                                           :readonly="!enableEdit">
+                                                </div>
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">國家</label>
+                                                    <input class="form-control"
+                                                           type="text"
+                                                           v-model="MemberUpdate.country"
+                                                           :readonly="!enableEdit">
+                                                </div>
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">性別</label>
+                                                    <br>
+                                                    <el-select v-model="MemberUpdate.gender"
+                                                               :disabled="!enableEdit">
+                                                        <el-option v-for="item in genderlist"
+                                                                   :key="item.gender" :value="item.id"
+                                                                   :label="item.gender">
+                                                        </el-option>
+                                                </div>
+                                                <div class="col-12 col-md-6 my-3">
+                                                    <label for="">語言</label>
+                                                    <br>
+                                                    <el-select v-model="MemberUpdate.languageId"
+                                                               :disabled="!enableEdit">
+                                                        <el-option v-for="item in languagelist.options"
+                                                                   :key="item.value" :value="item.value"
+                                                                   :label="item.label">
+                                                        </el-option>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- </template> -->
+                                        <div class="modal-footer my-3">
+                                            <button type="button" class="btn btn-secondary"
+                                                    @@click="hideModal">
+                                                取消
+                                            </button>
+                                            <button v-on:click="UpdateMember" type="button"
+                                                    class="btn btn-primary">
+                                                更新
+                                            </button>
+                                        </div>
+                                    </b-modal>
+
+                                    <!-- emailInfoModal寄信樣板的資料結構 -->
+                                    <b-modal :id="emailInfoModal.id" :title="emailInfoModal.title" ok-title="寄信"
+                                             @@ok="handleEmailOk" cancel-title="取消" @@show="resetEmailInfoModal"
+                                             @@hide="resetEmailInfoModal">
+
+                                        <b-card-text>收件信箱:{{emailInfoModal.emailReceiver}}</b-card-text>
+                                        <form ref="form" submit.stop.prevent="emailSubmit" class="edit-form">
+                                            <b-form-group label="信件標題"
+                                                          label-for="emailInfoModal.emailTitle-input"
+                                                          invalid-feedback="此為必填選項"
+                                                          :state="emailInfoModalemailTitleState">
+                                                <b-form-input id="emailInfoModal.emailTitle-input"
+                                                              :state="emailInfoModalemailTitleState"
+                                                              v-model="emailInfoModal.emailTitle" placeholder="請輸入標題"
+                                                              required></b-form-input>
+                                            </b-form-group>
+                                            <b-form-group label="信件內容"
+                                                          label-for="emailInfoModal.emailBody-input"
+                                                          invalid-feedback="此為必填選項" :state="emailInfoModalemailBodyState">
+                                                <b-form-textarea id="emailInfoModal.emailBody-input"
+                                                                 v-model="emailInfoModal.emailBody" placeholder="請輸入內容"
+                                                                 rows="3" :state="emailInfoModalemailBodyState" max-rows="6"
+                                                                 required></b-form-textarea>
+                                            </b-form-group>
+                                        </form>
+                                    </b-modal>
+
+                                </b-tab>
+                                <b-tab>
+                                    <!-- <template #title>
+                                            <b-icon icon="arrow-down-square-fill" aria-hidden="true"></b-icon>
+                                            <strong>已下架商品</strong>
+                                        </template> -->
+                                    <b-row>
+                                        <b-col lg="9" class="my-1"></b-col>
+                                        <b-col lg="3" class="my-1">
+                                            <b-form-group label="關鍵字搜尋" label-for="filter-input"
+                                                          label-cols-sm="4" label-align-sm="right" label-size="sm"
+                                                          class="mb-0">
+                                                <b-input-group size="sm">
+                                                    <b-form-input id="filter-input" v-model="filter"
+                                                                  type="search" placeholder="請輸入關鍵字">
+                                                    </b-form-input>
+                                                </b-input-group>
+                                            </b-form-group>
+                                        </b-col>
+                                    </b-row>
+                                    <b-table v-if="tabIndex==1" :items="items" :fields="fields">
+                                        <template #table-busy>
+                                            <div class="text-center text-danger my-2">
+                                                <b-spinner class="align-middle"></b-spinner>
+                                                <strong>Loading...</strong>
+                                            </div>
+                                        </template>
+
+
+
+                                        <template #cell(productImg)="row">
+                                            <b-img-lazy v-bind="simplifyproductimgProps" class="pdlistimg"
+                                                        :src="row.item.productImg" thumbnail>
+                                            </b-img-lazy>
+                                        </template>
+
+                                        <template #cell(actions)="row">
+                                            <b-button variant="primary" size="sm"
+                                                      v-on:click="ProductModify(row.item.productId)" class="mr-1">
+                                                商品編輯
+                                            </b-button>
+                                            <b-button variant="success" size="sm"
+                                                      v-on:click="ShowUpdateSaleConfirm(row.item.productId,SalesConfirmBoxProps.onSale)"
+                                                      class="mr-1">
+                                                商品上架
+                                            </b-button>
+                                        </template>
+                                    </b-table>
+
+                                    <b-row>
+                                        <b-col lg="6" class="ml-auto">
+                                            <b-pagination v-model="currentPage" :total-rows="totalRows"
+                                                          :per-page="perPage" align="fill" size="md" class="my-0">
+                                            </b-pagination>
+                                        </b-col>
+                                        <b-col lg="3" class="my-1">
+                                            <b-form-group label="每頁顯示筆數" label-for="per-page-select"
+                                                          label-cols-sm="3" label-cols-lg="9" content-cols="3"
+                                                          label-align-sm="right" label-size="sm" class="mb-0">
+                                                <b-form-select id="per-page-select" v-model="perPage"
+                                                               :options="pageOptions" size="sm"></b-form-select>
+                                            </b-form-group>
+                                        </b-col>
+                                    </b-row>
+
+                                </b-tab>
+                                </b-tabs>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+<!-- toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Axios -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+
+@section topCSS
+{
+    <style>
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            color: #28a745;
+        }
+
+        #app .tab-content {
+            background-color: #fff;
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .breadcrumb {
+            padding: 0 0 0 0px;
+            background-color: transparent;
+            font-size: 0.875rem;
+        }
+
+        .pdlistimg {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+}
+
+@section endJS{
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                items: [],
+                fields: [
+                    { key: 'memberId', label: '編號', sortable: true, sortDirection: 'desc' },
+                    { key: 'profilePicture', label: '頭像', sortable: false, sortDirection: 'desc' },
+                    { key: 'memberName', label: '會員名稱', sortable: true, sortDirection: 'desc' },
+                    { key: 'phone', label: '手機', sortable: true, sortDirection: 'desc' },
+                    { key: 'email', label: '註冊信箱', class: 'text-center' },
+                    { key: 'backRegistDate', label: '註冊日期', class: 'text-center', sortable: true, sortDirection: 'desc' },
+                    { key: 'actions', label: '會員管理' },
+
+                ],
+                currentitem: null,
+                tabIndex: 0,
+                totalRows: 1,
+                currentPage: 1,
+                perPage: 5,
+                pageOptions: [5, 10, 20],
+                sortBy: '',
+                sortDesc: false,
+                //預設排序順序 小 -> 大
+                sortDirection: 'asc',
+                filter: null,
+                filterOn: [],
+                currentMember: [],
+                productDetailsModel: {
+                    id: 'product-details-modal',
+                    fields: [
+                        { key: 'memberName', title: '商品姓名', value: '' },
+                        { key: 'memberId', title: '會員編號', value: '' },
+                        { key: 'profilePicture', title: '玩家圖片', value: '' },
+                        { key: 'phone', title: '手機', value: '' },
+                        { key: 'email', title: '註冊信箱', value: '' },
+                    ]
+                },
+                memberManageModel: {
+                    id: 'product-details-modal',
+                    fields: [
+                        { key: 'memberName', title: '商品姓名', value: '', },
+                        { key: 'memberId', title: '會員編號', value: '', readonlys: 'false' },
+                        { key: 'profilePicture', title: '玩家圖片', value: '' },
+                        { key: 'phone', title: '手機', value: '' },
+                        { key: 'email', title: '註冊信箱', value: '' },
+                        { key: 'country', title: '國家', value: '' },
+                        { key: 'title', title: '標題', value: '' },
+
+                    ]
+                },
+                // 儲存編輯會員資料的變數
+                MemberUpdate: { memberName: "", phone: "", country: "", memberId: "", profilePicture: "", languageId: "", gender: "" },
+                // 修改編輯會員資料的變數
+                ChangeMember: { memberName: "", phone: "", country: "", memberId: "", password: "123456", email: "", gender: "", languageId: "" },
+
+
+
+                emailInfoModal: {
+                    id: 'emailInfo-modal',
+                    title: '寄信給會員編號XX',
+                    memberId: '',
+                    emailReceiver: '',
+                    emailTitle: '',
+                    emailBody: '',
+                },
+                /*寄件輸入欄位的基本判斷*/
+                emailInfoModalemailTitleState: null,
+                emailInfoModalemailBodyState: null,
+                /*寄件資料AJAX發送的儲存物件*/
+                sendEmail: { MailBody: "", ToEmail: "", Subject: "" },
+
+
+                //描述頁面是否忙碌中，EX:進行非同步作業
+                isOnSaleBusy: { PageBusy: false, DetailsBusy: false },
+                isNonSaleBusy: { PageBusy: false, DetailsBusy: false },
+
+                // url列表
+                urlList: {
+                    simplifyproductsOnSale: 'http://localhost:34800/api/product/getallproduct',
+                    productDetails: 'http://localhost:34800/api/product/getproductDetails',
+                    memberManages: 'http://localhost:34800/api/Member/GetMemberManage',
+                    memberFeebackEmail: 'http://localhost:34800/api/Member/PostMemberEmail',
+                    memberLanguageList: 'http://localhost:34800/api/Member/GetAllLanguage'
+
+                },
+
+                //麵包屑
+                breadCrumbItems: [
+                    {
+                        text: '首頁',
+                        href: 'index.html'
+                    },
+                    {
+                        text: '會員列表',
+                        active: true
+                    }
+                ],
+                productDetailsimgProps: {
+                    blank: true,
+                    blankColor: '#bbb',
+                    width: 240,
+                    height: 340
+                },
+                languagelist: {
+                    busy: false,
+                    options: [],
+                },
+                genderlist: [
+                    { gender: "男", id: "0" },
+                    { gender: "女", id: "1" }
+                ],
+                //switch
+                enableEdit: false
+            },
+            //商品明細圖片延遲載入的參數
+
+            created() {
+                //初始化頁面
+                this.tabIndex = 0;
+                this.getAllMember();
+                this.GetPageSelectors();
+            },
+            watch: {
+                tabIndex: function () {
+                    switch (this.tabIndex) {
+                        case 0:
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                items: function () {
+                    this.totalRows = this.items.length;
+                }
+            },
+            methods: {
+                //取得所有會員
+                getAllMember() {
+                    this.SetPageDefault();
+                    axios.get('http://localhost:34800/api/Member/GetMembers')
+                        .then(res => {
+                            if (res.data.status == 0) {
+                                this.items = res.data.result;
+                                console.log(res.data.result)
+                            }
+                        })
+                },
+                /*emailInfoModal寄信樣板的資料結構*/
+                sendEmailInfo(item, index, button) {
+                    this.emailInfoModal.title = `寄信給會員編號: ${JSON.stringify(item.memberId, null, 2)}`;
+                    this.emailInfoModal.emailReceiver = item.email;
+                    console.log(this.emailInfoModal.emailReceiver);
+                    this.emailInfoModal.memberId = item.memberId,
+                        console.log(item.memberId);
+                    this.$root.$emit('bv::show::modal', this.emailInfoModal.id, button)
+                },
+
+                //修改會員明細API
+                UpdateMember() {
+
+                    this.ChangeMember.memberId = this.MemberUpdate.memberId;
+                    this.ChangeMember.memberName = this.MemberUpdate.memberName;
+                    this.ChangeMember.phone = this.MemberUpdate.phone;
+                    this.ChangeMember.country = this.MemberUpdate.country;
+                    this.ChangeMember.email = this.MemberUpdate.email;
+                    // this.ChangeMember.gender = this.MemberUpdate.gender;
+                    // this.ChangeMember.gender = 1;
+                    this.ChangeMember.languageId = this.MemberUpdate.languageId;
+
+                    if (this.MemberUpdate.gender == "男生") {
+                        this.ChangeMember.gender = 0;
+                    } else {
+                        this.ChangeMember.gender = 1;
+                    }
+
+                    let Data = JSON.stringify(this.ChangeMember)
+
+
+                    console.log(Data);
+                    //axios.get().then(res => {
+                    //    )
+                    let source = this
+                    $.ajax({
+                        url: "/api/Member/UpdateMember",
+                        type: "POST",
+                        data: Data,
+                        async: true,
+                        contentType: 'application/json; charset=utf-8',
+                        processData: false,
+                        //dataType: "json",
+                        success: function (res) {
+                            
+                            console.log(res);
+                            console.log('修改成功');
+                            toastr.success('修改成功');
+                            console.log(this)
+                            source.getAllMember();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            console.log('修改失敗');
+                            toastr.error('修改失敗');
+                        }
+                        
+                    });
+                   
+                    this.hideModal();
+                    // this.getAllMember();
+                },
+
+                //取得全部表格Options
+                GetPageSelectors() {
+                    let language = this.GetSelectorOptions(this.urlList.memberLanguageList);
+
+                    console.log(language);
+                    return Promise.all([language])
+                        .then(res => {
+                            let language = res;
+
+                            this.languagelist.options = language[0].data.result[0].languageAll.map(x => { return { value: x.languageId, label: x.languageName } });
+                            console.log(this.languagelist.options);
+
+                        }).catch(err => {
+
+                            console.error(err);
+                        })
+
+                },
+                //透過API取得Options內容
+                GetSelectorOptions(url) {
+                    let cfg = {
+                        method: 'get',
+                        header: {
+                            'Content-type': 'application/json'
+                        },
+                        url: url
+                    };
+                    return axios(cfg);
+                },
+
+                hideModal() {
+                    this.$refs['my-modal'].hide()
+                },
+
+                //取得所有商品
+                getAllProduct() {
+                    this.SetPageDefault();
+                    axios.get('http://localhost:34800/api/product/getallproduct')
+                        .then(res => {
+                            if (res.data.status == 0) {
+                                this.items = res.data.result;
+                                console.log(res.data.result)
+                            }
+                        })
+                },
+
+                //設定頁面初始狀態
+                SetPageDefault() {
+                    this.items = [];
+                    this.totalRows = 1;
+                    this.currentPage = 1;
+                    this.perPage = 5;
+                    this.sortBy = '';
+                    this.sortDesc = false;
+                    this.filter = null;
+                },
+
+
+                //編輯會員明細
+                getMemberManage(uri, id) {
+                    let cfg = {
+                        method: 'get',
+                        headers: {
+                            'Content-type': 'application/json',
+                        },
+                        url: `${uri}/${id}`
+                    };
+                    console.log(cfg)
+                    return axios(cfg);
+                },
+
+                //編輯會員明細(讀取)API
+                async infoM(item, index, button) {
+                    try {
+                        this.enableEdit = false;
+                        this.isOnSaleBusy.DetailsBusy = true;
+                        this.memberManageModel.title = `會員明細 - ID：${item.memberId}`;
+                        console.log(this.memberManageModel.title);
+                        this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
+                        let response = await this.getMemberManage(this.urlList.memberManages, item.memberId)
+
+                        if (response.status == 200) {
+                            let data = response.data.result;
+                            let newdata = data[0];
+                            this.MemberUpdate.memberName = newdata.memberName;
+                            this.MemberUpdate.phone = newdata.phone;
+                            this.MemberUpdate.email = newdata.email;
+                            this.MemberUpdate.country = newdata.country;
+                            this.MemberUpdate.profilePicture = newdata.profilePicture;
+                            this.MemberUpdate.memberId = newdata.memberId;
+                            this.MemberUpdate.languageId = newdata.languageId;
+
+                            if (newdata.gender == 0) {
+                                this.MemberUpdate.gender = "男"
+                            } else {
+                                this.MemberUpdate.gender = "女"
+                            }
+
+                            // this.MemberUpdate.gender = newdata.gender;
+                            console.log(66666);
+                            console.log(this.MemberUpdate.languageId);
+                            // console.log(newdata)
+                            // console.log(newdata.memberName);
+
+                            for (let item of this.memberManageModel.fields) {
+
+                                item.value = `$${(newdata[item.key])}.0`;
+                                let temp = newdata[`${item.key}`];
+                                item.value = (temp != '') ? temp : '無'
+                            }
+                        }
+                        else {
+                            throw new UserException('UnKnown Error')
+                        }
+                    } catch (err) {
+
+                        console.log(err);
+                    } finally {
+                        this.isOnSaleBusy.DetailsBusy = false;
+                    }
+                },
+
+                //寄信
+                handleEmailOk() {
+                    this.emailSubmit();
+                },
+                //重製編輯Modal
+                resetMemberInfoModal() {
+                    this.memberManageModel.title = '';
+                    this.memberManageModel.fields.map(x => x.value = '');
+                },
+                //重置寄信
+                resetEmailInfoModal() {
+                    this.emailInfoModal.emailTitle = '';
+                    this.emailInfoModal.emailBody = '';
+                },
+                //檢查寄信欄位是否符合規定
+                checkFormValidity() {
+
+                },
+                //Post發送信件請求
+                emailSubmit() {
+
+                    this.sendEmail.mailTitle = this.emailInfoModal.emailTitle;
+                    this.sendEmail.mailBody = this.emailInfoModal.emailBody;
+                    this.sendEmail.ToEmail = this.emailInfoModal.emailReceiver;
+                    //  console.log(sendEmail.ToEmail);
+
+                    var Data = JSON.stringify({
+                        email: 'user@example.com',
+                        password: 'string',
+                        MailBody: this.sendEmail.mailBody,
+                        // ToEmail: 'johnson1990hitachi@gmail.com',
+                        ToEmail: this.sendEmail.ToEmail,
+                        Subject: this.emailInfoModal.emailTitle,
+                        // Subject: '12345'
+                    });
+
+
+
+                    $.ajax({
+                        url: "http://localhost:34800/api/MemberEmail",
+                        type: "POST",
+                        data: Data,
+                        async: true,
+                        contentType: 'application/json; charset=utf-8',
+                        processData: false,
+                        //dataType: "json",
+                        success: function (res) {
+                            console.log(res);
+
+                            console.log('寄信成功');
+                            //$("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            console.log('寄信失敗');
+                            //$("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
+                        }
+                    });
+
+                    this.resetEmailInfoModal()
+                },
+
+                //顯示商品明細
+                async info(item, index, button) {
+                    try {
+                        this.isOnSaleBusy.DetailsBusy = true;
+                        this.productDetailsModel.title = `商品明細 - ID：${item.memberId}`
+
+                        this.$root.$emit('bv::show::modal', this.productDetailsModel.id, button);
+                        let response = await this.getProductDetails(this.urlList.productDetails, item.memberId)
+
+
+                        if (response.status == 200) {
+                            let data = response.data.result;
+                            let newdata = data[0]
+                            console.log(newdata)
+                            for (let item of this.productDetailsModel.fields) {
+                                item.value = newdata[item.key];
+                                let temp = newdata[`${item.key}`];
+                                item.value = (temp != '') ? temp : '無'
+                            }
+                        }
+                        else {
+                            throw new UserException('UnKnown Error')
+                        }
+                    } catch (err) {
+
+                        console.log(err);
+                    } finally {
+                        this.isOnSaleBusy.DetailsBusy = false;
+                    }
+                    // console.log(productDetailsModel);
+                },
+
+
+
+
+                resetProductDetailsModel() {
+                    this.$refs['my-modal'].hide()
+                    // this.productDetailsModel.title = ''
+                    // this.productDetailsModel.fields.map(x => x.value = '');
+                },
+
+                ProductModify(id) {
+                    window.location.href = `/Product/Modify/${id}`;
+                }
+            }
+        })
+    </script>
+
+    <script>
+        //價錢三位一點
+        function CurrencyFormat(num) {
+            var parts = num.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return parts.join('.');
+        }
+        Vue.filter('CurrencyString', function (num = "") {
+            var parts = num.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return parts.join('.');
+        });
+
+        //日期時間格式化
+        function DateFormat(value, format) {
+            return moment(value).format(format || 'YYYY/MM/DD');
+        }
+        //日期格式化
+        Vue.filter('DateString', function (value, format) {
+            return moment(value).format(format || 'YYYY/MM/DD')
+        });
+
+        //超過指定內容長度以...取代
+        function StringContentFormat(content, maxlength = 1) {
+            if (maxlength <= 0 || content.length <= maxlength) {
+                return content;
+            }
+            else {
+                return content.substring(0, maxlength - 1) + '...';
+            }
+        }
+
+
+        //取得圖片的解析度
+        function GetImageDimensions(imageData) {
+            return new Promise((resovle, reject) => {
+                let img = new Image();
+                img.onload = () => {
+                    resovle({ width: img.width, height: img.height })
+                }
+                img.src = imageData;
+            });
+        }
+
+        //取得Quill Instance
+        function GetQuillInstance(selector) {
+
+            let toolbaroptions = [
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['link'],
+                ['blockquote', 'code-block'],
+
+                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+                [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+
+                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                [{ 'font': [] }],
+                [{ 'align': [] }],
+
+                ['clean']                                         // remove formatting button
+            ];
+
+            return new Quill(selector, {
+                modules: {
+                    toolbar: toolbaroptions,
+                },
+                theme: 'snow'
+            });
+        }
+
+        //取得URL的Blob資源
+        function GetBlobResourceFromURL(url) {
+            return axios({
+                method: 'get',
+                url: url,
+                responseType: 'blob'
+            })
+                .then(res => {
+                    return res.data;
+                })
+        }
+
+        //檔案讀取
+        function FileReaderByDataURL(file) {
+            return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.onload = (result) => {
+                    resolve(result);
+                }
+                reader.readAsDataURL(file);
+            })
+        }
+
+        function Byte2KiloByte(byte) {
+            return Math.floor(byte / 1024);
+        }
+    </script>
+
+
+}
+@section topJS{
+
+    <script>
+        if (localStorage.getItem('accessToken') == null) {
+            window.location.href = '/Epalback/login';
+        }
+    </script>
+}
