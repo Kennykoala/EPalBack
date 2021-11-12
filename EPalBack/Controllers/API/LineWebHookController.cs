@@ -20,7 +20,7 @@ namespace isRock.Template
 
         public delegate isRock.LineBot.TextMessage selectoption();
 
-        private static Dictionary<string, selectoption> _expressions
+        private static Dictionary<string, selectoption> quickdict
             = new Dictionary<string, selectoption>
             {
                 { "請選擇遊戲種類" , new selectoption(showCategories) },
@@ -152,13 +152,13 @@ namespace isRock.Template
                 var linemsgtext = LineEvent.message.text;
                 //string[] lineevent = new string[] { linetype, linemsgtype, linemsgtext };
 
-                var result = _expressions.ContainsKey(linemsgtext);             
+                var result = quickdict.ContainsKey(linemsgtext);             
 
                 //準備回覆訊息
                 if (linetype == "message" && linemsgtype == "text" && result == true)
                 {
                     //_expressions[lineevent].Invoke(UserId);
-                    var msg = _expressions[linemsgtext].Invoke();
+                    var msg = quickdict[linemsgtext].Invoke();
                     bot.PushMessage(UserId, msg);
                     return Ok();
                 }
