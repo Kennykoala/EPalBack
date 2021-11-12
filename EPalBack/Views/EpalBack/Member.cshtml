@@ -477,9 +477,9 @@
                 urlList: {
                     simplifyproductsOnSale: 'http://localhost:34800/api/product/getallproduct',
                     productDetails: 'http://localhost:34800/api/product/getproductDetails',
-                    memberManages: 'http://localhost:34800/api/Member/GetMemberManage',
-                    memberFeebackEmail: 'http://localhost:34800/api/Member/PostMemberEmail',
-                    memberLanguageList: 'http://localhost:34800/api/Member/GetAllLanguage'
+                    memberManages: '/api/Member/GetMemberManage',
+                    memberFeebackEmail: '/api/Member/PostMemberEmail',
+                    memberLanguageList: '/api/Member/GetAllLanguage'
 
                 },
 
@@ -538,7 +538,7 @@
                 //取得所有會員
                 getAllMember() {
                     this.SetPageDefault();
-                    axios.get('http://localhost:34800/api/Member/GetMembers')
+                    axios.get('/api/Member/GetMembers')
                         .then(res => {
                             if (res.data.status == 0) {
                                 this.items = res.data.result;
@@ -579,7 +579,7 @@
 
                     console.log(Data);
                     //axios.get().then(res => {
-                    //    )
+                    //    ).catch
                     let source = this
                     $.ajax({
                         url: "/api/Member/UpdateMember",
@@ -595,6 +595,7 @@
                             console.log('修改成功');
                             toastr.success('修改成功');
                             console.log(this)
+                            console.log('1')
                             source.getAllMember();
                         },
                         error: function (err) {
@@ -604,7 +605,7 @@
                         }
                         
                     });
-                   
+                    console.log('2')
                     this.hideModal();
                     // this.getAllMember();
                 },
