@@ -237,11 +237,80 @@ namespace isRock.Template
 
             //判斷遊戲種類
             bool gamename = allproduct.Any(x => x.GameName == keyword);
-
             return gamename;
         }
 
-        private void showApple(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        private bool condition2(string keyword, List<LineProductViewModel> allproduct)
+        {
+            //var result = _lineproductService.GetAllProduct();
+
+            //判斷性別
+            int genderenum = 0;
+            bool gender;
+            switch (keyword)
+            {
+                case "Male":
+                    gender = allproduct.Any(x => x.gender == 0);
+                    genderenum = 0;
+                    break;
+                case "Female":
+                    gender = allproduct.Any(x => x.gender == 1);
+                    genderenum = 1;
+                    break;
+                default:
+                    gender = false;
+                    break;
+            }
+            return gender;
+        }
+
+        private bool condition3(string keyword, List<LineProductViewModel> allproduct)
+        {
+            //var result = _lineproductService.GetAllProduct();
+
+            //判斷陪玩師等級
+            bool level = allproduct.Any(x => x.Level == keyword);
+            return level;
+        }
+
+        private bool condition4(string keyword, List<LineProductViewModel> allproduct)
+        {
+            //var result = _lineproductService.GetAllProduct();
+
+            //判斷遊戲產品價格
+            bool productprice;
+            switch (keyword)
+            {
+                case "$1~$5":
+                    productprice = allproduct.Any(x => x.UnitPrice >= 1M && x.UnitPrice <= 5M);
+                    break;
+                case "$5~$10":
+                    productprice = allproduct.Any(x => x.UnitPrice >= 5M && x.UnitPrice <= 10M);
+                    break;
+                case "$10~$20":
+                    productprice = allproduct.Any(x => x.UnitPrice >= 10M && x.UnitPrice <= 20M);
+                    break;
+                case "$20 up":
+                    productprice = allproduct.Any(x => x.UnitPrice >= 20M);
+                    break;
+                default:
+                    productprice = false;
+                    break;
+            }
+            return productprice;
+        }
+
+        private bool condition5(string keyword, List<LineProductViewModel> allproduct)
+        {
+            //var result = _lineproductService.GetAllProduct();
+
+            //判斷遊戲伺服器
+            bool server = allproduct.Any(x => x.Server == keyword);
+            return server;
+        }
+
+
+        private void showCategory(string keyword, List<LineProductViewModel> allproduct, string userToken)
         {
 
             //CarouselTemplate
@@ -292,6 +361,237 @@ namespace isRock.Template
 
         }
 
+        private void showGender(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        {
+
+            //CarouselTemplate
+            var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+            var rnd = new Random();
+
+            int genderenum = 0;
+            var bycat = allproduct.Where(x => x.gender == genderenum).Select(x => new LineProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.MemberName,
+                GameName = x.GameName,
+                Server = x.Server,
+                Level = x.Level,
+                Position = x.Position,
+                CreatorImg = x.CreatorImg
+            })
+                    .OrderBy(x => rnd.Next()).Take(5);
+
+            foreach (var cat in bycat)
+            {
+                var creatorimg = cat.CreatorImg;
+                var memberName = cat.MemberName;
+                var price = cat.UnitPrice.ToString();
+                var proId = cat.ProductId;
+                var productname = cat.GameName;
+
+                var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+                    proId);
+
+                var carouseltext = string.Format("{0} {1}${2}",
+                            cat.MemberName,
+                            Environment.NewLine,
+                            cat.UnitPrice);
+
+                var actions = new List<isRock.LineBot.TemplateActionBase>();
+                actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+
+                var Column = new isRock.LineBot.Column
+                {
+                    text = carouseltext,
+                    title = productname,
+                    thumbnailImageUrl = new Uri(creatorimg),
+                    actions = actions
+                };
+                CarouselTemplate.columns.Add(Column);
+
+            }
+            ReplyMessage(userToken, CarouselTemplate);
+
+        }
+
+
+        private void showLevel(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        {
+
+            //CarouselTemplate
+            var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+            var rnd = new Random();
+
+            var bycat = allproduct.Where(x => x.Level == keyword).Select(x => new LineProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.MemberName,
+                GameName = x.GameName,
+                Server = x.Server,
+                Level = x.Level,
+                Position = x.Position,
+                CreatorImg = x.CreatorImg
+            })
+                               .OrderBy(x => rnd.Next()).Take(5);
+
+            foreach (var cat in bycat)
+            {
+                var creatorimg = cat.CreatorImg;
+                var memberName = cat.MemberName;
+                var price = cat.UnitPrice.ToString();
+                var proId = cat.ProductId;
+                var productname = cat.GameName;
+
+                var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+                    proId);
+
+                var carouseltext = string.Format("{0} {1}${2}",
+                            cat.MemberName,
+                            Environment.NewLine,
+                            cat.UnitPrice);
+
+                var actions = new List<isRock.LineBot.TemplateActionBase>();
+                actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+
+                var Column = new isRock.LineBot.Column
+                {
+                    text = carouseltext,
+                    title = productname,
+                    thumbnailImageUrl = new Uri(creatorimg),
+                    actions = actions
+                };
+                CarouselTemplate.columns.Add(Column);
+
+            }
+            ReplyMessage(userToken, CarouselTemplate);
+        }
+
+        private void showPrice(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        {
+
+            //CarouselTemplate
+            var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+            var rnd = new Random();
+
+            var pricelist = new List<LineProductViewModel>();
+            //判斷遊戲產品價格
+            switch (keyword)
+            {
+                case "$1~$5":
+                    pricelist = allproduct.Where(x => x.UnitPrice >= 1M && x.UnitPrice <= 5M).ToList();
+                    break;
+                case "$5~$10":
+                    pricelist = allproduct.Where(x => x.UnitPrice >= 5M && x.UnitPrice <= 10M).ToList();
+                    break;
+                case "$10~$20":
+                    pricelist = allproduct.Where(x => x.UnitPrice >= 10M && x.UnitPrice <= 20M).ToList();
+                    break;
+                case "$20 up":
+                    pricelist = allproduct.Where(x => x.UnitPrice >= 20M).ToList();
+                    break;
+                default:
+                    pricelist = null;
+                    break;
+            }
+
+            var bycat = pricelist.Select(x => new LineProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.MemberName,
+                GameName = x.GameName,
+                Server = x.Server,
+                Level = x.Level,
+                Position = x.Position,
+                CreatorImg = x.CreatorImg
+            })
+                                .OrderBy(x => rnd.Next()).Take(5);
+
+            foreach (var cat in bycat)
+            {
+                var creatorimg = cat.CreatorImg;
+                var memberName = cat.MemberName;
+                var price = cat.UnitPrice.ToString();
+                var proId = cat.ProductId;
+                var productname = cat.GameName;
+
+                var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+                    proId);
+
+                var carouseltext = string.Format("{0} {1}${2}",
+                            cat.MemberName,
+                            Environment.NewLine,
+                            cat.UnitPrice);
+
+                var actions = new List<isRock.LineBot.TemplateActionBase>();
+                actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+
+                var Column = new isRock.LineBot.Column
+                {
+                    text = carouseltext,
+                    title = productname,
+                    thumbnailImageUrl = new Uri(creatorimg),
+                    actions = actions
+                };
+                CarouselTemplate.columns.Add(Column);
+
+            }
+            ReplyMessage(userToken, CarouselTemplate);
+        }
+
+        private void showServer(string keyword, List<LineProductViewModel> allproduct, string userToken)
+        {
+
+            //CarouselTemplate
+            var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
+            var rnd = new Random();
+
+            var bycat = allproduct.Where(x => x.Server == keyword).Select(x => new LineProductViewModel()
+            {
+                ProductId = x.ProductId,
+                UnitPrice = x.UnitPrice,
+                MemberName = x.MemberName,
+                GameName = x.GameName,
+                Server = x.Server,
+                Level = x.Level,
+                Position = x.Position,
+                CreatorImg = x.CreatorImg
+            })
+                     .OrderBy(x => rnd.Next()).Take(5);
+
+            foreach (var cat in bycat)
+            {
+                var creatorimg = cat.CreatorImg;
+                var memberName = cat.MemberName;
+                var price = cat.UnitPrice.ToString();
+                var proId = cat.ProductId;
+                var productname = cat.GameName;
+
+                var prourl = string.Format("https://epal-frontstage.azurewebsites.net/ePals/Detail/{0}",
+                    proId);
+
+                var carouseltext = string.Format("{0} {1}${2}",
+                            cat.MemberName,
+                            Environment.NewLine,
+                            cat.UnitPrice);
+
+                var actions = new List<isRock.LineBot.TemplateActionBase>();
+                actions.Add(new isRock.LineBot.UriAction() { label = "Go To Detail Page", uri = new Uri(prourl) });
+
+                var Column = new isRock.LineBot.Column
+                {
+                    text = carouseltext,
+                    title = productname,
+                    thumbnailImageUrl = new Uri(creatorimg),
+                    actions = actions
+                };
+                CarouselTemplate.columns.Add(Column);
+
+            }
+            ReplyMessage(userToken, CarouselTemplate);
+        }
 
 
         public bool GetResult(string keyword, string token, string UserId)
@@ -307,8 +607,7 @@ namespace isRock.Template
             //CarouselTemplate
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
 
-            //int gendernum = keyword == "Male" ? 0 : 1;
-            int genderenum = 0;
+            //int genderenum = 0;
             try
             {
                 var result = _lineproductService.GetAllProduct().ToList();
@@ -320,9 +619,11 @@ namespace isRock.Template
 
                 Dictionary<MyKey, MyValue> d = new Dictionary<MyKey, MyValue>()
                     {
-                     {new MyKey(condition1),  new MyValue(showApple) },//各條件要做的事....
-                     //{new MyKey(condition2),  new MyValue(showBanana)},
-                     //{new MyKey(condition3),  new MyValue(showCherry)},
+                     {new MyKey(condition1),  new MyValue(showCategory) },
+                     {new MyKey(condition2),  new MyValue(showGender) },
+                     {new MyKey(condition3),  new MyValue(showLevel) },
+                     {new MyKey(condition4),  new MyValue(showPrice) },
+                     {new MyKey(condition5),  new MyValue(showServer) },
                     };
                 //挑選出Key的回傳值為true的Method來執行
                 d.Where(x => x.Key(userInput, allproduct) == true).FirstOrDefault().Value.Invoke(userInput, allproduct, userToken);
