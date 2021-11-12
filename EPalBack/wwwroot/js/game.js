@@ -6,7 +6,7 @@ new Vue({
         breadcrumbs: [
             {
                 text: '首頁',
-                href: 'index.html'
+                href: '/EpalBack/Home'
             },
             {
                 text: '遊戲列表',
