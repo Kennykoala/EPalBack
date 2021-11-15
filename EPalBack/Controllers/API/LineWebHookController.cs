@@ -368,8 +368,21 @@ namespace isRock.Template
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
             var rnd = new Random();
 
-            int genderenum = 1;
-            var bycat = allproduct.Where(x => x.gender == genderenum).Select(x => new LineProductViewModel()
+            var genderlist = new List<LineProductViewModel>();
+            switch (keyword)
+            {
+                case "Male":
+                    genderlist = allproduct.Where(x => x.gender == 1).ToList();
+                    break;
+                case "Female":
+                    genderlist = allproduct.Where(x => x.gender == 2).ToList();
+                    break;
+                default:
+                    genderlist = null;
+                    break;
+            }
+
+            var bycat = genderlist.Select(x => new LineProductViewModel()
             {
                 ProductId = x.ProductId,
                 UnitPrice = x.UnitPrice,
