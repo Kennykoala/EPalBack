@@ -231,7 +231,7 @@ namespace isRock.Template
         public delegate bool MyKey(string userInput, List<LineProductViewModel> allproduct);
         public delegate void MyValue(string userInput, List<LineProductViewModel> allproduct, string userToken);
 
-        private bool condition1(string keyword, List<LineProductViewModel> allproduct)
+        private bool isCategory(string keyword, List<LineProductViewModel> allproduct)
         {
             //var result = _lineproductService.GetAllProduct();
 
@@ -240,22 +240,22 @@ namespace isRock.Template
             return gamename;
         }
 
-        private bool condition2(string keyword, List<LineProductViewModel> allproduct)
+        private bool isGender(string keyword, List<LineProductViewModel> allproduct)
         {
             //var result = _lineproductService.GetAllProduct();
 
             //判斷性別
-            int genderenum = 0;
+            int genderenum = 1;
             bool gender;
             switch (keyword)
             {
                 case "Male":
-                    gender = allproduct.Any(x => x.gender == 0);
-                    genderenum = 0;
-                    break;
-                case "Female":
                     gender = allproduct.Any(x => x.gender == 1);
                     genderenum = 1;
+                    break;
+                case "Female":
+                    gender = allproduct.Any(x => x.gender == 2);
+                    genderenum = 2;
                     break;
                 default:
                     gender = false;
@@ -264,7 +264,7 @@ namespace isRock.Template
             return gender;
         }
 
-        private bool condition3(string keyword, List<LineProductViewModel> allproduct)
+        private bool isLevel(string keyword, List<LineProductViewModel> allproduct)
         {
             //var result = _lineproductService.GetAllProduct();
 
@@ -273,7 +273,7 @@ namespace isRock.Template
             return level;
         }
 
-        private bool condition4(string keyword, List<LineProductViewModel> allproduct)
+        private bool isPrice(string keyword, List<LineProductViewModel> allproduct)
         {
             //var result = _lineproductService.GetAllProduct();
 
@@ -300,7 +300,7 @@ namespace isRock.Template
             return productprice;
         }
 
-        private bool condition5(string keyword, List<LineProductViewModel> allproduct)
+        private bool isServer(string keyword, List<LineProductViewModel> allproduct)
         {
             //var result = _lineproductService.GetAllProduct();
 
@@ -368,7 +368,7 @@ namespace isRock.Template
             var CarouselTemplate = new isRock.LineBot.CarouselTemplate();
             var rnd = new Random();
 
-            int genderenum = 0;
+            int genderenum = 1;
             var bycat = allproduct.Where(x => x.gender == genderenum).Select(x => new LineProductViewModel()
             {
                 ProductId = x.ProductId,
@@ -613,18 +613,17 @@ namespace isRock.Template
 
                 var result = _lineproductService.GetAllProduct().ToList();
 
-
-                string userInput = keyword;//使用者輸入的文字
+                string userInput = keyword;
                 List <LineProductViewModel> allproduct= result;
                 string userToken = token;
 
                 Dictionary<MyKey, MyValue> d = new Dictionary<MyKey, MyValue>()
                     {
-                     {new MyKey(condition1),  new MyValue(showCategory) },
-                     {new MyKey(condition2),  new MyValue(showGender) },
-                     {new MyKey(condition3),  new MyValue(showLevel) },
-                     {new MyKey(condition4),  new MyValue(showPrice) },
-                     {new MyKey(condition5),  new MyValue(showServer) },
+                     {new MyKey(isCategory),  new MyValue(showCategory) },
+                     {new MyKey(isGender),  new MyValue(showGender) },
+                     {new MyKey(isLevel),  new MyValue(showLevel) },
+                     {new MyKey(isPrice),  new MyValue(showPrice) },
+                     {new MyKey(isServer),  new MyValue(showServer) },
                     };
                 //挑選出Key的回傳值為true的Method來執行
                 d.Where(x => x.Key(userInput, allproduct) == true).FirstOrDefault().Value.Invoke(userInput, allproduct, userToken);
