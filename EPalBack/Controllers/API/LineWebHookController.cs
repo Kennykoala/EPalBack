@@ -135,7 +135,7 @@ namespace isRock.Template
         [HttpPost]
         public IActionResult POST()
         {
-            this.ChannelAccessToken = "sulLD9jJWPJW3RWQJVhuwL7vqcTOE6wtQCr6NND1ynH8YmUYVe9m4vFKk6OL7vMXDFbuzbN2QG47fPXGEi+g5JXt4H2eDdAEr9hCFnJqAwJDfVlgSHVPYUSGaxokiD36hV1n2BGzpcbPDJkrqMlAVgdB04t89/1O/w1cDnyilFU=";
+            this.ChannelAccessToken = "fdB8deMPW51UAuTi+udDZRNVjFvW6EgKHdXEzR83/5F1+pZ/lo/3RjlFMTfM4E0jsCEPBXVGwwj3fEelU+hARcwDWqOMEfGgGIY6A52dXBPb3T+cpQgAEzd8HU1UH0uI+UMJRWk7MZzud1u8YdkB8wdB04t89/1O/w1cDnyilFU=";
             if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                 ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
             var LineEvent = this.ReceivedMessage.events.FirstOrDefault();
