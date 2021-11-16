@@ -181,15 +181,26 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-12 col-md-6 my-3">
                                                             <label for="">商品姓名</label>
-                                                            <input class="form-control" type="text"
+                                                            <input type="text"
                                                                    v-model="inputData.creatorName"
+                                                                   :class="{'is-invalid':inputDataCheck.creatorName.error}"
+                                                                   class="form-control"
                                                                    :readonly="!enableEdit">
+                                                            <div class="text-danger small mt-1">
+                                                                {{inputDataCheck.creatorName.errorMsg}}
+                                                            </div>
+
                                                         </div>
                                                         <div class="col-12 col-md-6 my-3">
                                                             <label for="">商品價格</label>
-                                                            <input class="form-control" type="number" min="0"
+                                                            <input type="number" min="0"
                                                                    v-model="inputData.unitprice"
+                                                                   :class="{'is-invalid':inputDataCheck.unitprice.error}"
+                                                                   class="form-control"
                                                                    :readonly="!enableEdit">
+                                                            <div class="text-danger small mt-1">
+                                                                {{inputDataCheck.unitprice.errorMsg}}
+                                                            </div>
                                                         </div>
 
                                                         <div class="col-12 col-md-6 my-3">
@@ -365,6 +376,10 @@
                     unitprice: 0,
                     Introduction: ''
                 },
+                inputDataCheck: {
+                    creatorName: { error: false, errorMsg: '' },
+                    unitprice: {error: false, errorMsg:''}
+                },
                 currentItem: {},
                 tabIndex: 0,
                 totalRows: 1,
@@ -485,6 +500,30 @@
                         default:
                             break;
                     }
+                },
+                'inputData.creatorName': {
+                    immediate: true,
+                    handler: function () {
+                        if (this.inputData.creatorName == '') {
+                            this.inputDataCheck.creatorName.error = true;
+                            this.inputDataCheck.creatorName.errorMsg = '此欄位必填';
+                        } else {
+                            this.inputDataCheck.creatorName.error = false;
+                            this.inputDataCheck.creatorName.errorMsg = '';
+                        }
+                    }
+                },
+                'inputData.unitprice': {
+                    immediate: true,
+                    handler: function () {
+                        if (this.inputData.unitprice == '') {
+                            this.inputDataCheck.unitprice.error = true;
+                            this.inputDataCheck.unitprice.errorMsg = '此欄位必填';
+                        } else {
+                            this.inputDataCheck.unitprice.error = false;
+                            this.inputDataCheck.unitprice.errorMsg = '';
+                        }
+                    }
                 }
             },
             methods: {
@@ -509,7 +548,6 @@
 
                 //切換下架商品頁
                 NonSalePage() {
-                    // console.log('Nonsalepage');
                     this.SetPageDefault();
                     this.getSimplifyProducts(this.urlList.simplifyproductsNonSale, this.isOnSaleBusy, false)
                 },
@@ -525,10 +563,8 @@
                         },
                         url: uri
                     };
-                    // console.log(cfg)
                     axios(cfg)
                         .then(res => {
-                            console.log(res)
                             if (Array.isArray(res.data.result) && res.status == 200) {
 
                                 switch (res.data.status) {
@@ -578,7 +614,7 @@
                         },
                         url: `${uri}/${id}`
                     };
-                    console.log(cfg)
+                    
                     return axios(cfg);
                 },
 
@@ -593,8 +629,7 @@
 
                         if (response.status == 200) {
                             let data = response.data.result;
-                            let newdata = data[0]
-                            console.log(JSON.stringify(newdata))
+                            let newdata = data[0] 
                             this.inputData.productId = newdata.productId;
                             this.inputData.creatorId = newdata.creatorId;
                             this.inputData.creatorName = newdata.creatorName;
@@ -632,15 +667,11 @@
 
                     return Promise.all([style, server, game, language])
                         .then(res => {
-                            // console.log(res)
                             let [style, server, game, language] = res;
                             this.stylelist.options = style.data.result[0].styleAll.map(x => { return { value: x.styleId, label: x.styleName } })
                             this.serverlist.options = server.data.result[0].serverAll.map(x => { return { value: x.serverId, label: x.serverName } })
                             this.gamelist.options = game.data.result[0].gameAll.map(x => { return { value: x.gameId, label: x.gameName } })
                             this.languagelist.options = language.data.result[0].languageAll.map(x => { return { value: x.languageId, label: x.languageName } })
-                            // console.log(this.stylelist.value)
-                            console.log(this.gamelist)
-
                         }).catch(err => {
                             console.error(err);
                         });
@@ -656,7 +687,6 @@
                         },
                         url: url
                     };
-                    console.log(cfg)
                     return axios(cfg);
                 },
 
@@ -673,7 +703,6 @@
                         url: '/api/product/UpdateProduct'
                     };
                       axios(cfg).then(res => {
-                            console.log(res)
 
                             if (res.data.status == 0 && res.data.result == true && this.tabIndex == 0) {
                                 toastr.success('更新成功');
@@ -720,7 +749,6 @@
                                     ProductId: productId,
                                     SaleStatus: cfg.data.Status,
                                 }
-                                console.log(data)
                                 this.UpdateProductSalesStatus(this.urlList.updateProductSalesStatus, data)
                             }
                         })
@@ -745,19 +773,16 @@
                         url: uri
 
                     };
-                    console.log(cfg)
                     let successMsg = data.SaleStatus ? '已成功將商品上架' : '已成功將商品下架';
                     let errorMsg = data.SaleStatus ? '商品上架請求失敗' : '商品下架請求失敗';
 
 
                     axios(cfg)
                         .then(res => {
-                            console.log(res)
                             if (res.status == 200) {
                                 switch (res.data.status) {
                                     case 0:
                                         let index = this.items.findIndex(x => x.productId === data.ProductId)
-                                        console.log(index)
                                         if (index >= 0) {
                                             toastr.success('操作成功');
                                             this.items.splice(index, 1);

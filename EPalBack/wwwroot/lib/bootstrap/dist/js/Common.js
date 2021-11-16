@@ -17,7 +17,6 @@ function TokenGetter() {
 
 //產生Authorize Bear 格式
 function GenCurrentAuthBarerFormat() {
-    console.log(`Bearer ${TokenGetter()}`)
     return `Bearer ${TokenGetter()}`;
 }
 

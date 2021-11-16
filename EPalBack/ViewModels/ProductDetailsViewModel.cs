@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace EPalBack.ViewModels
         /// 商品Id
         /// </summary>
         public int ProductId { get; set; }
-
+        [Required]
         /// <summary>
         /// 商品人姓名
         /// </summary>
@@ -26,7 +27,7 @@ namespace EPalBack.ViewModels
         /// 商品人照片
         /// </summary>
         public string CreatorImg { get; set; }
-
+        [Required]
         /// <summary>
         /// 單價
         /// </summary>
