@@ -9,6 +9,8 @@ namespace EPalBack.ViewModels
     {
         public int ProductId { get; set; }
 
+        public int ProductQty { get; set; }
+
         public string MemberName { get; set; }
 
         public string GameName { get; set; }

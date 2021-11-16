@@ -195,5 +195,18 @@ namespace EPalBack.Controllers
             }
         }
 
+        [HttpGet]
+        public ApiResponse GetMostPopularProductList(int topMax)
+        {
+            try
+            {
+                var result = _productService.GetMostPopular(topMax);
+                return new ApiResponse(APIStatus.Success, string.Empty, result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(APIStatus.Fail, ex.Message, null);
+            }
+        }
     }
 }

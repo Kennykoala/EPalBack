@@ -41,5 +41,10 @@ namespace EPalBack.Repositories
         {
             return _context.Set<T>();
         }
+
+        //public T Get(int id)
+        //{
+        //    return _context.Set<T>().FirstOrDefault();
+        //}
     }
 }

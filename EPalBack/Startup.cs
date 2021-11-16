@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using EPalBack.Repositories;
 using EPalBack.Services;
 
+
 namespace EPalBack
 {
     public class Startup
@@ -37,7 +38,10 @@ namespace EPalBack
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EPalBack", Version = "v1" });
             //});
-
+            services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = Configuration["RedisConfig:ToolManMemoryCache"];
+                });
 
             //µù¥U Swagger ªA°È
             services.AddSwaggerDocument(config => {
@@ -91,6 +95,7 @@ namespace EPalBack
             services.AddScoped<Repository<GameCategory>>();
             services.AddScoped<Repository<ProductServer>>();
             services.AddScoped<Repository<ProductStyle>>();
+           
 
             services.AddScoped<ProductService>();
             services.AddScoped<MemberService>();

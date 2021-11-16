@@ -39,7 +39,6 @@ namespace EPalBack.Services
                 tempDesired = x.DesiredStartTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 Quantity =x.Quantity
             }).ToList();
-
         }
 
         public IEnumerable<OrderViewModel>GetUpaidOrder()
@@ -47,7 +46,6 @@ namespace EPalBack.Services
             var porduct = _order.GetAll().Where(p => p.OrderStatusId == 1 ||p.OrderStatusId==2);
             return porduct.Select(x => new OrderViewModel()
             {
-
                 OrderId = x.OrderId,
                 CustomerId = x.CustomerId,
                 ProductId = x.ProductId,
@@ -71,7 +69,6 @@ namespace EPalBack.Services
             );
             return porduct.Select(x => new OrderViewModel()
             {
-
                 OrderId = x.OrderId,
                 CustomerId = x.CustomerId,
                 ProductId = x.ProductId,
@@ -120,14 +117,7 @@ namespace EPalBack.Services
 
             }).FirstOrDefault();
 
-
-
-
         }
-
-
-
-
 
     }
 

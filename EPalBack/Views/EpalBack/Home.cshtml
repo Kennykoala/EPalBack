@@ -128,7 +128,7 @@
                                 <div class="chart-pie  pt-4 pb-2">
                                     <canvas id="Mycanvas"></canvas>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -156,11 +156,50 @@
                             <!-- Card Body -->
                             <div class="card-body ">
                                 <div class="chart-area">
-                                    <canvas id="canvas" ></canvas>
+                                    <canvas id="canvas"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <table class="table col-12 col-md-6 ">
+                        <thead>
+                            <tr>
+                                <th scope="col">Popular</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Total Quantity</th>
+                                <th scope="col">Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td id="Firstname"></td>
+                                <td id="Firsttotal">Otto</td>
+                                <td><img id="image1"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td id="Secondname">Jacob</td>
+                                <td id="Secondtotal">Thornton</td>
+                                <td><img id="image2"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td id="Thirdname">Larry the Bird</td>
+                                <td id="Thirdtotal"></td>
+                                <td><img id="image3"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td id="Fourname">Larry the Bird</td>
+                                <td id="Fourtotal"></td>
+                                <td><img id="image4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
 
                 </div>
 
@@ -191,6 +230,18 @@
             .chart-area{
                 height: 80% !important;
             }
+            img {
+                width: 100px;
+                height: 100px;
+            }
+
+            tbody {
+                text-align: center;
+            }
+
+            thead {
+                text-align: center;
+            }
         </style>
 }
 
@@ -198,6 +249,67 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="vendor/chart.js/Chart.min.js"></script>
     <script>
+
+
+        axios('/api/Product/GetMostPopularProductList?topMax=4')
+            .then(popular => {
+                console.log(popular.data.result[0]);
+                let Firstname = document.getElementById("Firstname");
+                let firstname = popular.data.result[0].memberName;
+                Firstname.innerText = firstname;
+
+                let Firsttotal = document.getElementById("Firsttotal");
+                let firsttotal = popular.data.result[0].productQty;
+                Firsttotal.innerText = firsttotal;
+
+                let firstimage = popular.data.result[0].productImg;
+                console.log(firstimage);
+                let Firstimage = document.getElementById("image1").src = firstimage;
+                //  let firstimage = popular.data.result[0].productImg;
+
+
+                let Secondname = document.getElementById("Secondname");
+                let secondname = popular.data.result[1].memberName;
+                Secondname.innerText = secondname;
+
+                let secondimage = popular.data.result[1].productImg;
+                console.log(secondimage);
+                let Secondimage = document.getElementById("image2").src = secondimage;
+
+                let Secondtotal = document.getElementById("Secondtotal");
+                let secondtotal = popular.data.result[1].productQty;
+                Secondtotal.innerText = secondtotal;
+
+
+                let Thirdname = document.getElementById("Thirdname");
+                let thirdname = popular.data.result[2].memberName;
+                Thirdname.innerText = thirdname;
+
+
+                let Thirdtotal = document.getElementById("Thirdtotal");
+                let thirdtotal = popular.data.result[2].productQty;
+                Thirdtotal.innerText = thirdtotal;
+
+
+                let thirdimage = popular.data.result[2].productImg;
+                console.log(thirdimage);
+                let Thirdimage = document.getElementById("image3").src = thirdimage;
+
+
+                let Fourname = document.getElementById("Fourname");
+                let fourname = popular.data.result[3].memberName;
+                Fourname.innerText = fourname;
+
+                let Fourtotal = document.getElementById("Fourtotal");
+                let fourtotal = popular.data.result[3].productQty;
+                Fourtotal.innerText = fourtotal;
+
+                let fourimage = popular.data.result[3].productImg;
+                console.log(fourimage);
+                let Fourimage = document.getElementById("image4").src = fourimage;
+
+            });
+
 
         axios('/api/Product/GetMemberagerange')
             .then(response => {
