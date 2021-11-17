@@ -192,7 +192,7 @@ namespace isRock.Template
             }
             catch (Exception ex)
             {
-                this.PushMessage(UserId, "發生錯誤:\n" + ex.Message);
+                //this.PushMessage(UserId, "發生錯誤:\n" + ex.Message);
                 return Ok();
             }
         }
